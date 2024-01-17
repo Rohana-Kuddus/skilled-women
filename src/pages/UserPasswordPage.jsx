@@ -1,5 +1,5 @@
 function UserPasswordPage() {
-  return ( 
+  return (
     <div></div>
   );
 }

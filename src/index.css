@@ -86,3 +86,17 @@ body {
 .dark {
   color: var(--neutral-color);
 }
+
+/* input form */
+.input-text {
+  @apply w-96 h-10 pl-4 rounded-lg;
+  background-color: var(--secondary-color);
+  color: var(--neutral-color);
+}
+
+.label-form {
+  @apply mb-1.5 mt-4 font-bold;
+  font-family: var(--paragraph-font);
+  font-size: var(--regular-font-size);
+  color: var(--primary-color);
+}
