@@ -5,10 +5,9 @@ import AboutPage from "./pages/AboutPage"
 import FaqPage from "./pages/FaqPage"
 import RegisterPage from "./pages/RegisterPage"
 import LoginPage from "./pages/LoginPage"
-import EmailPage from "./pages/EmailPage"
+import ForgotPasswordPage from "./pages/ForgotPasswordPage"
 import RenewPasswordPage from "./pages/RenewPasswordPage"
 import JobDetailPage from "./pages/JobDetailPage"
-import RoadmapPage from "./pages/RoadmapPage"
 import UserProfilePage from "./pages/UserProfilePage"
 import UserPasswordPage from "./pages/UserPasswordPage"
 import UserRecommendationPage from "./pages/UserRecommendationPage"
@@ -29,12 +28,11 @@ function App() {
 
           <Route path='/register' element={<RegisterPage></RegisterPage>}></Route>
           <Route path='/login' element={<LoginPage></LoginPage>}></Route>
-          <Route path='/password/email' element={<EmailPage></EmailPage>}></Route>
+          <Route path='/password/email' element={<ForgotPasswordPage></ForgotPasswordPage>}></Route>
           <Route path='/password/reset' element={<RenewPasswordPage></RenewPasswordPage>}></Route>
 
           <Route path='/jobs' element={<JobPage></JobPage>}></Route>
           <Route path='/jobs/:id' element={<JobDetailPage></JobDetailPage>}></Route>
-          <Route path='/jobs/:id/roadmap' element={<RoadmapPage></RoadmapPage>}></Route>
 
           <Route path='/profiles/:id' element={<UserProfilePage></UserProfilePage>}></Route>
           <Route path='/profiles/:id/password' element={<UserPasswordPage></UserPasswordPage>}></Route>
