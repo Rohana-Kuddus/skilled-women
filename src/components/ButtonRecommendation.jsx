@@ -1,10 +1,11 @@
 import ChatQuoteLineIcon from "remixicon-react/ChatQuoteLineIcon"
 import "../index.css"
+import "../styles/components/ButtonRecommendation.css"
 
 function ButtonRecommendation({ name }) {
   return ( 
     <div>
-      <button className="flex bg-[#EDEDED] justify-center items-start px-4 py-2 rounded-lg paragraph green">
+      <button className="button paragraph-regular green">
         <ChatQuoteLineIcon className="mr-2 green"></ChatQuoteLineIcon> 
         Rekomendasikan {name}
       </button>
