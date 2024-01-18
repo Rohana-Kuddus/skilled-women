@@ -14,6 +14,7 @@ import UserRecommendationPage from "./pages/UserRecommendationPage"
 import RecommendationPage from "./pages/RecommendationPage"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
+import Alert from "./components/Alert"
 
 function App() {
   return (
@@ -41,6 +42,9 @@ function App() {
           <Route path='/recommendations' element={<RecommendationPage></RecommendationPage>}></Route>
         </Routes>
       </BrowserRouter>
+
+      <Alert status={false} text={'Yakin ingin menghapus?'} 
+        button={{ primary: 'Hapus', secondary: 'Batal' }} closeBtn={true}></Alert>
 
       <Footer></Footer>
     </>
