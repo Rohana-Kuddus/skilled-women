@@ -14,7 +14,6 @@ import UserRecommendationPage from "./pages/UserRecommendationPage"
 import RecommendationPage from "./pages/RecommendationPage"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
-import Alert from "./components/Alert"
 
 function App() {
   return (
