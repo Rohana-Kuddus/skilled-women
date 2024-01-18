@@ -43,9 +43,6 @@ function App() {
         </Routes>
       </BrowserRouter>
 
-      <Alert status={false} text={'Yakin ingin menghapus?'} 
-        button={{ primary: 'Hapus', secondary: 'Batal' }} closeBtn={true}></Alert>
-
       <Footer></Footer>
     </>
   )
