@@ -1,21 +1,16 @@
-//hero di job detail
+import PropTypes from "prop-types"
 
-// import React from "react";
-
-function Hero() {
+function Hero({ data }) {
   return (
-    <>
-      <div className=" ml-80 flex justify-center items-center gap-32">
-        <div className="dark heading1 gap-y-6 justify-items-center text-center ">
-          <h1 className="">Pilihlah Pekerjaan Yang</h1>
-          <h1 className="">Kamu Minati! </h1>
-        </div>
-        <div>
-          <img src="https://imgur.com/dEyAXJg.png" alt="" />
-        </div>
-      </div>
-    </>
+    <div>
+      <h1>{data.title}</h1>
+      <img src={data.image} alt={data.title.toLowerCase().replace(/\s+/g, '-')} />
+    </div>
   );
+}
+
+Hero.propTypes = {
+  data: PropTypes.object
 }
 
 export default Hero;
