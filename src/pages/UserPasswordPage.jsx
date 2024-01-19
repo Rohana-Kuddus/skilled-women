@@ -163,7 +163,7 @@ function UserPasswordPage() {
       </div>
 
       {/* panggil button primary untuk ganti password */}
-      <ButtonPrimary buttonText="Ganti kata sandi" onClick={buttonHandler}></ButtonPrimary>
+      <ButtonPrimary buttonText={'Ganti kata sandi'} onClick={buttonHandler}></ButtonPrimary>
 
       {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>

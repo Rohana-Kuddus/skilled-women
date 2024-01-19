@@ -21,7 +21,7 @@ function Alert({ status, text, button, closeBtn }) {
 
         <div>
           {button.primary ? <ButtonPrimary buttonText={button.primary} onClick={button.primaryAction}></ButtonPrimary> : ''}
-          {button.secondary ? <ButtonSecondary text={button.secondary} action={button.secondaryAction}></ButtonSecondary> : ''}
+          {button.secondary ? <ButtonSecondary name={button.secondary} action={button.secondaryAction}></ButtonSecondary> : ''}
         </div>
       </div>
     </div>

@@ -82,12 +82,12 @@ function CardClass({ data, editBtn = false }) {
               {/* hit api ketika di klik untuk tambah rating */}
               <div onClick={likeHandler}>
                 {active === 'none' || active !== 'like' ? 
-                  <ThumbUpLineIcon></ThumbUpLineIcon> : <ThumbUpFillIcon></ThumbUpFillIcon>}
+                  <ThumbUpLineIcon color="#4F6C6A"></ThumbUpLineIcon> : <ThumbUpFillIcon color="#4F6C6A"></ThumbUpFillIcon>}
               </div>
               <p className="paragraph-regular green">{data.rating}</p>
               <div onClick={dislikeHandler}>
                 {active === 'none' || active !== 'dislike' ? 
-                  <ThumbDownLineIcon></ThumbDownLineIcon> : <ThumbDownFillIcon></ThumbDownFillIcon>}
+                  <ThumbDownLineIcon color="#4F6C6A"></ThumbDownLineIcon> : <ThumbDownFillIcon color="#4F6C6A"></ThumbDownFillIcon>}
               </div>
             </div>
 
@@ -95,7 +95,7 @@ function CardClass({ data, editBtn = false }) {
               <ButtonPrimary buttonText={'Lihat Kelas'} onClick={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
               : <div>
                 <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations')}></ButtonPrimary>
-                <ButtonSecondary text={'Hapus'} action={() => dispatch(setStatus(true))}></ButtonSecondary>
+                <ButtonSecondary name={'Hapus'} action={() => dispatch(setStatus(true))}></ButtonSecondary>
               </div>}
           </div>
         </div>
