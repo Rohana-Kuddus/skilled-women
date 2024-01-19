@@ -1,10 +1,9 @@
-// form email di forgot password
-
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "./ButtonPrimary";
 
-function InputEmail() {
+function InputEmail({ setNextPage }) {
   const navigate = useNavigate();
+
   return ( 
     <div>
        <form>
@@ -23,7 +22,7 @@ function InputEmail() {
           placeholder="Email"
           />
 
-          <ButtonPrimary text={"Kirim email"}></ButtonPrimary>
+          <ButtonPrimary buttonText={"Kirim email"} onClick={setNextPage}></ButtonPrimary>
         </div>
 
         <p>
