@@ -22,7 +22,7 @@ function CardJob({job}) {
                     {job.description}
                   </p>
                   
-                  <ButtonPrimary buttonText="Lihat Detail" onClick={() => navigate('/jobs/{job.id}')}></ButtonPrimary>
+                  <ButtonPrimary buttonText="Lihat Detail" onClick={() => navigate(`/jobs/${job.id}`)}></ButtonPrimary>
               </div>
           </div>
       </div>
