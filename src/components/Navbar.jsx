@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import MenuLineIcon from "remixicon-react/MenuLineIcon";
-import Logo from "../../assets/logo.svg";
-import "../../index.css";
-import "./Navbar.css";
+import Logo from "../assets/logo.svg";
+import "../index.css";
+import "../styles/components/Navbar.css";
 
 function Navbar() {
   // change the navbar view based on device size
@@ -24,7 +24,7 @@ function Navbar() {
   };
 
   // check if the user has registered/login --> show user profile
-  // the state should be false
+  // the register state should be false
   const [isRegistered, setRegistered] = useState(true);
   const [userProfile, setProfile] = useState(null);
 
@@ -82,13 +82,20 @@ function Navbar() {
               </NavLink>
 
               {isRegistered ? (
-                <div>
+                <div className="lg:inline-flex">
                   <NavLink to="/profiles/:id" className="userNav">
                     <img
                       src={userProfile}
                       alt="User Profile"
                       className="user-profile rounded-xxl"
                     />
+                  </NavLink>
+                  <NavLink
+                    to=""
+                    onClick={""}
+                    className="active navlink lg:inline-flex lg:w-auto w-full mx-2 px-4 py-2 rounded items-center justify-center hover:text-white"
+                  >
+                    Keluar
                   </NavLink>
                 </div>
               ) : (
