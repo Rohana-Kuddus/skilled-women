@@ -44,7 +44,7 @@ function Navbar() {
         {/* ICON MENU */}
         <button
           onClick={handleToggle}
-          class="text-white inline-flex p-3 rounded lg:hidden ml-auto hover:text-white outline-none nav-toggle"
+          className="text-white inline-flex p-3 rounded lg:hidden ml-auto hover:text-white outline-none nav-toggle"
         >
           <MenuLineIcon color="##4F6C6A" />
         </button>
