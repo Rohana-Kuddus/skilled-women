@@ -3,7 +3,7 @@ import "../index.css"
 import "../styles/components/ButtonRecommendation.css"
 import PropTypes from "prop-types"
 
-function ButtonRecommendation({ name, action, padding }) {
+function ButtonRecommendation({ name, action, padding = 'px-4' }) {
   return ( 
     <div>
       <button className={`button ${padding} paragraph-regular green`} onClick={action}>

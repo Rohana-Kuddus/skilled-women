@@ -9,6 +9,7 @@ import Alert from "./Alert"
 import { useDispatch, useSelector } from "react-redux"
 import { setStatus } from "../redux/slices/alertSlice"
 import { useState } from "react"
+import PropTypes from "prop-types"
 
 function CardClass({ data, editBtn = false }) {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ function CardClass({ data, editBtn = false }) {
 
         <div>
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
-          <p className="paragraph-regular dark">{data.name}</p>
+          <p className="paragraph-regular dark">{data.title}</p>
           <div>
             <div className="dot"></div>
             <p className="paragraph-small dark">{data.paid ? 'Berbayar' : 'Gratis'}</p>
@@ -103,6 +104,11 @@ function CardClass({ data, editBtn = false }) {
       {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>
   );
+}
+
+CardClass.propTypes = {
+  data: PropTypes.object,
+  editBtn: PropTypes.bool
 }
 
 export default CardClass;
