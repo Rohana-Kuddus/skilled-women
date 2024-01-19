@@ -1,14 +1,9 @@
 // form email di forgot password
 
 import { useNavigate } from "react-router-dom";
-import propTypes from 'prop-types'
+import ButtonPrimary from "./ButtonPrimary";
 
-function InputEmail({ email }) {
-  // const user = {
-  //   "username" : "janedoe123",
-  //   "email": "janedoe123@email.com",
-  //   "password": "12345"
-  // }
+function InputEmail() {
   const navigate = useNavigate();
   return ( 
     <div>
@@ -25,11 +20,10 @@ function InputEmail({ email }) {
           className="input-text"
           type="text"
           name="email"
-          placeholder={email}
+          placeholder="Email"
           />
 
-          {/* button primary   */}
-          <button>Kirim email</button>
+          <ButtonPrimary text={"Kirim email"}></ButtonPrimary>
         </div>
 
         <p>
@@ -38,10 +32,6 @@ function InputEmail({ email }) {
       </form>
     </div>
   );
-}
-
-InputEmail.propTypes = {
-  email: propTypes.string
 }
 
 export default InputEmail;
