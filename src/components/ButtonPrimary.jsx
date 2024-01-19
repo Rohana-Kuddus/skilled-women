@@ -1,6 +1,8 @@
-function ButtonPrimary() {
+function ButtonPrimary({ text, action }) {
   return ( 
-    <div></div>
+    <div>
+      <button onClick={action}>{text}</button>
+    </div>
   );
 }
 
