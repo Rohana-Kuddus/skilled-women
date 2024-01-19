@@ -1,0 +1,9 @@
+.button {
+  @apply flex justify-center items-start py-2.5 rounded-lg;
+  background-color: var(--secondary-color);
+  transition: all 0.3s;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
