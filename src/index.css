@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;700&family=Titillium+Web:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* font style */
+  --heading-font: 'Exo', sans-serif;
+  --paragraph-font: 'Titillium Web', sans-serif;
+
+  /* color */
+  --primary-color: #4F6C6A;
+  --accent-color: #F6DDD9;
+  --secondary-color: #EDEDED;
+  --neutral-color: #1E292B;
+  --white-color: #fff;
+
+  /* font size */
+  --h1-font-size: 2.25rem; /* 36px */
+  --h2-font-size: 1.625em; /* 26px */
+  --h3-font-size: 1.25rem; /* 20px */
+  --regular-font-size: 1rem; /* 16px */
+  --small-font-size: 0.75rem; /* 12px */
+}
+
+* {
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+/* font setting */
+.heading1 {
+  font-family: var(--heading-font);
+  font-size: var(--h1-font-size);
+  font-weight: 700;
+}
+
+.heading2 {
+  font-family: var(--heading-font);
+  font-size: var(--h2-font-size);
+  font-weight: 700;
+}
+
+.heading3 {
+  font-family: var(--heading-font);
+  font-size: var(--h3-font-size);
+  font-weight: 700;
+}
+
+.paragraph-regular {
+  font-family: var(--paragraph-font);
+  font-size: var(--regular-font-size);
+}
+
+.paragraph-small {
+  font-family: var(--paragraph-font);
+  font-size: var(--small-font-size);
+}
+
+/* color class */
+.green {
+  color: var(--primary-color);
+}
+
+.pink {
+  color: var(--accent-color);
+}
+
+.grey {
+  color: var(--secondary-color);
+}
+
+.white {
+  color: var(--white-color);
+}
+
+.dark {
+  color: var(--neutral-color);
+}
+
+/* input form */
+.input-text {
+  @apply w-96 h-10 pl-4 rounded-lg;
+  background-color: var(--secondary-color);
+  color: var(--neutral-color);
+}
+
+.label-form {
+  @apply mb-1.5 mt-4 font-bold;
+  font-family: var(--paragraph-font);
+  font-size: var(--regular-font-size);
+  color: var(--primary-color);
+}
