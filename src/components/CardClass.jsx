@@ -91,9 +91,9 @@ function CardClass({ data, editBtn = false }) {
             </div>
 
             {!editBtn ?
-              <ButtonPrimary text={'Lihat Kelas'} action={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
+              <ButtonPrimary buttonText={'Lihat Kelas'} onClick={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
               : <div>
-                <ButtonPrimary text={'Edit'} action={() => navigate('/recommendations')}></ButtonPrimary>
+                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations')}></ButtonPrimary>
                 <ButtonSecondary text={'Hapus'} action={() => dispatch(setStatus(true))}></ButtonSecondary>
               </div>}
           </div>
