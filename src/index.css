@@ -63,7 +63,6 @@ body {
 .paragraph-small {
   font-family: var(--paragraph-font);
   font-size: var(--small-font-size);
-  font-weight: 400;
 }
 
 /* color class */
