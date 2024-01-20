@@ -20,8 +20,8 @@ function Alert({ status, text, button, closeBtn }) {
         <p className="paragraph-regular green">{ReactHtmlParser(text)}</p>
 
         <div>
-          {button.primary ? <ButtonPrimary text={button.primary} action={button.primaryAction}></ButtonPrimary> : ''}
-          {button.secondary ? <ButtonSecondary text={button.secondary} action={button.secondaryAction}></ButtonSecondary> : ''}
+          {button.primary ? <ButtonPrimary buttonText={button.primary} onClick={button.primaryAction}></ButtonPrimary> : ''}
+          {button.secondary ? <ButtonSecondary name={button.secondary} action={button.secondaryAction}></ButtonSecondary> : ''}
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import Alert from "./Alert"
 import { useDispatch, useSelector } from "react-redux"
 import { setStatus } from "../redux/slices/alertSlice"
 import { useState } from "react"
+import PropTypes from "prop-types"
 
 function CardClass({ data, editBtn = false }) {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ function CardClass({ data, editBtn = false }) {
 
         <div>
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
-          <p className="paragraph-regular dark">{data.name}</p>
+          <p className="paragraph-regular dark">{data.title}</p>
           <div>
             <div className="dot"></div>
             <p className="paragraph-small dark">{data.paid ? 'Berbayar' : 'Gratis'}</p>
@@ -81,20 +82,20 @@ function CardClass({ data, editBtn = false }) {
               {/* hit api ketika di klik untuk tambah rating */}
               <div onClick={likeHandler}>
                 {active === 'none' || active !== 'like' ? 
-                  <ThumbUpLineIcon></ThumbUpLineIcon> : <ThumbUpFillIcon></ThumbUpFillIcon>}
+                  <ThumbUpLineIcon color="#4F6C6A"></ThumbUpLineIcon> : <ThumbUpFillIcon color="#4F6C6A"></ThumbUpFillIcon>}
               </div>
               <p className="paragraph-regular green">{data.rating}</p>
               <div onClick={dislikeHandler}>
                 {active === 'none' || active !== 'dislike' ? 
-                  <ThumbDownLineIcon></ThumbDownLineIcon> : <ThumbDownFillIcon></ThumbDownFillIcon>}
+                  <ThumbDownLineIcon color="#4F6C6A"></ThumbDownLineIcon> : <ThumbDownFillIcon color="#4F6C6A"></ThumbDownFillIcon>}
               </div>
             </div>
 
             {!editBtn ?
-              <ButtonPrimary text={'Lihat Kelas'} action={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
+              <ButtonPrimary buttonText={'Lihat Kelas'} onClick={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
               : <div>
-                <ButtonPrimary text={'Edit'} action={() => navigate('/recommendations')}></ButtonPrimary>
-                <ButtonSecondary text={'Hapus'} action={() => dispatch(setStatus(true))}></ButtonSecondary>
+                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations')}></ButtonPrimary>
+                <ButtonSecondary name={'Hapus'} action={() => dispatch(setStatus(true))}></ButtonSecondary>
               </div>}
           </div>
         </div>
@@ -103,6 +104,11 @@ function CardClass({ data, editBtn = false }) {
       {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>
   );
+}
+
+CardClass.propTypes = {
+  data: PropTypes.object,
+  editBtn: PropTypes.bool
 }
 
 export default CardClass;
