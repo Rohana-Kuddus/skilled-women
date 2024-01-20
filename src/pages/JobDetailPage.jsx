@@ -6,8 +6,9 @@ import Roadmap from "../components/Roadmap"
 function JobDetailPage() {
   const [isActive, setIsActive] = useState('intro');
 
-  // dummy data supaya ngga error & contoh bentuk data
+  // dummy data supaya ngga error & contoh bentuk data pengenalan
   const data = {
+    id: 1,
     title: 'Petani Hidroponik',
     description: 'ini deskripsi',
     percentage: '24%',
@@ -39,7 +40,8 @@ function JobDetailPage() {
       image: '',
       role: 'petani professional',
       description: 'ini cerita dia'
-    }
+    },
+    roadmapSummary: 'roadmap ini bertujuan untuk bla bla'
   };
 
   return ( 
@@ -55,7 +57,7 @@ function JobDetailPage() {
 
       {/* akan ditambah props data dari redux api */}
       {isActive === 'intro' && <Introduction data={data} setIsActive={setIsActive}></Introduction>}
-      {isActive === 'roadmap' && <Roadmap></Roadmap>}
+      {isActive === 'roadmap' && <Roadmap data={data}></Roadmap>}
     </div>
   );
 }
