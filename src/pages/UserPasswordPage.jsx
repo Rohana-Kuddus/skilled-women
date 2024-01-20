@@ -3,9 +3,23 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
 import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setStatus } from "../redux/slices/alertSlice";
+import Alert from "../components/Alert";
 
 function UserPasswordPage() {
   const passwordRef = useRef();
+  const dispatch = useDispatch();
+  const { status } = useSelector(state => state.alert);
+
+  const alert = {
+    status: true,
+    text: 'Kata sandi Anda berhasil diubah!',
+    button: {
+      primary: 'Tutup',
+      primaryAction: () => dispatch(setStatus(false)) // akan buat function hit api ubah password
+    }
+  };
 
   // input value
   const [input, setInput] = useState({
@@ -101,6 +115,13 @@ function UserPasswordPage() {
   const checkNumber = /\d/.test(input.password) ? 'line-through' : '';
   const checkCharacter = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(input.password) ? 'line-through' : '';
 
+  // submit input
+  const buttonHandler = () => {
+    if (error.password && error.confirmPassword && !input.password && !input.confirmPassword) {
+      dispatch(setStatus(true));
+    };
+  };
+
   return (
     <div>
       <SidebarProfile></SidebarProfile>
@@ -113,7 +134,8 @@ function UserPasswordPage() {
       <div>
         <form action="" ref={passwordRef}>
           <label htmlFor="password" className="label-form">Kata Sandi Baru</label>
-          <input type={passwordType.password} id="password" className="input-text" name="password" value={input.password} onChange={onInputChange} onBlur={validateInput} />
+          <input type={passwordType.password} id="password" className="input-text" name="password" value={input.password} 
+            onChange={onInputChange} onBlur={validateInput} autoFocus />
           <span className="eye-icon" onClick={visibilityHandler}>
             {passwordType.password === 'password' ? <EyeOffLineIcon className="green" name="password"></EyeOffLineIcon>
               : <EyeLineIcon className="green" name="password"></EyeLineIcon>}
@@ -121,7 +143,8 @@ function UserPasswordPage() {
           {error.password && <p className="paragraph-regular dark">{error.password}</p>}
 
           <label htmlFor="confirmPassword" className="label-form">Konfirmasi Kata Sandi</label>
-          <input type={passwordType.confirmPassword} id="confirmPassword" className="input-text" name="confirmPassword" value={input.confirmPassword} onChange={onInputChange} onBlur={validateInput} />
+          <input type={passwordType.confirmPassword} id="confirmPassword" className="input-text" name="confirmPassword" 
+            value={input.confirmPassword} onChange={onInputChange} onBlur={validateInput} />
           <span className="eye-icon" onClick={visibilityHandler}>
             {passwordType.confirmPassword === 'password' ? <EyeOffLineIcon className="green" name="confirmPassword"></EyeOffLineIcon>
               : <EyeLineIcon className="green" name="confirmPassword"></EyeLineIcon>}
@@ -140,7 +163,9 @@ function UserPasswordPage() {
       </div>
 
       {/* panggil button primary untuk ganti password */}
-      <ButtonPrimary></ButtonPrimary>
+      <ButtonPrimary buttonText={'Ganti kata sandi'} onClick={buttonHandler}></ButtonPrimary>
+
+      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>
   );
 }

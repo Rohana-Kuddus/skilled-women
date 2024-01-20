@@ -1,8 +1,14 @@
-// gabungan komponen input email dan konfirmasi email
+import { useState } from "react";
+import InputEmail from "../components/InputEmail";
+import Confirmation from "../components/Confirmation";
 
 function ForgotPasswordPage() {
-  return ( 
-    <div></div>
+  const [nextPage, setNextPage] = useState(false);
+
+  return (
+    <div>
+      {!nextPage ? <InputEmail setNextPage={() => setNextPage(true)}></InputEmail> : <Confirmation></Confirmation>}
+    </div>
   );
 }
 

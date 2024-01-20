@@ -1,0 +1,45 @@
+@import url(/src/index.css);
+
+.navlink {
+  color: var(--primary-color);
+  font-family: var(--heading-font);
+}
+
+.active,
+div .navlink:not(.active):hover {
+  color: var(--white-color);
+  background-color: var(--primary-color);
+}
+
+/* USER PROFILE */
+.user-profile {
+  width: 4rem;
+  height: auto;
+}
+
+/* MEDIA */
+@media (min-width: 1024px) {
+  .top-navbar {
+    width: 0 !important;
+    display: inline-flex !important;
+  }
+}
+
+@media (max-width: 884px) {
+  .top-navbar,
+  .navSmall {
+    width: 100%;
+    margin-inline: 0;
+  }
+}
+
+@media (max-width: 425px) {
+  div > .navlink {
+    margin-inline: 0;
+    text-align: center;
+  }
+
+  .userNav {
+    margin: 0 auto;
+  }
+}
