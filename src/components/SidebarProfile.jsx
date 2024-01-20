@@ -46,7 +46,7 @@ function SidebarProfile({ id, action }) {
               </div>
             </div>
             <div className="border-t-2 border-gray-200"></div>
-            <div className="mt-4 mx-2 text-center hover:bg-red-300 active:bg-red-300 rounded-md">
+            <div className="mt-4 mx-2 text-center hover:bg-red-200 active:bg-red-200 rounded-md">
               <button onClick={action} className="text-red-500">
                 Keluar
               </button>
