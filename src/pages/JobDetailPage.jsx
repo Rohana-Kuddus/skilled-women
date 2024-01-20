@@ -6,7 +6,7 @@ import Roadmap from "../components/Roadmap"
 function JobDetailPage() {
   const [isActive, setIsActive] = useState('intro');
 
-  // dummy data supaya ngga error & contoh bentuk data
+  // dummy data supaya ngga error & contoh bentuk data pengenalan
   const data = {
     title: 'Petani Hidroponik',
     description: 'ini deskripsi',
