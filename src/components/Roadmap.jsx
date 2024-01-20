@@ -35,7 +35,7 @@ function Roadmap({ data }) {
     }
   ]
 
-  return ( 
+  return (
     <div>
       <StepRoadmap data={roadmap}></StepRoadmap>
     </div>
