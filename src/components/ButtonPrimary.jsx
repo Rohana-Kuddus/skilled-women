@@ -1,4 +1,3 @@
-// import React from "react";
 import PropTypes from "prop-types";
 
 const ButtonPrimary = ({ onClick, buttonText, padding = "px-4" }) => {

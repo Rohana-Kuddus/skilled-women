@@ -1,7 +1,7 @@
 function SidebarProfile() {
-  return ( 
+  return (
     <div></div>
-  );
+  )
 }
 
 export default SidebarProfile;
