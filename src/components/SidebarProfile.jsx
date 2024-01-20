@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import "../index.css";
 
 function SidebarProfile({ id, action }) {
@@ -31,21 +32,21 @@ function SidebarProfile({ id, action }) {
           >
             <div className="mx-2 mb-60 ">
               <div className="my-1 p-1 w-full text-center hover:bg-gray-200 active:bg-gray-200 rounded-md">
-                {/* <Link to={`/profiles/${id}`}>Profile Saya</Link> */}
+                <Link to={`/profiles/${id}`}>Profile Saya</Link>
               </div>
               <div className="my-1 p-1 w-full text-center hover:bg-gray-200 active:bg-gray-200 rounded-md">
-                {/* <Link to={`/profiles/${id}/password`}>
+                <Link to={`/profiles/${id}/password`}>
                   Ganti Kata Sandi
-                </Link> */}
+                </Link>
               </div>
               <div className="my-1 p-1 w-full text-center hover:bg-gray-200 active:bg-gray-200 rounded-md">
-                {/* <Link to={`/profiles/${id}/recommendation`}>
+                <Link to={`/profiles/${id}/recommendation`}>
                   Rekomendasi Saya
-                </Link> */}
+                </Link>
               </div>
             </div>
             <div className="border-t-2 border-gray-200"></div>
-            <div className="mt-4 mx-2 text-center hover:bg-red-200 active:bg-red-200 rounded-md">
+            <div className="mt-4 mx-2 text-center hover:bg-red-300 active:bg-red-300 rounded-md">
               <button onClick={action} className="text-red-500">
                 Keluar
               </button>
