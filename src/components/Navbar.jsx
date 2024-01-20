@@ -25,7 +25,7 @@ function Navbar() {
 
   // check if the user has registered/login --> show user profile
   // the register state should be false
-  const [isRegistered, setRegistered] = useState(true);
+  const [isRegistered, setRegistered] = useState(false);
   const [userProfile, setProfile] = useState(null);
 
   const handleRegister = () => {
@@ -35,16 +35,16 @@ function Navbar() {
 
   return (
     <>
-      <nav className="flex items-center p-4 flex-wrap shadow-md">
+      <nav className="flex items-center p-4 flex-wrap border-b-4">
         {/* LOGO */}
         <Link to="/" className="top-0 p-2 mx-2 inline-flex items-center">
-          {/* <Logo alt="skilled-women_logo" /> */}
-          LOGO
+          <img src={Logo} alt="skilldwomen_logo" className="w-60"/>
+        
         </Link>
         {/* ICON MENU */}
         <button
           onClick={handleToggle}
-          class="text-white inline-flex p-3 rounded lg:hidden ml-auto hover:text-white outline-none nav-toggle"
+          className="text-white inline-flex p-3 rounded lg:hidden ml-auto hover:text-white outline-none nav-toggle"
         >
           <MenuLineIcon color="##4F6C6A" />
         </button>
@@ -91,8 +91,8 @@ function Navbar() {
                     />
                   </NavLink>
                   <NavLink
-                    to=""
-                    onClick={""}
+                    to="/"
+                    onClick={() => {setRegistered(false)}}
                     className="active navlink lg:inline-flex lg:w-auto w-full mx-2 px-4 py-2 rounded items-center justify-center hover:text-white"
                   >
                     Keluar
