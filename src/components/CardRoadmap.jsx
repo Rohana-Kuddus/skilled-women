@@ -1,10 +1,10 @@
 import { useState } from "react"
 import SidebarClass from "./SidebarClass"
 
-function CardRoadmap({ classes, roadmap }) {
+function CardRoadmap({ roadmap }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // data dummy kelas. isi dari props classes
+  // data dummy kelas. dapet dari hit redux api kelas
   const classData = [
     {
       id: 1,
