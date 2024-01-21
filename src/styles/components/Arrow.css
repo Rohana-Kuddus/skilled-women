@@ -1,0 +1,15 @@
+.arrow {
+  @apply border-solid border-black;
+}
+
+.x-line {
+  @apply border w-60;
+}
+
+.y-line {
+  @apply mt-[3.4rem] ml-[11.5rem] border w-28 rotate-90;
+}
+
+.down {
+  @apply mt-[2.8rem] ml-[14.7rem] border-r-[1.5px] border-b-[1.5px] inline-block p-1 rotate-45;
+}
