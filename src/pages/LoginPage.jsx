@@ -1,6 +1,75 @@
-function LoginPage() { 
+import { useState } from "react";
+import "../index.css";
+import ButtonPrimary from "../components/ButtonPrimary";
+
+function LoginPage() {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleInput = (event) => {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const login = (event) => {
+    event.preventDefault();
+    console.log(user);
+  };
+
   return (
-    <div></div>
+    <>
+      <div className="text-center">
+        <h1 className="heading1 dark">Log In</h1>
+        <p className="dark paragraph-regular">
+          Senang melihat kamu kembali! <br /> Masukkan data sesuai dengan yang
+          telah kamu daftarkan.
+        </p>
+      </div>
+
+      <div className="flex flex-row justify-center">
+        <div>
+          <img src="https://imgur.com/dEyAXJg.png" alt="login"></img>
+        </div>
+
+        <div className="">
+          <div>
+            <p className="label-form">Email</p>
+            <input
+              className="input-text"
+              type="text"
+              name="username"
+              placeholder="janedoe@email.com"
+              value={user.username}
+              onChange={handleInput}
+            ></input>
+            <br />
+            <p className="label-form">Password</p>
+            <input
+              className="input-text"
+              type="password"
+              name="password"
+              placeholder="********"
+              value={user.password}
+              onChange={handleInput}
+            ></input>
+            <p className="label-form text-center">Forgot Password?</p>
+          </div>
+
+          <div className="text-center">
+            <ButtonPrimary buttonText="Log in" onClick={login} />
+            <p className="label-form">
+              Belum punya akun?
+              <span className="underline">Daftar sekarang</span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </>
   );
 }
 
