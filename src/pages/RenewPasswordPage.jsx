@@ -1,63 +1,180 @@
-import ButtonPrimary from "../components/ButtonPrimary";
-import { useState } from "react";
+import ButtonPrimary from "../components/ButtonPrimary"
+import { useState } from "react"
+import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon"
+import EyeLineIcon from "remixicon-react/EyeLineIcon"
+import { useDispatch, useSelector } from "react-redux";
+import { setStatus } from "../redux/slices/alertSlice";
+import Alert from "../components/Alert";
 
 function RenewPasswordPage() {
-  const [reset, setReset] = useState({
-    newpassword: "",
-    confirm: "",
+  const dispatch = useDispatch();
+  const { status } = useSelector(state => state.alert);
+
+  const alert = {
+    status: true,
+    text: 'Kata sandi Anda berhasil diubah!',
+    button: {
+      primary: 'Kembali ke halaman log in',
+      primaryAction: () => dispatch(setStatus(false))
+    }
+  };
+
+  const [input, setInput] = useState({
+    newPassword: '',
+    confirmPassword: ''
   });
 
-  const handleInput = (event) => {
-    setReset({
-      ...reset,
-      [event.target.name]: event.target.value,
+  const [error, setError] = useState({
+    newPassword: '',
+    confirmPassword: ''
+  });
+
+  const [passwordType, setPasswordType] = useState({
+    newPassword: 'password',
+    confirmPassword: 'password'
+  });
+
+  // handler change visibiity
+  const visibilityHandler = () => {
+    event.preventDefault();
+    const name = event.target.getAttribute('name');
+
+    let value;
+    switch (name) {
+      case 'newPassword':
+        passwordType.newPassword === 'password' ? value = 'text' : value = 'password';
+        break;
+
+      case 'confirmPassword':
+        passwordType.confirmPassword === 'password' ? value = 'text' : value = 'password';
+        break;
+
+      default:
+        value = 'password';
+        break;
+    };
+
+    setPasswordType(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const inputHandler = () => {
+    const { name, value } = event.target;
+
+    setInput(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // error handling
+  const validateInput = () => {
+    const { name, value } = event.target;
+
+    setError(prev => {
+      const stateObj = { ...prev, [name]: '' };
+
+      switch (name) {
+        case 'newPassword':
+          if (!value) {
+            stateObj[name] = 'Please enter Password.';
+          } else if (input.confirmPassword && value !== input.confirmPassword) {
+            stateObj['confirmPassword'] = 'Password and Confirm Password does not match.';
+          } else {
+            stateObj['confirmPassword'] = input.confirmPassword ? '' : error.confirmPassword;
+          }
+          break;
+
+        case 'confirmPassword':
+          if (!value) {
+            stateObj[name] = 'Please enter Confirm Password.';
+          } else if (input.newPassword && value !== input.newPassword) {
+            stateObj[name] = 'Password and Confirm Password does not match.';
+          }
+          break;
+
+        default:
+          break;
+      };
+
+      return stateObj;
     });
   };
 
-  const renewpassword = (event) => {
-    event.preventDefault();
-    console.log(reset);
+  // check password
+  const checkCapital = /[A-Z]/.test(input.newPassword) ? 'line-through' : '';
+  const checkNumber = /\d/.test(input.newPassword) ? 'line-through' : '';
+  const checkCharacter = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(input.newPassword) ? 'line-through' : '';
+
+  // submit input
+  const buttonHandler = () => {
+    if (error.newPassword === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
+      // akan buat function hit api ubah password
+      dispatch(setStatus(true));
+    };
   };
 
   return (
-    <>
+    <div>
       <div className="text-center">
-        <h1 className="heading1 dark">Renew Your Password</h1>
-        <p className="paragraph-regular">Masukkan password baru kamu</p>
+        <h1 className="heading1 dark">Perbarui Kata Sandi</h1>
+        <p className="paragraph-regular">Masukkan kata sandi baru kamu.</p>
       </div>
 
-      <div className="text-center">
+      <div>
         <div>
-          <p className="label-form ">New Password</p>
+          <label className="label-form">Kata Sandi Baru</label>
           <input
             className="input-text"
-            type="password"
-            name="newpassword"
+            type={passwordType.newPassword}
+            name="newPassword"
             placeholder="********"
-            value={reset.newpassword}
-            onChange={handleInput}
+            value={input.newPassword}
+            onChange={inputHandler}
+            onBlur={validateInput}
+            autoFocus
           ></input>
+          <div id="newPassword" onClick={visibilityHandler}>
+            {passwordType.newPassword === "password" ? <EyeOffLineIcon className="green" name="newPassword"></EyeOffLineIcon>
+              : <EyeLineIcon className="green" name="newPassword"></EyeLineIcon>}
+          </div>
         </div>
+        {error.newPassword && <p className="paragraph-regular text-[#FE0101]">{error.newPassword}</p>}
 
         <div>
-          <p className="label-form">Confirm New Password</p>
+          <label className="label-form">Konfirmasi Kata Sandi</label>
           <input
             className="input-text"
-            type="password"
-            name="confirm"
+            type={passwordType.confirmPassword}
+            name="confirmPassword"
             placeholder="********"
-            value={reset.confirm}
-            onChange={handleInput}
+            value={input.confirmPassword}
+            onChange={inputHandler}
+            onBlur={validateInput}
           ></input>
+          <div id="confirmPassword" onClick={visibilityHandler}>
+            {passwordType.confirmPassword === "password" ? <EyeOffLineIcon className="green" name="confirmPassword"></EyeOffLineIcon>
+              : <EyeLineIcon className="green" name="confirmPassword"></EyeLineIcon>}
+          </div>
         </div>
-        <br />
+        {error.confirmPassword && <p className="paragraph-regular text-[#FE0101]">{error.confirmPassword}</p>}
 
-        {/* Buttonnya belum bisa munculin alert berhasil */}
-        {/* Passwordnya belum hilang ketika button di klik */}
-        <ButtonPrimary buttonText="Ubah Password" onClick={renewpassword} />
+        <div>
+          <p className="paragraph-small dark">Kata sandi Anda harus mengandung:</p>
+          <ul className="ml-4 list-disc">
+            <li className={`paragraph-small dark ${checkCapital}`}>1 atau lebih huruf kapital</li>
+            <li className={`paragraph-small dark ${checkNumber}`}>1 atau lebih angka</li>
+            <li className={`paragraph-small dark ${checkCharacter}`}>1 atau lebih karakter khusus</li>
+          </ul>
+        </div>
 
+        <ButtonPrimary buttonText={"Ubah kata sandi"} onClick={buttonHandler}></ButtonPrimary>
       </div>
-    </>
+
+        {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+    </div>
   );
 }
 
