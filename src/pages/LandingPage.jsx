@@ -1,15 +1,41 @@
 import "../index.css";
-import Footer from "../components/Footer";
 import ButtonPrimary from "../components/ButtonPrimary";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
 import CardJob from "../components/CardJob";
-// import CardJob
+import { useState } from "react";
 
-// const LandingPage = () => {
 function LandingPage() {
+  const [jobsData, setJobsData] = useState([
+    {
+      id: 1,
+      image: "https://unsplash.com/photos/tuned-on-macbook-CGpifH3FjOA",
+      industry: "Kreatif",
+      title: "Graphic Designer",
+      description: "Ciptakan kreasi desain art kamu secara digital!",
+    },
+    {
+      id: 2,
+      image: "https://unsplash.com/photos/text-s_AgJxMc4zk",
+      industry: "Agrikultur",
+      title: "Petani Hidroponik",
+      description:
+        "Cocok untuk kamu yang ingin membuka usaha tanaman hidroponik atau berkebun sendiri ~",
+    },
+    {
+      id: 3,
+      image:
+        "https://unsplash.com/photos/person-holding-canon-dslr-camera-hfk6xOjQlFk",
+      industry: "Kreatif",
+      title: "Fotografer",
+      description:
+        "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
+    },
+  ]);
+
   return (
     <>
       {/* Hero section */}
+
       <div className="bg-[#4F6C6A] text-[#FFF] flex ">
         <div>
           <h1 className="heading1">
@@ -28,12 +54,6 @@ function LandingPage() {
               <ArrowRightLineIcon />
             </button>
           </div>
-
-          {/* <ButtonPrimary
-            buttonText="Mulai jelajahi"
-            backgroundColor="#fff"
-            textColor="#4F6C6A"
-          /> */}
         </div>
 
         <div className="rounded-full">
@@ -148,21 +168,28 @@ function LandingPage() {
           Roadmap Pekerjaan di Skilled Women{" "}
         </h1>
 
-        <h2 className="heading2">Roadmap pekerjaan untuk kamu!</h2>
-        <p className="paragraph-regular">
-          Pelajari Berbagai Alur Keterampilan dan <br /> langkah Langkah untuk
-          Meningkatkan <br /> Keahlian kamu!
-        </p>
-        <ButtonPrimary buttonText="Lihat Semua" />
+        <div className= "grid gap-y-15 grid-cols-2">
+          <div>
+            <h2 className="heading2">Roadmap pekerjaan untuk kamu!</h2>
+            <p className="paragraph-regular">
+              Pelajari Berbagai Alur Keterampilan dan <br /> langkah Langkah
+              untuk Meningkatkan <br /> Keahlian kamu!
+            </p>
+            <ButtonPrimary buttonText="Lihat Semua" />
+          </div>
+
+          <div className="flex flex-row gap-6">
+            {jobsData.map((job) => (
+              <CardJob key={job.id} job={job} />
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div>
-        <CardJob />
-        <CardJob />
-        <CardJob />
-      </div>
-
-      <Footer></Footer>
+      {/* Geser list job -- belum bisa */}
+      {/* <div>
+        <button></button>
+      </div> */}
     </>
   );
 }

@@ -1,5 +1,4 @@
 import "../index.css";
-import Footer from "../components/Footer";
 
 function AboutPage() {
   return (
@@ -49,7 +48,7 @@ function AboutPage() {
         <div className="green text-center">
           <h2 className=" heading2">Kenalan dengan Anggota Tim Kami</h2><br/>
 
-          <div className="flex paragraph-small ">
+          <div className="flex paragraph-small justify-center">
             <div>
               <img
                 className="rounded-full"
@@ -88,7 +87,6 @@ function AboutPage() {
         </div>
       </div>
 
-      <Footer></Footer>
     </>
   );
 }
