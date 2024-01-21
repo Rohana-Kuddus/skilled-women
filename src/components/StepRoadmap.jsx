@@ -1,8 +1,18 @@
-// gabungan arrow dan langkah roadmap (mapping)
+import CardRoadmap from "./CardRoadmap";
 
-function StepRoadmap() {
-  return ( 
-    <div></div>
+function StepRoadmap({ data }) {
+  return (
+    // styling: buat roadmap step dan border garis2 mengelilingi roadmap
+    <div className="border-2 border-dashed border-[#4F6C6A] p-5">
+      <div>
+        {/* perlu bikin function map card roadmap diselingi arrow component */}
+        {data.map(v => (
+          <div key={v.id}>
+            <CardRoadmap roadmap={v}></CardRoadmap>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

@@ -25,7 +25,7 @@ div .navlink:not(.active):hover {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 884px) {
   .top-navbar,
   .navSmall {
     width: 100%;
