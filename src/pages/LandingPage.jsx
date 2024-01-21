@@ -6,8 +6,6 @@ import { useState } from "react";
 
 function LandingPage() {
 
-  const Industry = ['Kreatif','Agrikultur' , 'Bisnis', 'Teknologi'];
-
   const [jobsData, setJobsData] = useState([
     {
       "title": "Graphic Designer",
