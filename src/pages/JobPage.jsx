@@ -1,14 +1,29 @@
 import SearchLineIcon from "remixicon-react/SearchLineIcon"
-import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon"
 import ButtonRecommendation from "../components/ButtonRecommendation";
 import { useState } from "react";
 import CardJob from "../components/CardJob";
 
 function JobPage() {
-  const [open, setOpen] = useState(false);
-  const Industry = ['Kreatif','Agrikultur' , 'Bisnis', 'Teknologi'];
+  const Industry = [
+      {
+        "id": 1 ,
+        "name": "Kreatif"
+      },
+      {
+        "id": 2 ,
+        "name": "Agrikultur"
+      },
+      {
+        "id": 3 ,
+        "name": "Bisnis"
+      },
+      {
+        "id": 4 ,
+        "name": "Teknologi"
+      }
+  ];
 
-  const [jobs, setJobs] = useState([
+  const jobs = [
     {
       "title": "Graphic Designer",
       "image": "https://source.unsplash.com/tuned-on-macbook-CGpifH3FjOA",
@@ -51,7 +66,20 @@ function JobPage() {
       "description": "Hobi main game console & pesawat? Jadi pilot drone yuk! ",
       "id": "6"
     }
-  ]);
+  ]
+
+
+  //filter by search
+  const [searchTerm, setSearchTerm] = useState("")
+
+  //filter by industry
+  const [selected, setSelected] = useState([])
+
+  const filterHandler = (e) => {
+      //akan hit api pekerjaan sesuai industry id
+      const data = jobs.filter(val => val.industry === e.target.value)
+      setSelected(data)
+    }
 
   return ( 
     <div>
@@ -64,7 +92,10 @@ function JobPage() {
             {/* search bar */}
             <div className="pt-2 relative mx-auto green">
                 <input className="border-2 border-gray-300 paragraph-regular black bg-white h-10 px-5 pr-16 rounded-md text-sm w-72 focus:outline-none"
-                  type="search" name="search" placeholder="Cari Berdasarkan Pekerjaan"/>
+                  type="search" name="search" placeholder="Cari Berdasarkan Pekerjaan"
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                  }}/>
                 <button type="submit" className="absolute right-0 top-0 mt-4 mr-4">
                   <SearchLineIcon className="green"></SearchLineIcon>
                 </button>
@@ -73,28 +104,14 @@ function JobPage() {
             {/* dropdown industri */}
             <div className="relative pt-2 ">
 
-              <button onClick={() => setOpen(!open)} className="inline-flex justify-start px-4 py-2 w-40 paragraph-regular bg-white border border-gray-300 rounded-md shadow-sm">
-                <span className="mr-2 green">Pilih Industri</span>
-                <ArrowDownSLineIcon className="green"></ArrowDownSLineIcon>
-              </button>
-
-              {open && (
-                  <div className=" bg-white p-4 w-40 shadow-lg">
-                    <ul>
-                        <li className="p-2 paragraph-regular green cursor-pointer rounded-md hover:bg-green-800 hover:text-white">Semua</li>
-                      {
-                        Industry.map((industry) => (
-                          <li 
-                            onClick={() => setOpen(false)}
-                            className="p-2 paragraph-regular green cursor-pointer rounded-md hover:bg-green-800 hover:text-white" 
-                            key={industry}>
-                              {industry}
-                          </li>
-                        ))
-                      }
-                    </ul>
-                  </div>
-                )}
+            <select onChange={filterHandler} name="jobIndustry" className="inline-flex justify-start px-4 py-2 w-40 paragraph-regular bg-white border border-gray-300 rounded-md shadow-sm">
+              <option value="Pilih Industri">Pilih Industri</option>
+                {
+                  Industry.map((industry) => {
+                   return <option value={industry.name} key={industry.id}>{industry.name}</option>
+                  })
+                }
+              </select>
 
             </div>
           
@@ -109,12 +126,32 @@ function JobPage() {
       {/* section cards */}
       <section className="  px-7">
         <div className="container mt-10">
+          
           <div className="flex flex-wrap -mx-4 gap-4">
+            { 
             
-            {
-              jobs.map((job) => (
-                <CardJob job={job}></CardJob>
-              ))
+              selected.length > 0 ? 
+
+                selected.map((val) => (
+                  <CardJob job={val} key={val.id}></CardJob>
+                ))
+
+                : 
+                
+                jobs
+                .filter((val) => {
+                  if(searchTerm == "") {
+                    return val;
+                  } else if(val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return val;
+                  }
+                })
+                
+                .map((val) => (
+                  
+                  <CardJob job={val} key={val.id}></CardJob>
+                ))
+              
             }
           </div>
         </div>
