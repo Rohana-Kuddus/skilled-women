@@ -5,31 +5,52 @@ import CardJob from "../components/CardJob";
 import { useState } from "react";
 
 function LandingPage() {
+
+  const Industry = ['Kreatif','Agrikultur' , 'Bisnis', 'Teknologi'];
+
   const [jobsData, setJobsData] = useState([
     {
-      id: 1,
-      image: "https://unsplash.com/photos/tuned-on-macbook-CGpifH3FjOA",
-      industry: "Kreatif",
-      title: "Graphic Designer",
-      description: "Ciptakan kreasi desain art kamu secara digital!",
+      "title": "Graphic Designer",
+      "image": "https://source.unsplash.com/tuned-on-macbook-CGpifH3FjOA",
+      "industry": "Kreatif",
+      "description": "Ciptakan kreasi desain art kamu secara digital!",
+      "id": "1"
     },
     {
-      id: 2,
-      image: "https://unsplash.com/photos/text-s_AgJxMc4zk",
-      industry: "Agrikultur",
-      title: "Petani Hidroponik",
-      description:
-        "Cocok untuk kamu yang ingin membuka usaha tanaman hidroponik atau berkebun sendiri ~",
+      "title": "Petani Hidroponik",
+      "image": "https://source.unsplash.com/text-s_AgJxMc4zk",
+      "industry": "Agrikultur",
+      "description": "Cocok untuk kamu yang ingin membuka usaha tanaman hidroponik atau berkebun sendiri ~",
+      "id": "2"
     },
     {
-      id: 3,
-      image:
-        "https://unsplash.com/photos/person-holding-canon-dslr-camera-hfk6xOjQlFk",
-      industry: "Kreatif",
-      title: "Fotografer",
-      description:
-        "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
+      "title": "Fotografer",
+      "image": "https://source.unsplash.com/person-holding-canon-dslr-camera-hfk6xOjQlFk",
+      "industry": "Kreatif",
+      "description": "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
+      "id": "3"
     },
+    // {
+    //   "title": "Digital Marketing Consoultant",
+    //   "image": "https://source.unsplash.com/person-writing-on-white-paper-U33fHryBYBU",
+    //   "industry": "Bisnis",
+    //   "description": "Bantu konsultasi tim marketing kamu dengan menjadi digital marketing consoultant",
+    //   "id": "4"
+    // },
+    // {
+    //   "title": "Video Editor ",
+    //   "image": "https://source.unsplash.com/black-flat-screen-tv-turned-on-displaying-game-B4f_Kx5jvpg",
+    //   "industry": "Kreatif",
+    //   "description": "Jago ngedit video? Jadi Video editor aja!",
+    //   "id": "5"
+    // },
+    // {
+    //   "title": "Pilot Drone",
+    //   "image": "https://source.unsplash.com/brown-and-black-wooden-table-U9vKDttdNLA",
+    //   "industry": "Teknologi",
+    //   "description": "Hobi main game console & pesawat? Jadi pilot drone yuk! ",
+    //   "id": "6"
+    // }
   ]);
 
   return (
