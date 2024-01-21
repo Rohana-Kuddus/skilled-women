@@ -17,7 +17,7 @@ function SidebarClass({ data, setIsOpen }) {
 
       <div>
         <div>
-          <h3 className="heading3 green">{data.name}</h3>
+          <h3 className="heading3 green font-bold">{data.name}</h3>
           <ButtonRecommendation name={'Kelas'} action={() => navigate('/recommendations')}></ButtonRecommendation>
         </div>
 

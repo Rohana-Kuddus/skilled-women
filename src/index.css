@@ -52,7 +52,6 @@ body {
 .heading3 {
   font-family: var(--heading-font);
   font-size: var(--h3-font-size);
-  font-weight: 700;
 }
 
 .paragraph-regular {
