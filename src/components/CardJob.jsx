@@ -6,13 +6,13 @@ function CardJob({ job }) {
 
   return (
     <div>
-      <div class="max-w-45 mx-auto">
+      <div className="max-w-45 mx-auto">
 
-        <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-80">
+        <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-80">
           <a href="#">
-            <img class="rounded-t-lg" src={job.image} alt="" />
+            <img className="rounded-t-lg" src={job.image} alt="" />
           </a>
-          <div class="p-5">
+          <div className="p-5">
             <p className="paragraph-regular black text-md">
               {job.industry}
             </p>

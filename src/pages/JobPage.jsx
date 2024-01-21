@@ -6,7 +6,7 @@ import CardJob from "../components/CardJob";
 
 function JobPage() {
   const [open, setOpen] = useState(false);
-  const Industry = ['Kreatif','Agrikultur' , 'Bisnis', 'Teknologi'];
+  const Industry = ['Semua', 'Kreatif','Agrikultur' , 'Bisnis', 'Teknologi'];
 
   const [jobs, setJobs] = useState([
     {
@@ -53,6 +53,9 @@ function JobPage() {
     }
   ]);
 
+  //filter by search
+  const [searchTerm, setSearchTerm] = useState("")
+
   return ( 
     <div>
 
@@ -64,7 +67,10 @@ function JobPage() {
             {/* search bar */}
             <div className="pt-2 relative mx-auto green">
                 <input className="border-2 border-gray-300 paragraph-regular black bg-white h-10 px-5 pr-16 rounded-md text-sm w-72 focus:outline-none"
-                  type="search" name="search" placeholder="Cari Berdasarkan Pekerjaan"/>
+                  type="search" name="search" placeholder="Cari Berdasarkan Pekerjaan"
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                  }}/>
                 <button type="submit" className="absolute right-0 top-0 mt-4 mr-4">
                   <SearchLineIcon className="green"></SearchLineIcon>
                 </button>
@@ -80,8 +86,8 @@ function JobPage() {
 
               {open && (
                   <div className=" bg-white p-4 w-40 shadow-lg">
-                    <ul>
-                        <li className="p-2 paragraph-regular green cursor-pointer rounded-md hover:bg-green-800 hover:text-white">Semua</li>
+                    <ul >
+                        {/* <li onClick={() => setOpen(false)} className="p-2 paragraph-regular green cursor-pointer rounded-md hover:bg-green-800 hover:text-white">Semua</li> */}
                       {
                         Industry.map((industry) => (
                           <li 
@@ -109,11 +115,21 @@ function JobPage() {
       {/* section cards */}
       <section className="  px-7">
         <div className="container mt-10">
+          
           <div className="flex flex-wrap -mx-4 gap-4">
             
             {
-              jobs.map((job) => (
-                <CardJob job={job}></CardJob>
+              jobs
+              .filter((val) => {
+                if(searchTerm == "") {
+                  return val;
+                } else if(val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  return val;
+                }
+              })
+              
+              .map((val) => (
+                <CardJob job={val} key={val.id}></CardJob>
               ))
             }
           </div>
