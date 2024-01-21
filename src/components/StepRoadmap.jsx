@@ -11,8 +11,8 @@ function StepRoadmap({ data }) {
       <div className="flex flex-wrap">
         {data.map((v, i)=> (
           <div className={flip ? 'flex flex-row-reverse' : 'flex'} key={v.id}>
-            {console.log(flip)}
             <CardRoadmap roadmap={v}></CardRoadmap>
+            
             {i !== 4 ? <Arrow flip={flip}></Arrow> : ''}
             {(i + 1) % 2 === 0 ? flip = false : flip = true}
           </div>
