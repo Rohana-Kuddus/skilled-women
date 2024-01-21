@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Arrow from "./Arrow";
 import CardRoadmap from "./CardRoadmap";
 
@@ -12,7 +11,6 @@ function StepRoadmap({ data }) {
         {data.map((v, i)=> (
           <div className={flip ? 'flex flex-row-reverse' : 'flex'} key={v.id}>
             <CardRoadmap roadmap={v}></CardRoadmap>
-            
             {i !== 4 ? <Arrow flip={flip}></Arrow> : ''}
             {(i + 1) % 2 === 0 ? flip = false : flip = true}
           </div>
