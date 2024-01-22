@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom"
+
 function LoginPage() {
   
   const navigate = useNavigate();
