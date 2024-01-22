@@ -4,6 +4,16 @@ import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
 import CardJob from "../components/CardJob";
 import { useState } from "react";
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+// import Swiper core and required modules
+import { Navigation, Pagination } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 function LandingPage() {
 
   const [jobsData, setJobsData] = useState([
@@ -28,13 +38,13 @@ function LandingPage() {
       "description": "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
       "id": "3"
     },
-    // {
-    //   "title": "Digital Marketing Consoultant",
-    //   "image": "https://source.unsplash.com/person-writing-on-white-paper-U33fHryBYBU",
-    //   "industry": "Bisnis",
-    //   "description": "Bantu konsultasi tim marketing kamu dengan menjadi digital marketing consoultant",
-    //   "id": "4"
-    // },
+    {
+      "title": "Digital Marketing Consoultant",
+      "image": "https://source.unsplash.com/person-writing-on-white-paper-U33fHryBYBU",
+      "industry": "Bisnis",
+      "description": "Bantu konsultasi tim marketing kamu dengan menjadi digital marketing consoultant",
+      "id": "4"
+    },
     // {
     //   "title": "Video Editor ",
     //   "image": "https://source.unsplash.com/black-flat-screen-tv-turned-on-displaying-game-B4f_Kx5jvpg",
@@ -197,18 +207,29 @@ function LandingPage() {
             <ButtonPrimary buttonText="Lihat Semua" />
           </div>
 
-          <div className="flex flex-row gap-6">
-            {jobsData.map((job) => (
-              <CardJob key={job.id} job={job} />
-            ))}
-          </div>
+          {/* job carousel */}
+            <div className='container'>
+              <Swiper
+                // install Swiper modules
+                modules={[Navigation, Pagination]}
+                spaceBetween={20}
+                slidesPerView={3}
+                navigation
+                pagination={{ clickable: true }}
+              >
+                {
+                  jobsData.map((val) => (
+                    <SwiperSlide key={val.id}>
+                      <CardJob job={val}></CardJob>
+                    </SwiperSlide>
+                    
+                  ))
+                }
+              </Swiper>
+            </div>
+
         </div>
       </div>
-
-      {/* Geser list job -- belum bisa */}
-      {/* <div>
-        <button></button>
-      </div> */}
     </>
   );
 }
