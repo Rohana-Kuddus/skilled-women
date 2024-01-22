@@ -84,6 +84,16 @@ function JobPage() {
   return ( 
     <div>
 
+      {/* hero section */}
+      <section>
+        <div className="container">
+          <div className="flex justify-end">
+            <p className="heading1 black text-center">Pilihlah Pekerjaan Yang <br /> Kamu Minati!</p>
+            <img className=" max-w-72" src="https://imgur.com/dEyAXJg.png" alt="" />
+          </div>
+        </div>
+      </section>
+
       {/* section filter */}
       <section className=" px-7">
         <div className="flex flex-row justify-between">
