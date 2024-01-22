@@ -1,8 +1,15 @@
 import { useState } from "react";
 import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
-
+import { useNavigate } from "react-router-dom"
 function LoginPage() {
+  
+  const navigate = useNavigate();
+
+  const toRegister = () => {
+    navigate("/register");
+  };
+
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -62,8 +69,8 @@ function LoginPage() {
           <div className="text-center">
             <ButtonPrimary buttonText="Log in" onClick={login} />
             <p className="label-form">
-              Belum punya akun?
-              <span className="underline">Daftar sekarang</span>
+              Belum punya akun?&ensp;
+              <span className="underline cursor-pointer" onClick={toRegister}>Daftar sekarang</span>
             </p>
           </div>
         </div>

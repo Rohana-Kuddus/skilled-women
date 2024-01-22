@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState  } from "react";
+// import { useEffect } from "react";
 import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
-import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
+import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
-  const [open, setOpen] = useState(false);
-  const Gender = ["Perempuan", "Laki-laki"];
+  // Pindah ke page login ketika "login" di klik
+  const navigate = useNavigate();
+  const toLogin = () => {
+    navigate("/login");
+  };
 
   const [register, setRegister] = useState({
     username: "",
@@ -15,17 +19,20 @@ function RegisterPage() {
     city: "",
   });
 
-  const [dataCity, setDataCity] = useState([]);
+  // ambil data kota di api, tapi belum benar kodenya
 
-  useEffect(() => {
-    const apiCity = "";
+  // const [dataCity, setDataCity] = useState([]);
 
-    fetch(apiCity)
-      .then((response) => response.json())
-      .then((data) => setDataCity(data))
-      .catch((error) => console.log("Kota tidak ditemukan", error));
-  }, []);
+  // useEffect(() => {
+  //   const apiCity = "";
 
+  //   fetch(apiCity)
+  //     .then((response) => response.json())
+  //     .then((data) => setDataCity(data))
+  //     .catch((error) => console.log("Kota tidak ditemukan", error));
+  // }, []);
+
+  // Input login form
   const handleInput = (event) => {
     setRegister({
       ...register,
@@ -53,7 +60,7 @@ function RegisterPage() {
           <img src="https://imgur.com/dEyAXJg.png"></img>
         </div>
 
-        <div className="text-center grid grid-cols-2 gap-6">
+        <div className="flex justify-center gap-6">
           <div>
             <p className="label-form ">Username</p>
             <input
@@ -65,41 +72,20 @@ function RegisterPage() {
               onChange={handleInput}
             ></input>
 
-            <p className="label-form ">Jenis Kelamin</p>
-
-            <div className="relative pt-2 ">
-              <button
-                onClick={() => setOpen(!open)}
-                className="flex items-center paragraph-regular input-text shadow-sm"
-                id="gender"
-                name="gender"
-                value={register.gender}
-                onChange={handleInput}
-                required
-              >
-                <span className="mr-2 green">Pilih Jenis Kelamin</span>
-                <ArrowDownSLineIcon className="green"></ArrowDownSLineIcon>
-              </button>
-
-              {open && (
-                <div className=" bg-white p-4 w-96 shadow-lg">
-                  <ul>
-                    <li className="p-2 paragraph-regular green cursor-pointer rounded-md hover:bg-green-800 hover:text-white">
-                      Semua
-                    </li>
-                    {Gender.map((gender) => (
-                      <li
-                        onClick={() => setOpen(false)}
-                        className="p-2 paragraph-regular green cursor-pointer rounded-md hover:bg-green-800 hover:text-white"
-                        key={gender}
-                      >
-                        {gender}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            <p className="label-form ">Gender</p>
+            <select
+              className="input-text "
+              id="gender"
+              name="gender"
+              value={register.gender}
+              onChange={handleInput}
+              required
+            >
+              <option className="hover:bg-green-800" value="perempuan">
+                Perempuan
+              </option>
+              <option value="laki-laki">Laki-laki</option>
+            </select>
 
             <p className="label-form ">City</p>
             <select
@@ -114,11 +100,11 @@ function RegisterPage() {
               <option value="" disabled>
                 Pilih Kota
               </option>
-              {dataCity.map((option) => (
+              {/* {dataCity.map((option) => (
                 <option key={option.id} value={option.value}>
                   {option.label}
                 </option>
-              ))}
+              ))} */}
             </select>
           </div>
 
@@ -142,15 +128,16 @@ function RegisterPage() {
               value={register.password}
               onChange={handleInput}
             ></input>
-
-            {/* dropdown industri */}
           </div>
         </div>
       </div>
 
       <div className="text-center">
         <p className="label-form ">
-          Sudah punya akun?&emsp;<span className="underline">Log in</span>
+          Sudah punya akun?&ensp;
+          <span className="underline cursor-pointer" onClick={toLogin}>
+            Log in
+          </span>
         </p>
 
         <ButtonPrimary buttonText="Daftar Sekarang" onClick={regist} />
