@@ -2,13 +2,12 @@ import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 
 function UserPasswordPage() {
-  const passwordRef = useRef();
   const dispatch = useDispatch();
   const { status } = useSelector(state => state.alert);
 
@@ -17,7 +16,7 @@ function UserPasswordPage() {
     text: 'Kata sandi Anda berhasil diubah!',
     button: {
       primary: 'Tutup',
-      primaryAction: () => dispatch(setStatus(false)) // akan buat function hit api ubah password
+      primaryAction: () => dispatch(setStatus(false))
     }
   };
 
@@ -73,8 +72,6 @@ function UserPasswordPage() {
       ...prev,
       [name]: value
     }));
-
-    validateInput(event);
   };
 
   const validateInput = () => {
@@ -117,7 +114,8 @@ function UserPasswordPage() {
 
   // submit input
   const buttonHandler = () => {
-    if (error.password && error.confirmPassword && !input.password && !input.confirmPassword) {
+    if (error.password === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
+      // akan buat function hit api ubah password
       dispatch(setStatus(true));
     };
   };
@@ -132,7 +130,7 @@ function UserPasswordPage() {
       </div>
 
       <div>
-        <form action="" ref={passwordRef}>
+        <form action="">
           <label htmlFor="password" className="label-form">Kata Sandi Baru</label>
           <input type={passwordType.password} id="password" className="input-text" name="password" value={input.password} 
             onChange={onInputChange} onBlur={validateInput} autoFocus />
@@ -140,7 +138,7 @@ function UserPasswordPage() {
             {passwordType.password === 'password' ? <EyeOffLineIcon className="green" name="password"></EyeOffLineIcon>
               : <EyeLineIcon className="green" name="password"></EyeLineIcon>}
           </span>
-          {error.password && <p className="paragraph-regular dark">{error.password}</p>}
+          {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
 
           <label htmlFor="confirmPassword" className="label-form">Konfirmasi Kata Sandi</label>
           <input type={passwordType.confirmPassword} id="confirmPassword" className="input-text" name="confirmPassword" 
@@ -149,7 +147,7 @@ function UserPasswordPage() {
             {passwordType.confirmPassword === 'password' ? <EyeOffLineIcon className="green" name="confirmPassword"></EyeOffLineIcon>
               : <EyeLineIcon className="green" name="confirmPassword"></EyeLineIcon>}
           </span>
-          {error.confirmPassword && <p className="paragraph-regular dark">{error.confirmPassword}</p>}
+          {error.confirmPassword && <p className="paragraph-regular text-[#FE0101]">{error.confirmPassword}</p>}
         </form>
 
         <div>
