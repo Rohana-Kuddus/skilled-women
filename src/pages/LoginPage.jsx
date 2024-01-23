@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom"
 
 function LoginPage() {
   
+  // akan ke page register jika tulisan "daftar sekarang" di klik 
   const navigate = useNavigate();
-
   const toRegister = () => {
     navigate("/register");
   };
 
+  // input form
   const [user, setUser] = useState({
     username: "",
     password: "",
