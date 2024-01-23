@@ -2,6 +2,10 @@ import SearchLineIcon from "remixicon-react/SearchLineIcon"
 import ButtonRecommendation from "../components/ButtonRecommendation";
 import { useState } from "react";
 import CardJob from "../components/CardJob";
+import { setStatus } from "../redux/slices/alertSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Alert from "../components/Alert";
+import { useNavigate } from "react-router-dom";
 
 function JobPage() {
   const Industry = [
@@ -80,8 +84,54 @@ function JobPage() {
     setSelected(data)
   }
 
-  return (
+  //if user not login set alert
+  //akan cek dari api
+  const [isRegistered, setRegistered] = useState(false);
+  // alert
+  const dispatch = useDispatch();
+  const { status } = useSelector(state => state.alert);
+  const navigate = useNavigate();
+
+  const alert = {
+    status: false,
+    text: 'Silahkan login atau daftar akun terlebih dahulu',
+    button: {
+      primary: 'Login',
+      primaryAction: () => {
+        //ke page login
+        navigate('/login');
+        dispatch(setStatus(false));
+      },
+      secondary: 'Daftar sekarang',
+      secondaryAction: () => {
+        //ke page register
+        navigate('/register');
+        // dispatch(setStatus(false));
+      }
+    }
+  }
+
+  //click button recomendation
+  const buttonHandler = () => {
+    dispatch(setStatus(true));
+  }
+  
+
+  return ( 
     <div>
+      <div>
+      {status && <Alert status={alert.status} text={alert.text} button={alert.button} closeBtn></Alert>}
+      </div>
+      {/* hero section */}
+      <section>
+        <div className="container">
+          <div className="flex justify-end">
+            <p className="heading1 black text-center">Pilihlah Pekerjaan Yang <br /> Kamu Minati!</p>
+            <img className=" max-w-72" src="https://imgur.com/dEyAXJg.png" alt="" />
+          </div>
+        </div>
+      </section>
+
       {/* section filter */}
       <section className=" px-7">
         <div className="flex flex-row justify-between">
@@ -112,9 +162,12 @@ function JobPage() {
           </div>
 
           <div className="basis-1/4 pt-2 ">
-            <ButtonRecommendation name={'Pekerjaan'}></ButtonRecommendation>
-          </div>
-        </div>
+            <ButtonRecommendation name={'Pekerjaan'}  action={isRegistered ? () => window.open('url', '_blank', 'noreferrer') : buttonHandler}></ButtonRecommendation>
+          </div> 
+
+          
+          
+        </div> 
       </section>
 
       {/* section cards */}
