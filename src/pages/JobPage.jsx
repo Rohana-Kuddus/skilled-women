@@ -2,6 +2,10 @@ import SearchLineIcon from "remixicon-react/SearchLineIcon"
 import ButtonRecommendation from "../components/ButtonRecommendation";
 import { useState } from "react";
 import CardJob from "../components/CardJob";
+import { setStatus } from "../redux/slices/alertSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Alert from "../components/Alert";
+import { useNavigate } from "react-router-dom";
 
 function JobPage() {
   const Industry = [
@@ -81,9 +85,44 @@ function JobPage() {
       setSelected(data)
     }
 
+  //if user not login set alert
+  //akan cek dari api
+  const [isRegistered, setRegistered] = useState(false);
+  // alert
+  const dispatch = useDispatch();
+  const { status } = useSelector(state => state.alert);
+  const navigate = useNavigate();
+
+  const alert = {
+    status: false,
+    text: 'Silahkan login atau daftar akun terlebih dahulu',
+    button: {
+      primary: 'Login',
+      primaryAction: () => {
+        //ke page login
+        navigate('/login');
+        dispatch(setStatus(false));
+      },
+      secondary: 'Daftar sekarang',
+      secondaryAction: () => {
+        //ke page register
+        navigate('/register');
+        // dispatch(setStatus(false));
+      }
+    }
+  }
+
+  //click button recomendation
+  const buttonHandler = () => {
+    dispatch(setStatus(true));
+  }
+  
+
   return ( 
     <div>
-
+      <div>
+      {status && <Alert status={alert.status} text={alert.text} button={alert.button} closeBtn></Alert>}
+      </div>
       {/* hero section */}
       <section>
         <div className="container">
@@ -128,8 +167,11 @@ function JobPage() {
           </div>
 
           <div className="basis-1/4 pt-2 ">
-            <ButtonRecommendation name={'Pekerjaan'}></ButtonRecommendation>
-          </div>
+            <ButtonRecommendation name={'Pekerjaan'}  action={isRegistered ? () => window.open('url', '_blank', 'noreferrer') : buttonHandler}></ButtonRecommendation>
+          </div> 
+
+          
+          
         </div> 
       </section>
       
