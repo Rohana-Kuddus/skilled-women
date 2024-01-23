@@ -4,7 +4,6 @@ import CloseLineIcon from "remixicon-react/CloseLineIcon"
 import PropTypes from "prop-types"
 import ButtonPrimary from "./ButtonPrimary"
 import ButtonSecondary from "./ButtonSecondary"
-import ReactHtmlParser from "react-html-parser"
 import { useDispatch } from "react-redux"
 import { setStatus } from "../redux/slices/alertSlice"
 
@@ -17,7 +16,7 @@ function Alert({ status, text, button, closeBtn }) {
 
       <div>
         {status ? <CheckLineIcon color="green"></CheckLineIcon> : <ErrorWarningLineIcon color="red"></ErrorWarningLineIcon>}
-        <p className="paragraph-regular green">{ReactHtmlParser(text)}</p>
+        <p className="paragraph-regular green" dangerouslySetInnerHTML={{ __html: text }}></p>
 
         <div>
           {button.primary ? <ButtonPrimary buttonText={button.primary} onClick={button.primaryAction}></ButtonPrimary> : ''}
