@@ -39,12 +39,10 @@ function UserPasswordPage() {
   });
   
   // handler change visibiity
-  const visibilityHandler = () => {
-    event.preventDefault();
-    const name = event.target.getAttribute('name');
+  const visibilityHandler = (e) => {
+    const name = e.currentTarget.getAttribute('name');
     
     let value;
-    
     switch (name) {
       case 'password':
         passwordType.password === 'password' ? value = 'text' : value = 'password';
@@ -65,8 +63,8 @@ function UserPasswordPage() {
     }));
   };
 
-  const onInputChange = () => {
-    const { name, value } = event.target;
+  const onInputChange = (e) => {
+    const { name, value } = e.target;
     
     setInput(prev => ({
       ...prev,
@@ -74,8 +72,8 @@ function UserPasswordPage() {
     }));
   };
 
-  const validateInput = () => {
-    const { name, value } = event.target;
+  const validateInput = (e) => {
+    const { name, value } = e.target;
 
     setError(prev => {
       const stateObj = { ...prev, [name]: '' };
@@ -131,21 +129,21 @@ function UserPasswordPage() {
 
       <div>
         <form action="">
-          <label htmlFor="password" className="label-form">Kata Sandi Baru</label>
+          <label htmlFor="password" className="label-form">Kata sandi baru</label>
           <input type={passwordType.password} id="password" className="input-text" name="password" value={input.password} 
             onChange={onInputChange} onBlur={validateInput} autoFocus />
-          <span className="eye-icon" onClick={visibilityHandler}>
-            {passwordType.password === 'password' ? <EyeOffLineIcon className="green" name="password"></EyeOffLineIcon>
-              : <EyeLineIcon className="green" name="password"></EyeLineIcon>}
+          <span name="password" onClick={visibilityHandler}>
+            {passwordType.password === 'password' ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
+              : <EyeLineIcon className="green"></EyeLineIcon>}
           </span>
           {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
 
-          <label htmlFor="confirmPassword" className="label-form">Konfirmasi Kata Sandi</label>
+          <label htmlFor="confirmPassword" className="label-form">Konfirmasi kata sandi</label>
           <input type={passwordType.confirmPassword} id="confirmPassword" className="input-text" name="confirmPassword" 
             value={input.confirmPassword} onChange={onInputChange} onBlur={validateInput} />
-          <span className="eye-icon" onClick={visibilityHandler}>
-            {passwordType.confirmPassword === 'password' ? <EyeOffLineIcon className="green" name="confirmPassword"></EyeOffLineIcon>
-              : <EyeLineIcon className="green" name="confirmPassword"></EyeLineIcon>}
+          <span name="confirmPassword" onClick={visibilityHandler}>
+            {passwordType.confirmPassword === 'password' ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
+              : <EyeLineIcon className="green"></EyeLineIcon>}
           </span>
           {error.confirmPassword && <p className="paragraph-regular text-[#FE0101]">{error.confirmPassword}</p>}
         </form>
