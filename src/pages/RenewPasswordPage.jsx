@@ -35,9 +35,8 @@ function RenewPasswordPage() {
   });
 
   // handler change visibiity
-  const visibilityHandler = () => {
-    event.preventDefault();
-    const name = event.target.getAttribute('name');
+  const visibilityHandler = (e) => {
+    const name = e.currentTarget.getAttribute('name');
 
     let value;
     switch (name) {
@@ -60,8 +59,8 @@ function RenewPasswordPage() {
     }));
   };
 
-  const inputHandler = () => {
-    const { name, value } = event.target;
+  const inputHandler = (e) => {
+    const { name, value } = e.target;
 
     setInput(prev => ({
       ...prev,
@@ -70,8 +69,8 @@ function RenewPasswordPage() {
   };
 
   // error handling
-  const validateInput = () => {
-    const { name, value } = event.target;
+  const validateInput = (e) => {
+    const { name, value } = e.target;
 
     setError(prev => {
       const stateObj = { ...prev, [name]: '' };
@@ -125,7 +124,7 @@ function RenewPasswordPage() {
 
       <div>
         <div>
-          <label className="label-form">Kata Sandi Baru</label>
+          <label className="label-form">Kata sandi baru</label>
           <input
             className="input-text"
             type={passwordType.newPassword}
@@ -136,15 +135,15 @@ function RenewPasswordPage() {
             onBlur={validateInput}
             autoFocus
           ></input>
-          <div id="newPassword" onClick={visibilityHandler}>
-            {passwordType.newPassword === "password" ? <EyeOffLineIcon className="green" name="newPassword"></EyeOffLineIcon>
-              : <EyeLineIcon className="green" name="newPassword"></EyeLineIcon>}
-          </div>
+          <span name="newPassword" onClick={visibilityHandler}>
+            {passwordType.newPassword === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
+              : <EyeLineIcon className="green"></EyeLineIcon>}
+          </span>
         </div>
         {error.newPassword && <p className="paragraph-regular text-[#FE0101]">{error.newPassword}</p>}
 
         <div>
-          <label className="label-form">Konfirmasi Kata Sandi</label>
+          <label className="label-form">Konfirmasi kata sandi</label>
           <input
             className="input-text"
             type={passwordType.confirmPassword}
@@ -154,10 +153,10 @@ function RenewPasswordPage() {
             onChange={inputHandler}
             onBlur={validateInput}
           ></input>
-          <div id="confirmPassword" onClick={visibilityHandler}>
-            {passwordType.confirmPassword === "password" ? <EyeOffLineIcon className="green" name="confirmPassword"></EyeOffLineIcon>
-              : <EyeLineIcon className="green" name="confirmPassword"></EyeLineIcon>}
-          </div>
+          <span name="confirmPassword" onClick={visibilityHandler}>
+            {passwordType.confirmPassword === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
+              : <EyeLineIcon className="green"></EyeLineIcon>}
+          </span>
         </div>
         {error.confirmPassword && <p className="paragraph-regular text-[#FE0101]">{error.confirmPassword}</p>}
 
