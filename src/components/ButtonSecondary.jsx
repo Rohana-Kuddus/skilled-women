@@ -6,7 +6,7 @@ function ButtonSecondary({ name, action }) {
   return (
     <>
       <button
-      className="paragraph-regular dark px-4 py-2 rounded-lg hover:bg-white"
+      className="paragraph-regular dark px-4 py-2 rounded-lg hover:bg-gray-100"
       style={{
         borderColor: "var(--primary-color)",
         borderWidth: "1px",
