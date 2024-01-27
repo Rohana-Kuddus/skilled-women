@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setStatus } from "../redux/slices/alertSlice"
 import MenuLineIcon from "remixicon-react/MenuLineIcon";
+import Alert from "./Alert";
 import "../styles/components/SidebarProfile.css";
 import "../index.css";
 
-function SidebarProfile({ id, action }) {
+function SidebarProfile({ id }) {
   const [isOpen, setOpen] = useState(window.innerWidth >= 768);
 
   // adjust open and close sidebar based on screen size
@@ -25,6 +28,27 @@ function SidebarProfile({ id, action }) {
   const handleBlur = () => {
     setOpen(false);
   };
+
+    // alert
+    // saat user click tombol yang ada komponen alert seharusnya yang ketrigger sesuai tombol yang di klik 
+    const dispatch = useDispatch();
+    const { status } = useSelector(state => state.alert);
+  
+    const alert = {
+      status: false,
+      text: 'Apakah Anda yakin ingin keluar?',
+      button: {
+        primary: 'Keluar',
+          primaryAction: () => dispatch(setStatus(false)),
+        secondary: 'Batal',
+          secondaryAction: () => dispatch(setStatus(false))
+      },
+    };
+
+  // ketika user klik tombol keluar, tampilan navbar seharusnya tidak langsung berubah, tunggu komponen alert
+    const handleLogout = () => {
+      dispatch(setStatus(true));
+   };
 
   return (
     <>
@@ -76,7 +100,7 @@ function SidebarProfile({ id, action }) {
               </div>
               <div className="border-t-2 border-gray-200"></div>
               <div className="my-5 mx-2 p-1 text-center hover:bg-red-200 active:bg-red-200 rounded-md">
-                <button onClick={action} className="text-red-500">
+                <button onClick={handleLogout} className="text-red-500">
                   Keluar
                 </button>
               </div>
@@ -84,6 +108,7 @@ function SidebarProfile({ id, action }) {
           </aside>
         )}
       </div>
+      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </>
   );
 }

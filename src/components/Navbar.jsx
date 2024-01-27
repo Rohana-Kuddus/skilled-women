@@ -43,9 +43,9 @@ function Navbar() {
 
   const alert = {
     status: false,
-    text: 'Apa kamu yakin ingin keluar?',
+    text: 'Apakah Anda yakin ingin keluar?',
     button: {
-      primary: 'keluar',
+      primary: 'Keluar',
         primaryAction: () => dispatch(setStatus(false)),
       secondary: 'Batal',
         secondaryAction: () => dispatch(setStatus(false))
