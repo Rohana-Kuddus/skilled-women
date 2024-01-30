@@ -12,6 +12,7 @@ function JobDetailPage() {
   const data = {
     id: 1,
     title: 'Petani Hidroponik',
+    image: '',
     description: 'ini deskripsi',
     percentage: '24%',
     percetageScope: 'IND',

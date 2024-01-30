@@ -13,32 +13,30 @@ import { setFooterAnchor } from "../redux/slices/footerSlice";
 function UserRecommendationPage() {
   const navigate = useNavigate();
   // dummy data
-  const classData = {
-    classes: [
-      {
-        id: 1,
-        image: "https://dummyimage.com/400x400/000/fff.jpg&text=Class+Image",
-        username: "janedoe3",
-        name: "Introduction to Graphic Design 1",
-        paid: true,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, culpa.",
-        link: "https://course.com/course",
-        rating: 4.5,
-      },
-      {
-        id: 2,
-        image: "https://dummyimage.com/400x400/000/fff.jpg&text=Class+Image",
-        username: "janedoe3",
-        name: "Introduction to Graphic Design 2",
-        paid: false,
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, culpa.",
-        link: "https://course.com/course",
-        rating: 4.3,
-      },
-    ],
-  };
+  const classData = [
+    {
+      id: 1,
+      image: "https://dummyimage.com/400x400/000/fff.jpg&text=Class+Image",
+      username: "janedoe3",
+      name: "Introduction to Graphic Design 1",
+      paid: true,
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, culpa.",
+      link: "https://course.com/course",
+      rating: 4.5,
+    },
+    {
+      id: 2,
+      image: "https://dummyimage.com/400x400/000/fff.jpg&text=Class+Image",
+      username: "janedoe3",
+      name: "Introduction to Graphic Design 2",
+      paid: false,
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque, culpa.",
+      link: "https://course.com/course",
+      rating: 4.3,
+    },
+  ];
 
     // reset footer's text + link
     const dispatch = useDispatch();
@@ -59,18 +57,18 @@ function UserRecommendationPage() {
         </div>
         {/* user's class recommendation (card) */}
         <div className="green mt-6 flex flex-col align-middle justify-center">
-              {classData.classes.map((i) => (
-                <div key={i.id} className="mb-2">
-                  <CardClass data={i} editBtn={false}></CardClass>
-                </div>
-              ))}
-            {/* button recommendation */}
-            <div>
-              <ButtonRecommendation
-                name="Kelas"
-                padding="px-4"
-                action={() => navigate("/recommendations")}
-              />
+          {classData.map((i) => (
+            <div key={i.id} className="mb-2">
+              <CardClass data={i} editBtn={true}></CardClass>
+            </div>
+          ))}
+          {/* button recommendation */}
+          <div>
+            <ButtonRecommendation
+              name="Kelas"
+              padding="px-4"
+              action={() => navigate("/recommendations")}
+            />
           </div>
         </div>
       </div>

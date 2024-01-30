@@ -4,16 +4,20 @@ import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import "../index.css";
-import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setStatus } from "../redux/slices/alertSlice";
 
 function UserProfilePage() {
+  const dispatch = useDispatch();
+  const { status } = useSelector(state => state.alert);
+
   const [input, setInput] = useState({
     // data dummy
     username: "Jane Doe",
     email: "jane@email.com",
     gender: "Perempuan",
-    city: "Jakarta",
+    city: "Jakarta"
   });
 
   // change profile picture
@@ -57,8 +61,8 @@ function UserProfilePage() {
         const text = item.textContent.toLowerCase();
 
         searchCity === "" ||
-        text.includes(searchCity.toLowerCase()) ||
-        searchCity.toLowerCase().includes(text)
+          text.includes(searchCity.toLowerCase()) ||
+          searchCity.toLowerCase().includes(text)
           ? (item.style.display = "block")
           : (item.style.display = "none");
       });
@@ -82,6 +86,24 @@ function UserProfilePage() {
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
   }, []);
+  
+  const alert = {
+    status: true,
+    text: 'Rekomendasi berhasil disimpan',
+    button: {
+      primary: 'Tutup',
+      primaryAction: () => dispatch(setStatus(false))
+    }
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    
+    // hit api update profile
+    console.log({ message: 'success update input', data: { ...input } });
+
+    dispatch(setStatus(true));
+  };
 
   return (
     <>
@@ -288,7 +310,7 @@ function UserProfilePage() {
                 </div>
                 {/* button */}
                 <div>
-                  <ButtonPrimary onClick={""}>Simpan Profile</ButtonPrimary>
+                  <ButtonPrimary buttonText="Simpan Profile" onClick={submitHandler} submit={true}></ButtonPrimary>
                 </div>
               </form>
             </div>
