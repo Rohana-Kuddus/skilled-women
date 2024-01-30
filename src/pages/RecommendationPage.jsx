@@ -225,7 +225,7 @@ function RecommendationPage() {
           <ul>
             {search !== '' && searchedJob.map(v => (
               <li key={v.id} value={v.id} onClick={(e) => {
-                setInput(prev => ({ ...prev, job: v.title }));
+                setInput(prev => ({ ...prev, job: v.id }));
                 setSearch(v.title);
                 e.target.setAttribute('class', 'hidden');
                 // akan ditambah hit api untuk ambil roadmap berdasar pekerjaan
