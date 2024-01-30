@@ -11,12 +11,6 @@ div .navlink:not(.active):hover {
   background-color: var(--primary-color);
 }
 
-/* USER PROFILE */
-.user-profile {
-  width: 4rem;
-  height: auto;
-}
-
 /* MEDIA */
 @media (min-width: 1024px) {
   .top-navbar {
@@ -31,12 +25,19 @@ div .navlink:not(.active):hover {
     width: 100%;
     margin-inline: 0;
   }
+
+  .user-profile{
+    margin-left: 0.5rem;
+    margin-bottom: 1rem;
+  }
 }
 
 @media (max-width: 425px) {
+  .logo{
+    width: 10rem;
+  }
   div > .navlink {
     margin-inline: 0;
-    text-align: center;
   }
 
   .userNav {

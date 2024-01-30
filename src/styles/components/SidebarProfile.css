@@ -1,0 +1,15 @@
+@import url(/src/index.css);
+
+/* MEDIA */
+@media (min-width: 320px) and (max-width: 430px) {
+  .side-toggle {
+    position: relative;
+    z-index: 1!important;
+  }
+  .aside {
+    left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    position: absolute!important;
+  }
+}
