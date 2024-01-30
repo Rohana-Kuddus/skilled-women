@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import SidebarProfile from "../components/SidebarProfile";
 import CardClass from "../components/CardClass";
@@ -7,6 +7,8 @@ import ButtonRecommendation from "../components/ButtonRecommendation";
 import { useNavigate } from "react-router-dom";
 
 import "../index.css";
+import { useDispatch } from "react-redux";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function UserRecommendationPage() {
   const navigate = useNavigate();
@@ -35,6 +37,13 @@ function UserRecommendationPage() {
       rating: 4.3,
     },
   ];
+
+    // reset footer's text + link
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(setFooterAnchor("", ""));
+    }, []);
 
   return (
     <>

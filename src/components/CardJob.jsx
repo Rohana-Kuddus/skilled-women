@@ -1,34 +1,33 @@
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "./ButtonPrimary";
+import "../styles/components/CardJob.css"
 
 function CardJob({ job }) {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <div className="max-w-45 mx-auto">
-
-        <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-80">
-          <a href="#">
-            <img className="rounded-t-lg" src={job.image} alt="" />
-          </a>
-          <div className="p-5">
-            <p className="paragraph-regular black text-md">
-              {job.industry}
-            </p>
-            <p className="heading2 black font-bold text-md">
-              {job.title}
-            </p>
-            <p className="paragraph-regular green text-md max-w-60">
-              {job.description}
-            </p>
-
-            <ButtonPrimary buttonText="Lihat Detail" onClick={() => navigate(`/jobs/${job.id}`)}></ButtonPrimary>
+    <>
+      <div className="max-w-68 mx-auto">
+        <div className="shadow-md border-2 border-gray-200 rounded-3xl max-w-80">
+          <img
+            className="card-img rounded-t-3xl w-full h-48 object-cover"
+            src={job.image}
+          />
+          <div className="flex flex-col justify-between p-5 h-72">
+            <div>
+              <p className="paragraph-regular black">{job.industry}</p>
+              <p className="heading2 black font-bold text-balance">{job.title}</p>
+              <p className="paragraph-regular green text-left desc">
+                {job.description}
+              </p>
+            </div>
+            <div className="flex flex-col items-center">
+              <ButtonPrimary buttonText="Lihat Detail" onClick={() => navigate(`/jobs/${job.id}`)} padding="px-16 lg:px-24" className="primaryBtn"></ButtonPrimary>
+            </div>
           </div>
         </div>
       </div>
-
-    </div>
+    </>
   );
 }
 

@@ -1,6 +1,14 @@
+import { useDispatch } from "react-redux";
 import "../index.css";
+import { useEffect } from "react";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function AboutPage() {
+  // reset footer's text + link
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
   return (
     <>
       <div className="bg-[#4F6C6A] text-[#FFF] text-center p-10">

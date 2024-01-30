@@ -2,10 +2,11 @@ import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function UserPasswordPage() {
   const dispatch = useDispatch();
@@ -117,6 +118,11 @@ function UserPasswordPage() {
       dispatch(setStatus(true));
     };
   };
+
+    // reset footer's text + link
+    useEffect(() => {
+      dispatch(setFooterAnchor("", ""));
+    }, []);
 
   return (
     <div>

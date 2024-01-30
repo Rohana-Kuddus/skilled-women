@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import  ArrowRightSLineIcon  from 'remixicon-react/ArrowRightSLineIcon';
 import "../index.css";
+import { useDispatch } from "react-redux";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function FaqPage() {
+  // reset footer's text + link
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
   return (
     <>
       <div class="flex flex-col align-center">

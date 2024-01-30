@@ -10,8 +10,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { setStatus } from "../redux/slices/alertSlice"
 import { useState } from "react"
 import PropTypes from "prop-types"
+import "../styles/components/CardClass.css"
 
-function CardClass({ data, editBtn = false }) {
+function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth = "w-32", imgHeight ="h-auto" }) {
   const navigate = useNavigate();
   const [active, setActive] = useState('none');
 
@@ -63,22 +64,22 @@ function CardClass({ data, editBtn = false }) {
 
   return (
     <div>
-      <div>
+      <div className="container flex flex-row gap-4 items-center border-2 rounded-md mb-4 w-full">
         {/* default icon untuk kelas tanpa image */}
-        <img src={data.image ? data.image : 'https://cdn-icons-png.flaticon.com/128/9257/9257182.png'} alt="kelas" />
+        <img src={data.image ? data.image : 'https://cdn-icons-png.flaticon.com/128/9257/9257182.png'} alt="kelas" className={`${imgScale} ${imgWidth} ${imgHeight} rounded-s-md`}/>
 
-        <div>
+        <div className="card flex flex-col mr-4">
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
           <p className="paragraph-regular dark">{data.title}</p>
           <div>
-            <div className="dot"></div>
             <p className="paragraph-small dark">{data.paid ? 'Berbayar' : 'Gratis'}</p>
           </div>
           <p className="paragraph-small dark">{data.description}</p>
 
-          <div>
+          {/* buttons */}
+          <div className="card-content flex flex-row justify-between items-center gap-2">
             {/* akan ditambah error handling jika user klik sebelum login */}
-            <div>
+            <div className="grid grid-cols-3 gap-2">
               {/* hit api ketika di klik untuk tambah rating */}
               <div onClick={likeHandler}>
                 {active === 'none' || active !== 'like' ? 
@@ -93,10 +94,11 @@ function CardClass({ data, editBtn = false }) {
 
             {!editBtn ?
               <ButtonPrimary buttonText={'Lihat Kelas'} onClick={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
-              : <div>
-                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations')}></ButtonPrimary>
-                <ButtonSecondary name={'Hapus'} action={() => dispatch(setStatus(true))}></ButtonSecondary>
-              </div>}
+              : <div className="flex flex-row items-center gap-2">
+                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations')} padding="px-8"></ButtonPrimary>
+                <ButtonSecondary name={'Hapus'} action={() => dispatch(setStatus(true))} padding="px-7" height="h-10"></ButtonSecondary>
+                </div>
+              }
           </div>
         </div>
       </div>
@@ -108,7 +110,10 @@ function CardClass({ data, editBtn = false }) {
 
 CardClass.propTypes = {
   data: PropTypes.object,
-  editBtn: PropTypes.bool
+  editBtn: PropTypes.bool,
+  imgWidth: PropTypes.string,
+  imgHeight: PropTypes.string,
+  imgScale: PropTypes.string,
 }
 
 export default CardClass;

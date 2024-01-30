@@ -1,11 +1,12 @@
 import SearchLineIcon from "remixicon-react/SearchLineIcon"
 import ButtonRecommendation from "../components/ButtonRecommendation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardJob from "../components/CardJob";
 import { setStatus } from "../redux/slices/alertSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../components/Alert";
 import { useNavigate } from "react-router-dom";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function JobPage() {
   const Industry = [
@@ -116,6 +117,10 @@ function JobPage() {
     dispatch(setStatus(true));
   }
   
+  // reset footer's text + link
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   return ( 
     <div>

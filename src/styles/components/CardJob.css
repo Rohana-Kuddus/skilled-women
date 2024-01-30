@@ -1,0 +1,10 @@
+@import url(/src/index.css);
+
+@media (max-width: 425px) {
+    .card-img{
+        @apply hidden h-full overflow-y-auto pt-4 pb-2;
+        
+    }
+
+    
+}

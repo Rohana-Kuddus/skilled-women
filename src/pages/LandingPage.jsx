@@ -2,7 +2,7 @@ import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
 import CardJob from "../components/CardJob";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,6 +13,8 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { useDispatch } from "react-redux";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
@@ -61,6 +63,13 @@ function LandingPage() {
     //   "id": "6"
     // }
   ]);
+
+  // reset footer's text + link
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   return (
     <>
