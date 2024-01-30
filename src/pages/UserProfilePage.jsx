@@ -4,6 +4,8 @@ import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import "../index.css";
+import { useDispatch } from "react-redux";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function UserProfilePage() {
   const [input, setInput] = useState({
@@ -25,6 +27,8 @@ function UserProfilePage() {
       profilePicture: e.target.files[0],
     }));
   };
+
+  // belum ada form validation
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -71,6 +75,13 @@ function UserProfilePage() {
       filterItems();
     }
   }, [isOpen]);
+
+  // reset footer's text + link
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   return (
     <>

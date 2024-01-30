@@ -1,3 +1,4 @@
+import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LandingPage from "./pages/LandingPage"
 import JobPage from "./pages/JobPage"
@@ -15,12 +16,11 @@ import RecommendationPage from "./pages/RecommendationPage"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 
-function App() {
+function App() {  
   return (
     <>
       <BrowserRouter>
         <Navbar></Navbar>
-
         <Routes>
           <Route path='/' element={<LandingPage></LandingPage>}></Route>
           <Route path='/about' element={<AboutPage></AboutPage>}></Route>

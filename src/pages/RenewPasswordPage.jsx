@@ -1,10 +1,11 @@
 import ButtonPrimary from "../components/ButtonPrimary"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon"
 import EyeLineIcon from "remixicon-react/EyeLineIcon"
 import { useDispatch, useSelector } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function RenewPasswordPage() {
   const dispatch = useDispatch();
@@ -114,6 +115,11 @@ function RenewPasswordPage() {
       dispatch(setStatus(true));
     };
   };
+
+  // reset footer's text + link
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   return (
     <div>

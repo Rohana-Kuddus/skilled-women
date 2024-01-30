@@ -1,7 +1,9 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function LoginPage() {
   
@@ -28,6 +30,13 @@ function LoginPage() {
     event.preventDefault();
     console.log(user);
   };
+
+  // set text and link for footer
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+     dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'))
+  }, []);
 
   return (
     <>

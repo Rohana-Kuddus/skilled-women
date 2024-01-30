@@ -2,11 +2,10 @@ import React from "react";
 import PropTypes from "prop-types"
 import "../index.css";
 
-function ButtonSecondary({ name, action }) {
+function ButtonSecondary({ name, action, padding = "px-2", height = "h-2" }) {
   return (
     <>
-      <button
-      className="paragraph-regular dark px-4 py-2 rounded-lg hover:bg-gray-100"
+      <button className={`paragraph-regular dark ${padding} ${height} rounded-lg hover:bg-gray-100`}
       style={{
         borderColor: "var(--primary-color)",
         borderWidth: "1px",
@@ -21,7 +20,9 @@ function ButtonSecondary({ name, action }) {
 
 ButtonSecondary.propTypes = {
   name: PropTypes.string,
-  action: PropTypes.func
+  action: PropTypes.func,
+  padding: PropTypes.string,
+  height: PropTypes.string,
 }
 
 export default ButtonSecondary;

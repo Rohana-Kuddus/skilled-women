@@ -3,7 +3,8 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import { useDispatch, useSelector } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function RecommendationPage() {
   const dispatch = useDispatch();
@@ -207,6 +208,11 @@ function RecommendationPage() {
 
     return true;
   };
+
+  // reset footer's text + link
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   return (
     <div>

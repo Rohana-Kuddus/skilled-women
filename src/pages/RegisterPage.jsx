@@ -1,8 +1,9 @@
-import { useState } from "react";
-// import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function RegisterPage() {
   // Pindah ke page login ketika "login" di klik
@@ -20,6 +21,13 @@ function RegisterPage() {
     city: "",
   });
 
+  // set text and link for footer
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/638b4253fce0330001fefd18'))
+    return () => {dispatch(setFooterAnchor('',''))}
+  }, []);
 
   // jika button daftar sekarang di klik saat form kosong, maka muncul validasi untuk tiap form
   const [validationsErrors, setValidationsErrors] = useState({});

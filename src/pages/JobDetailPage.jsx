@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Hero from "../components/Hero"
 import Introduction from "../components/Introduction"
 import Roadmap from "../components/Roadmap"
+import { useDispatch } from "react-redux";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function JobDetailPage() {
   const [isActive, setIsActive] = useState('intro');
@@ -43,6 +45,12 @@ function JobDetailPage() {
     },
     roadmapSummary: 'roadmap ini bertujuan untuk bla bla'
   };
+
+  // reset footer's text + link
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   return ( 
     <div>
