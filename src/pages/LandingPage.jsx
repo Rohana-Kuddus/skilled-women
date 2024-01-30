@@ -13,9 +13,10 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
-
+  const navigate = useNavigate();
   const [jobsData, setJobsData] = useState([
     {
       "title": "Graphic Designer",
@@ -204,7 +205,7 @@ function LandingPage() {
               Pelajari Berbagai Alur Keterampilan dan <br /> langkah Langkah
               untuk Meningkatkan <br /> Keahlian kamu!
             </p>
-            <ButtonPrimary buttonText="Lihat Semua" />
+            <ButtonPrimary buttonText="Lihat Semua" onClick={() => navigate('/jobs')} />
           </div>
 
           {/* job carousel */}
