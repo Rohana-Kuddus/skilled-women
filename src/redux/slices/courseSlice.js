@@ -24,7 +24,7 @@ export const getClassRoadmap = (jobId, roadmapId) => {
   return async (dispatch) => {
     const { data: { data } } = await axios({
       method: 'get',
-      url: `http://localhost:8000/jobs/${jobId}/roadmaps/${roadmapId}/classes`,
+      url: `https://skilled-women-be-production.up.railway.app/jobs/${jobId}/roadmaps/${roadmapId}/classes`,
       responseType: 'json'
     });
     
