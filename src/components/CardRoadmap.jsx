@@ -1,47 +1,17 @@
 import { useState } from "react"
 import SidebarClass from "./SidebarClass"
 
-function CardRoadmap({ roadmap }) {
+function CardRoadmap({ roadmap, job }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // data dummy kelas. dapet dari hit redux api kelas
-  const classData = [
-    {
-      id: 1,
-      username: 'userkeren',
-      title: 'Kelas seru dan asik',
-      paid: false,
-      description: 'ini deskirpsi yang asik',
-      rating: 24
-    },
-    {
-      id: 2,
-      username: 'userkeren',
-      title: 'Kelas seru dan asik',
-      paid: false,
-      description: 'ini deskirpsi yang asik',
-      rating: 24
-    },
-    {
-      id: 3,
-      username: 'userkeren',
-      title: 'Kelas seru dan asik',
-      paid: false,
-      description: 'ini deskirpsi yang asik',
-      rating: 24
-    }
-  ];
-
-  // olah data untuk dikirim ke sidebar class
-  const data = {
-    name: roadmap.name,
-    classes: classData
+  const sidebarHandler = () => {
+    setIsOpen(true);
   };
 
-  const sidebarHandler = () => {
-    // dispacth hit redux api ambil kelas sesuai roadmap id
-
-    setIsOpen(true);
+  const data = {
+    classId: job.id,
+    roadmapId: roadmap.id,
+    name: roadmap.name
   };
 
   return (
