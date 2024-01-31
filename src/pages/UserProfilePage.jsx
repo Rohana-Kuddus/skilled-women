@@ -5,12 +5,15 @@ import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import "../index.css";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   const [input, setInput] = useState({
     // data dummy
@@ -74,27 +77,12 @@ function UserProfilePage() {
     setSearchCity(event.target.value);
     filterItems();
   };
+
   useEffect(() => {
     if (isOpen !== "" && dropdownRef.current) {
       filterItems();
     }
   }, [isOpen]);
-
-  // reset footer's text + link
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
-  
-  const alert = {
-    status: true,
-    text: 'Rekomendasi berhasil disimpan',
-    button: {
-      primary: 'Tutup',
-      primaryAction: () => dispatch(setStatus(false))
-    }
-  };
 
   const submitHandler = (e) => {
     e.preventDefault();
