@@ -13,10 +13,10 @@ const jobSlice = createSlice({
       state.job = action.payload;
     },
     setRoadmap(state, action) {
-      state.roadmap = action.payload;
+      state.job = action.payload;
     },
     setJobDetail(state, action) {
-      state.jobDetail = action.payload;
+      state.job = action.payload;
     }
   }
 });
@@ -32,14 +32,20 @@ export const getJobList = (industry, search) => {
       responseType: 'json'
     });
        dispatch(setJob(data));
-        console.log(data);
   };
 };
 
-// url: `https://skilled-women-be-production.up.railway.app/jobs?industry=${industry}&search=${search}`,
-
-
-// function get job detail
+export const getJobDetail = (jobId) => {
+  return async (dispatch) => {
+    const { data: { data } } = await axios({
+      method: 'get',
+      url: `https://skilled-women-be-production.up.railway.app/jobs/${jobId}`,
+      responseType: 'json'
+    });
+    
+    dispatch(setJobDetail(data));
+  };
+};
 
 // function get roadmap by job
 
