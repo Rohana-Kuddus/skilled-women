@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const jobSlice = createSlice({
   name: 'job',
@@ -23,6 +24,20 @@ const jobSlice = createSlice({
 export const { setJob, setRoadmap, setJobDetail } = jobSlice.actions;
 
 // function get all job + filter search and industry
+export const getJobList = (industry, search) => {
+  return async (dispatch) => {
+    const { data: { data } } = await axios({
+      method: 'get',
+      url: `https://skilled-women-be-production.up.railway.app/jobs?industry=${industry}&search=${search}`,
+      responseType: 'json'
+    });
+       dispatch(setJob(data));
+        console.log(data);
+  };
+};
+
+// url: `https://skilled-women-be-production.up.railway.app/jobs?industry=${industry}&search=${search}`,
+
 
 // function get job detail
 
