@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
-
 import SidebarProfile from "../components/SidebarProfile";
 import CardClass from "../components/CardClass";
 import ButtonRecommendation from "../components/ButtonRecommendation";
-
 import { useNavigate } from "react-router-dom";
-
 import "../index.css";
 import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function UserRecommendationPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   // dummy data
   const classData = [
     {
@@ -38,12 +37,9 @@ function UserRecommendationPage() {
     },
   ];
 
-    // reset footer's text + link
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-      dispatch(setFooterAnchor("", ""));
-    }, []);
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   return (
     <>
@@ -66,8 +62,8 @@ function UserRecommendationPage() {
           <div>
             <ButtonRecommendation
               name="Kelas"
-              padding="px-4"
-              action={() => navigate("/recommendations")}
+              padding="px-40"
+              action={() => navigate('/recommendations')}
             />
           </div>
         </div>

@@ -5,10 +5,30 @@ import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { useEffect, useState } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { useLocation } from "react-router-dom";
+import { getClass } from "../redux/slices/courseSlice";
 
 function RecommendationPage() {
   const dispatch = useDispatch();
   const { status } = useSelector(state => state.alert);
+  const { courseDetail } = useSelector(state => state.course);
+
+  // check if user edit page or add new course
+  const location = useLocation();
+  if (location.state !== null) {
+    const { classId } = location.state;
+
+    // dummy token
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNjc0ODg0NX0.HDhf3ah9l5abgcoRIdF_G6yK8UVJ7_ddmFYuwVf88Qg';
+    useEffect(() => {
+      dispatch(getClass(token, classId));
+    }, [courseDetail]);
+    console.log(courseDetail);
+  };
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   const [search, setSearch] = useState('');
   const [select, setSelect] = useState([]);
@@ -208,11 +228,6 @@ function RecommendationPage() {
 
     return true;
   };
-
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
 
   return (
     <div>
