@@ -1,3 +1,5 @@
+// butuh integrasi add, edit, delete setelah integrasi job dan roadmap
+
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
