@@ -23,27 +23,27 @@ function RecommendationPage() {
     useEffect(() => {
       dispatch(getClass(token, classId));
     }, [courseDetail]);
-    console.log(courseDetail);
   };
 
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
   }, []);
 
-  const [search, setSearch] = useState('');
-  const [select, setSelect] = useState([]);
+  // input states
+  const [search, setSearch] = useState(Object.keys(courseDetail).length !== 0 ? courseDetail.job : '');
+  const [select, setSelect] = useState(Object.keys(courseDetail).length !== 0 ? courseDetail.roadmap : []);
   const [payment, setPayment] = useState({
     status: 'paid',
     paidChecked: true,
     freeChecked: false
   });
   const [input, setInput] = useState({
-    job: '',
-    roadmap: [],
-    name: '',
-    link: '',
-    status: true,
-    description: ''
+    job: courseDetail ? courseDetail.job : '',
+    roadmap: courseDetail ? courseDetail.roadmap : [],
+    name: courseDetail ? courseDetail.name : '',
+    link: courseDetail ? courseDetail.link : '',
+    status: courseDetail ? courseDetail.paid : true,
+    description: courseDetail ? courseDetail.description : ''
   });
   const [error, setError] = useState({
     job: '',
@@ -263,9 +263,10 @@ function RecommendationPage() {
               <option key={i} value={i}>{v.name}</option>
             ))}
           </select>
-          {select.map(id => (
-            <p key={id} className="paragraph-regular dark">
-              {roadmap[id].name}
+          {select.map((v, i) => (
+            <p key={i} className="paragraph-regular dark">
+              {v}
+              {/* {roadmap[id].name} */}
             </p>
           ))}
           {error.roadmap && <p className="paragraph-regular text-[#FE0101]">{error.roadmap}</p>}

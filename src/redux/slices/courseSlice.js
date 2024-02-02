@@ -37,6 +37,23 @@ export const getClassRoadmap = (jobId, roadmapId) => {
   };
 };
 
+// function get class by user
+export const getClassUser = (token) => {
+  return async (dispatch) => {
+    const { status, data: { data } } = await axios({
+      method: 'get',
+      url: 'https://skilled-women-be-production.up.railway.app/users/classes',
+      headers: {
+        'Authorization': token
+      },
+      responseType: 'json'
+    });
+    
+    dispatch(setStatusCode(status));
+    dispatch(setCourse(data));
+  };
+};
+
 // function get detail class
 export const getClass = (token, classId) => {
   return async (dispatch) => {
@@ -50,7 +67,7 @@ export const getClass = (token, classId) => {
     });
 
     dispatch(setStatusCode(status));
-    dispatch(setCourse(data));
+    dispatch(setCourseDetail(data));
   };
 };
 
