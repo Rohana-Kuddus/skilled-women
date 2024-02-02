@@ -36,7 +36,7 @@ function App() {
 
           <Route path='/profiles/:id' element={<UserProfilePage></UserProfilePage>}></Route>
           <Route path='/profiles/:id/password' element={<UserPasswordPage></UserPasswordPage>}></Route>
-          <Route path='/profiles/:id/recommendation' element={<UserRecommendationPage></UserRecommendationPage>}></Route>
+          <Route path='/profiles/:id/recommendations' element={<UserRecommendationPage></UserRecommendationPage>}></Route>
 
           <Route path='/recommendations' element={<RecommendationPage></RecommendationPage>}></Route>
         </Routes>
