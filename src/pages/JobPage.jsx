@@ -20,35 +20,15 @@ function JobPage() {
   const { job } = useSelector(state => state.job);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getJobList(industryTerm, searchTerm));
-  }, [job]);
-
   // update query params
-  // belum bisa ditambah kesamping param nya
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [industryParams, setIndustryParams] = useSearchParams();
+  // harus refresh dulu baru bisa jalan
+  const [searchParams, setSearchParams] = useSearchParams({ search: '', industry: '' });
+  const search = searchParams.get('search');
+  const industry = searchParams.get('industry');
 
-  const searchTerm = searchParams.get('search') || '';
-  const industryTerm = industryParams.get('industry') || '';
-
-  const handleInput = event => {
-    const search = event.target.value;
-      if (search) {
-        setSearchParams({ search });
-      } else {
-        setSearchParams({});
-      }
-  };
-
-  const handleDropDown = event => {
-    const industry = event.target.value;
-    if (industry) {
-      setIndustryParams({ industry, search });
-    } else {
-      setIndustryParams({});
-    }
-  }
+  useEffect(() => {
+    dispatch(getJobList(industry, search));
+  }, [job]);
 
   const Industry = [
     {
@@ -121,8 +101,12 @@ function JobPage() {
             <div className="pt-2 relative mx-auto green">
               <input className="border-2 border-gray-300 paragraph-regular black bg-white h-10 px-5 pr-16 rounded-md text-sm w-72 focus:outline-none"
                 type="search" name="search" placeholder="Cari Berdasarkan Pekerjaan"
-                value={searchTerm}
-                onChange={handleInput} />
+                value={search}
+                onChange={ e => setSearchParams(prev => {
+                    prev.set("search", e.target.value)
+                    return prev
+                  }, { replace: true }) 
+                } />
               <button type="submit" className="absolute right-0 top-0 mt-4 mr-4">
                 <SearchLineIcon className="green"></SearchLineIcon>
               </button>
@@ -130,7 +114,12 @@ function JobPage() {
 
             {/* dropdown industri */}
             <div className="relative pt-2 ">
-              <select onChange={handleDropDown} name="jobIndustry" className="inline-flex justify-start px-4 py-2 w-40 paragraph-regular bg-white border border-gray-300 rounded-md shadow-sm">
+              <select name="jobIndustry" className="inline-flex justify-start px-4 py-2 w-40 paragraph-regular bg-white border border-gray-300 rounded-md shadow-sm"
+                onChange={ e => setSearchParams(prev => {
+                  prev.set("industry", e.target.value)
+                  return prev
+                }, { replace: true }) } 
+              >
                 <option value="Pilih Industri">Pilih Industri</option>
                 {
                   Industry.map((industry) => {
