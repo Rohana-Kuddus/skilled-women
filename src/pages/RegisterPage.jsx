@@ -5,13 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 
+// import { useSelector } from "react-redux";
+// import { getCities } from "../redux/slices/citySlice";
+
+
 function RegisterPage() {
+
   // Pindah ke page login ketika "login" di klik
   const navigate = useNavigate();
   const toLogin = () => {
     navigate("/login");
   };
-
+  
   // input form
   const [register, setRegister] = useState({
     username: "",
@@ -86,18 +91,13 @@ function RegisterPage() {
     }
   };
 
-   // ambil data kota di api, tapi belum benar kodenya
+  // ambil data kota di api, tapi belum benar kodenya
 
-  // const [dataCity, setDataCity] = useState([]);
+  // const city = useSelector(store => store.city);
 
-  // useEffect(() => {
-  //   const apiCity = "";
-
-  //   fetch(apiCity)
-  //     .then((response) => response.json())
-  //     .then((data) => setDataCity(data))
-  //     .catch((error) => console.log("Kota tidak ditemukan", error));
-  // }, []);
+  // const handleGetCities = (id) => {
+  //   dispatch(getCities({ id }));
+  // }
 
   return (
     <>
@@ -158,6 +158,7 @@ function RegisterPage() {
                 name="city"
                 value={register.city}
                 onChange={handleInput}
+                
                 required
               >
                 <option value="" disabled>
@@ -166,10 +167,8 @@ function RegisterPage() {
 
                 {/* Ambil data dari API */}
 
-                {/* {dataCity.map((option) => (
-                <option key={option.id} value={option.value}>
-                  {option.label}
-                </option>
+                {/* {cities.map((city) => (
+                <option key={city.id} value={city.name}></option>
               ))} */}
               </select>
               {validationsErrors.city && (
