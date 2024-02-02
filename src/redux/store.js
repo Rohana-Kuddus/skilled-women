@@ -7,6 +7,7 @@ import city from "./slices/citySlice"
 import course from "./slices/courseSlice"
 import industry from "./slices/industrySlice"
 import user from "./slices/userSlice"
+import roadmap from "./slices/roadmapSlice"
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     course,
     industry,
     job,
-    user
+    user,
+    roadmap
   }
 });
 

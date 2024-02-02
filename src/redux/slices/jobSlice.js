@@ -4,15 +4,10 @@ import axios from "axios";
 const jobSlice = createSlice({
   name: 'job',
   initialState: {
-    job: [],
-    roadmap: [],
-    jobDetail: {}
+    job: []
   },
   reducers: {
     setJob(state, action) {
-      state.job = action.payload;
-    },
-    setRoadmap(state, action) {
       state.job = action.payload;
     },
     setJobDetail(state, action) {
@@ -21,7 +16,7 @@ const jobSlice = createSlice({
   }
 });
 
-export const { setJob, setRoadmap, setJobDetail } = jobSlice.actions;
+export const { setJob, setJobDetail } = jobSlice.actions;
 
 // function get all job + filter search and industry
 export const getJobList = (industry, search) => {
@@ -35,6 +30,7 @@ export const getJobList = (industry, search) => {
   };
 };
 
+// function get job detail
 export const getJobDetail = (jobId) => {
   return async (dispatch) => {
     const { data: { data } } = await axios({
@@ -46,7 +42,5 @@ export const getJobDetail = (jobId) => {
     dispatch(setJobDetail(data));
   };
 };
-
-// function get roadmap by job
 
 export default jobSlice.reducer;

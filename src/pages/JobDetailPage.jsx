@@ -14,13 +14,12 @@ function JobDetailPage() {
   const { job } = useSelector(state => state.job);
   const params = useParams();
   const id = params.id
-  // console.log(params.id);
 
   // ada masalah, kalau di refresh error 
   useEffect(() => {
     dispatch(getJobDetail(id))
   }, [])
-  console.log(job);
+  // console.log(job);
 
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
@@ -29,7 +28,7 @@ function JobDetailPage() {
   return ( 
     <div>
       {/* akan ditambah props data dari api */}
-      <Hero data={job}></Hero>
+      {/* <Hero data={job}></Hero> */}
 
       {/* tab */}
       <div>
@@ -39,7 +38,7 @@ function JobDetailPage() {
       </div>
 
       {/* akan ditambah props data dari redux api */}
-      {isActive === 'intro' && <Introduction data={job} setIsActive={setIsActive}></Introduction>}
+      {/* {isActive === 'intro' && <Introduction data={job} setIsActive={setIsActive}></Introduction>} */}
       {isActive === 'roadmap' && <Roadmap data={job}></Roadmap>}
     </div>
   );
