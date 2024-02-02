@@ -3,14 +3,15 @@ import Edit2LineIcon from "remixicon-react/Edit2LineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
-import "../index.css";
+import Alert from "../components/Alert"
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useDispatch } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
+import "../index.css";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
   }, []);
@@ -83,6 +84,17 @@ function UserProfilePage() {
       filterItems();
     }
   }, [isOpen]);
+  
+  // alert
+  const { status } = useSelector(state => state.alert);
+  const alert = {
+    status: true,
+    text: 'Profile berhasil disimpan',
+    button: {
+      primary: 'Tutup',
+      primaryAction: () => dispatch(setStatus(false))
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -305,6 +317,7 @@ function UserProfilePage() {
           </div>
         </div>
       </div>
+      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </>
   );
 }

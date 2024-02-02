@@ -17,8 +17,6 @@ const footerSlice = createSlice({
 export const { setFooter } = footerSlice.actions;
 
 // function
-
-// belum bisa reset state kalau keluar page
 export const setFooterAnchor = (text, link) => {
   const obj = { text, link };
   return setFooter(obj);

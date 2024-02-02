@@ -5,25 +5,45 @@ import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { useEffect, useState } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { useLocation } from "react-router-dom";
+import { getClass } from "../redux/slices/courseSlice";
 
 function RecommendationPage() {
   const dispatch = useDispatch();
   const { status } = useSelector(state => state.alert);
+  const { courseDetail } = useSelector(state => state.course);
 
-  const [search, setSearch] = useState('');
-  const [select, setSelect] = useState([]);
+  // check if user edit page or add new course
+  const location = useLocation();
+  if (location.state !== null) {
+    const { classId } = location.state;
+
+    // dummy token
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNjc0ODg0NX0.HDhf3ah9l5abgcoRIdF_G6yK8UVJ7_ddmFYuwVf88Qg';
+    useEffect(() => {
+      dispatch(getClass(token, classId));
+    }, [courseDetail]);
+  };
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
+
+  // input states
+  const [search, setSearch] = useState(Object.keys(courseDetail).length !== 0 ? courseDetail.job : '');
+  const [select, setSelect] = useState(Object.keys(courseDetail).length !== 0 ? courseDetail.roadmap : []);
   const [payment, setPayment] = useState({
     status: 'paid',
     paidChecked: true,
     freeChecked: false
   });
   const [input, setInput] = useState({
-    job: '',
-    roadmap: [],
-    name: '',
-    link: '',
-    status: true,
-    description: ''
+    job: courseDetail ? courseDetail.job : '',
+    roadmap: courseDetail ? courseDetail.roadmap : [],
+    name: courseDetail ? courseDetail.name : '',
+    link: courseDetail ? courseDetail.link : '',
+    status: courseDetail ? courseDetail.paid : true,
+    description: courseDetail ? courseDetail.description : ''
   });
   const [error, setError] = useState({
     job: '',
@@ -209,11 +229,6 @@ function RecommendationPage() {
     return true;
   };
 
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
-
   return (
     <div>
       <div>
@@ -248,9 +263,10 @@ function RecommendationPage() {
               <option key={i} value={i}>{v.name}</option>
             ))}
           </select>
-          {select.map(id => (
-            <p key={id} className="paragraph-regular dark">
-              {roadmap[id].name}
+          {select.map((v, i) => (
+            <p key={i} className="paragraph-regular dark">
+              {v}
+              {/* {roadmap[id].name} */}
             </p>
           ))}
           {error.roadmap && <p className="paragraph-regular text-[#FE0101]">{error.roadmap}</p>}

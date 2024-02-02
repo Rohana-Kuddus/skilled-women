@@ -93,7 +93,7 @@ function SidebarProfile({ id }) {
                   <Link to={`/profiles/${id}/password`}>Ganti Kata Sandi</Link>
                 </div>
                 <div className="my-1 p-1 w-full text-center hover:bg-gray-200 active:bg-gray-200 rounded-md">
-                  <Link to={`/profiles/${id}/recommendation`}>
+                  <Link to={`/profiles/${id}/recommendations`}>
                     Rekomendasi Saya
                   </Link>
                 </div>
