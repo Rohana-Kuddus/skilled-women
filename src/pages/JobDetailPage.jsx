@@ -4,9 +4,15 @@ import Introduction from "../components/Introduction"
 import Roadmap from "../components/Roadmap"
 import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { getClassRoadmap } from "../redux/slices/courseSlice";
 
 function JobDetailPage() {
   const [isActive, setIsActive] = useState('intro');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   // dummy data supaya ngga error & contoh bentuk data pengenalan
   const data = {
@@ -46,12 +52,6 @@ function JobDetailPage() {
     },
     roadmapSummary: 'roadmap ini bertujuan untuk bla bla'
   };
-
-  // reset footer's text + link
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
 
   return ( 
     <div>

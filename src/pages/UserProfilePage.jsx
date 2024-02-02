@@ -5,12 +5,16 @@ import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Alert from "../components/Alert"
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import "../index.css";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   const [input, setInput] = useState({
     // data dummy
@@ -74,16 +78,12 @@ function UserProfilePage() {
     setSearchCity(event.target.value);
     filterItems();
   };
+
   useEffect(() => {
     if (isOpen !== "" && dropdownRef.current) {
       filterItems();
     }
   }, [isOpen]);
-
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
   
   // alert
   const { status } = useSelector(state => state.alert);

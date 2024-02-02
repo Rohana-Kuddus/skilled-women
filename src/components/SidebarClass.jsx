@@ -3,9 +3,18 @@ import ButtonRecommendation from "./ButtonRecommendation"
 import { useNavigate } from "react-router"
 import CardClass from "./CardClass"
 import PropTypes from "prop-types"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { getClassRoadmap } from "../redux/slices/courseSlice"
 
 function SidebarClass({ data, setIsOpen }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { course } = useSelector(state => state.course);
+
+  useEffect(() => {
+    dispatch(getClassRoadmap(data.clasId, data.roadmapId));
+  }, [course]);
 
   return ( 
     <div>
@@ -22,7 +31,7 @@ function SidebarClass({ data, setIsOpen }) {
         </div>
 
         <div>
-          {data.classes.map(v => (
+          {course.map(v => (
             <div key={v.id}>
               <CardClass data={v} editBtn={false}></CardClass>
             </div>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const courseSlice = createSlice({
   name: 'course',
@@ -19,6 +20,17 @@ const courseSlice = createSlice({
 export const { setCourse, setCourseDetail } = courseSlice.actions;
 
 // function get class by roadmap
+export const getClassRoadmap = (jobId, roadmapId) => {
+  return async (dispatch) => {
+    const { data: { data } } = await axios({
+      method: 'get',
+      url: `https://skilled-women-be-production.up.railway.app/jobs/${jobId}/roadmaps/${roadmapId}/classes`,
+      responseType: 'json'
+    });
+    
+    dispatch(setCourse(data));
+  };
+};
 
 // function get detail class
 
