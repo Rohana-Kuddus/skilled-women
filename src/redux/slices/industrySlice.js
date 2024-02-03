@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const industrySlice = createSlice({
@@ -16,12 +16,16 @@ const industrySlice = createSlice({
 export const { setIndustry } = industrySlice.actions;
 
 // function get industries
+export const getIndustry = () => {
+  return async (dispatch) => {
+    const { data: { data } } = await axios({
+      method: 'get',
+      url: 'https://skilled-women-be-production.up.railway.app/industries',
+      responseType: 'json'
+    });
 
-export const getIndustries = createAsyncThunk(
-  "industries/getIndustries",
-  async() => {
-    const response = await axios.get("https://skilled-women-be-production.up.railway.app/industries");
-    return response.data;
-  });
+    dispatch(setIndustry(data));
+  };
+};
 
 export default industrySlice.reducer;

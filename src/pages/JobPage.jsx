@@ -7,76 +7,88 @@ import { useDispatch, useSelector } from "react-redux";
 import Alert from "../components/Alert";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { getJobList } from "../redux/slices/jobSlice";
+import { getIndustry } from "../redux/slices/industrySlice";
 
 function JobPage() {
-  //if user not login set alert
-  //akan cek dari api
-  const [isRegistered, setRegistered] = useState(false);
-
-  // alert
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
-  const { job } = useSelector(state => state.job);
   const navigate = useNavigate();
-
-  // update query params
-  // harus refresh dulu baru bisa jalan
-  const [searchParams, setSearchParams] = useSearchParams({ search: '', industry: '' });
-  const search = searchParams.get('search');
-  const industry = searchParams.get('industry');
+  const [isRegistered, setRegistered] = useState(true); // if user not login set alert, akan cek dari api
+  const [searchTerm, setSearchTerm] = useState(""); //filter by search
+  const [selected, setSelected] = useState([]); //filter by industry
+  const { status } = useSelector(state => state.alert);
+  const { industry } = useSelector(state => state.industry);
 
   useEffect(() => {
-    dispatch(getJobList(industry, search));
-  }, [job]);
+    dispatch(setFooterAnchor("", ""));
+    dispatch(getIndustry());
+  }, [industry]);
 
-  const Industry = [
+  const jobs = [
     {
-      "id": 1,
-      "name": "Kreatif"
+      "title": "Graphic Designer",
+      "image": "https://source.unsplash.com/tuned-on-macbook-CGpifH3FjOA",
+      "industry": "Kreatif",
+      "description": "Ciptakan kreasi desain art kamu secara digital!",
+      "id": "1"
     },
     {
-      "id": 2,
-      "name": "Agrikultur"
+      "title": "Petani Hidroponik",
+      "image": "https://source.unsplash.com/text-s_AgJxMc4zk",
+      "industry": "Agrikultur",
+      "description": "Cocok untuk kamu yang ingin membuka usaha tanaman hidroponik atau berkebun sendiri ~",
+      "id": "2"
     },
     {
-      "id": 3,
-      "name": "Bisnis"
+      "title": "Fotografer",
+      "image": "https://source.unsplash.com/person-holding-canon-dslr-camera-hfk6xOjQlFk",
+      "industry": "Kreatif",
+      "description": "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
+      "id": "3"
     },
     {
-      "id": 4,
-      "name": "Teknologi"
+      "title": "Digital Marketing Consoultant",
+      "image": "https://source.unsplash.com/person-writing-on-white-paper-U33fHryBYBU",
+      "industry": "Bisnis",
+      "description": "Bantu konsultasi tim marketing kamu dengan menjadi digital marketing consoultant",
+      "id": "4"
+    },
+    {
+      "title": "Video Editor ",
+      "image": "https://source.unsplash.com/black-flat-screen-tv-turned-on-displaying-game-B4f_Kx5jvpg",
+      "industry": "Kreatif",
+      "description": "Jago ngedit video? Jadi Video editor aja!",
+      "id": "5"
+    },
+    {
+      "title": "Pilot Drone",
+      "image": "https://source.unsplash.com/brown-and-black-wooden-table-U9vKDttdNLA",
+      "industry": "Teknologi",
+      "description": "Hobi main game console & pesawat? Jadi pilot drone yuk! ",
+      "id": "6"
     }
-  ];
+  ]
+
+  const filterHandler = (e) => {
+    const data = jobs.filter(val => val.industry === e.target.value);
+    setSelected(data);
+  };
 
   const alert = {
     status: false,
-    text: 'Silahkan login atau daftar akun terlebih dahulu',
+    text: 'Silahkan login atau daftar akun terlebih dahulu.',
     button: {
       primary: 'Login',
       primaryAction: () => {
-        //ke page login
         navigate('/login');
         dispatch(setStatus(false));
       },
       secondary: 'Daftar sekarang',
       secondaryAction: () => {
-        //ke page register
         navigate('/register');
         // dispatch(setStatus(false));
       }
     }
-  }
-
-  //click button recomendation
-  const buttonHandler = () => {
-    dispatch(setStatus(true));
-  }
-  
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
+  };
 
   return ( 
     <div>
@@ -101,39 +113,26 @@ function JobPage() {
             <div className="pt-2 relative mx-auto green">
               <input className="border-2 border-gray-300 paragraph-regular black bg-white h-10 px-5 pr-16 rounded-md text-sm w-72 focus:outline-none"
                 type="search" name="search" placeholder="Cari Berdasarkan Pekerjaan"
-                value={search}
-                onChange={ e => setSearchParams(prev => {
-                    prev.set("search", e.target.value)
-                    return prev
-                  }, { replace: true }) 
-                } />
+                onChange={(e) => setSearchTerm(e.target.value)} />
               <button type="submit" className="absolute right-0 top-0 mt-4 mr-4">
                 <SearchLineIcon className="green"></SearchLineIcon>
               </button>
             </div>
 
             {/* dropdown industri */}
-            <div className="relative pt-2 ">
-              <select name="jobIndustry" className="inline-flex justify-start px-4 py-2 w-40 paragraph-regular bg-white border border-gray-300 rounded-md shadow-sm"
-                onChange={ e => setSearchParams(prev => {
-                  prev.set("industry", e.target.value)
-                  return prev
-                }, { replace: true }) } 
-              >
+            <div className="relative pt-2">
+              <select onChange={filterHandler} name="jobIndustry" className="inline-flex justify-start px-4 py-2 w-40 paragraph-regular bg-white border border-gray-300 rounded-md shadow-sm">
                 <option value="Pilih Industri">Pilih Industri</option>
-                {
-                  Industry.map((industry) => {
-                    return <option value={industry.name} key={industry.id}>{industry.name}</option>
-                  })
-                }
+                {industry.map((v) => (
+                  <option key={v.id} value={v.name}>{v.name}</option>
+                ))}
               </select>
             </div>
           </div>
-
           <div className="basis-1/4 pt-2 ">
-            <ButtonRecommendation name={'Pekerjaan'}  action={isRegistered ? () => window.open('url', '_blank', 'noreferrer') : buttonHandler}></ButtonRecommendation>
+            <ButtonRecommendation name={'Pekerjaan'} action={isRegistered ? 
+              () => window.open('url', '_blank', 'noreferrer') : () => dispatch(setStatus(true))}></ButtonRecommendation>
           </div> 
-
         </div> 
       </section>
 
@@ -142,10 +141,8 @@ function JobPage() {
         <div className="container mt-10">
           <div className="flex flex-wrap -mx-4 gap-4">
             {
-              job
-              .map((val) => (
-                <CardJob job={val} key={val.id}></CardJob>
-              ))
+              selected.length !== 0 ? selected.map(v => (<CardJob job={v} key={v.id}></CardJob>))
+               : jobs.map((val) => (<CardJob job={val} key={val.id}></CardJob>))
             }
           </div>
         </div>

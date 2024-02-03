@@ -10,27 +10,22 @@ const authSlice = createSlice({
   reducers: {
     setSession(state, action) {
       state.session = action.payload;
-    },
-    setStatusCode(state, action) {
-      state.statusCode = action.payload;
     }
   }
 });
 
-export const { setSession, setStatusCode } = authSlice.actions;
+export const { setSession } = authSlice.actions;
 
 // function cek user login
 
 // function register
 export const registerUser = (payload) => {
   return async (dispatch) => {
-    const { status } = await axios({
+    await axios({
       method: 'post',
       url: 'https://skilled-women-be-production.up.railway.app/auth/register',
       data: payload
     });
-
-    dispatch(setStatusCode(status));
   };
 };
 

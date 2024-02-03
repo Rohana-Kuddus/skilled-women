@@ -5,16 +5,21 @@ import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Alert from "../components/Alert"
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import "../index.css";
+import "../styles/pages/UserProfilePage.css";
+import { getCity } from "../redux/slices/citySlice";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
-  
+  const { status } = useSelector(state => state.alert);
+  const { city } = useSelector(state => state.city);
+
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
-  }, []);
+    dispatch(getCity());
+  }, [city]);
 
   const [input, setInput] = useState({
     // data dummy
@@ -84,9 +89,7 @@ function UserProfilePage() {
       filterItems();
     }
   }, [isOpen]);
-  
-  // alert
-  const { status } = useSelector(state => state.alert);
+
   const alert = {
     status: true,
     text: 'Profile berhasil disimpan',
@@ -98,7 +101,7 @@ function UserProfilePage() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    
+
     // hit api update profile
     console.log({ message: 'success update input', data: { ...input } });
 
@@ -269,40 +272,18 @@ function UserProfilePage() {
                             autoComplete="off"
                             onChange={handleSearch}
                           />
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                            role="menuitem"
-                            onClick={(e) => {
+                          {city.map(v => (
+                            <a href="#" role="menuitem" className="option" key={v.id} onClick={(e) => {
                               e.preventDefault();
                               inputHandler({
                                 target: {
                                   name: "city",
-                                  value: "Jakarta",
-                                },
+                                  value: v.name
+                                }
                               });
                               toggleDropdown();
-                            }}
-                          >
-                            Jakarta
-                          </a>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                            role="menuitem"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              inputHandler({
-                                target: {
-                                  name: "city",
-                                  value: "Surabaya",
-                                },
-                              });
-                              toggleDropdown();
-                            }}
-                          >
-                            Surabaya
-                          </a>
+                            }}>{v.name}</a>
+                          ))}
                         </div>
                       </div>
                     ) : null}
