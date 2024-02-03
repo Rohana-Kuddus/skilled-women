@@ -75,9 +75,9 @@ function LandingPage() {
     <>
       {/* Hero section */}
 
-      <div className="bg-[#4F6C6A] text-[#FFF] flex ">
+      <div className="bg-[#4F6C6A] text-[#FFF] flex p-40 gap-36">
         <div>
-          <h1 className="heading1">
+          <h1 className="heading1 m-5">
             Ingin mempelajari keterampilan baru tetapi tidak tahu harus mulai
             dari mana?
           </h1>
@@ -88,7 +88,7 @@ function LandingPage() {
           </p>
 
           <div className="">
-            <button className="flex center my-3 rounded-lg bg-[#FFF] py-2 px-4 paragraph-regular green transition-all hover:opacity-95 focus:opacity-95 active:opacity-85 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none gap-1">
+            <button className="flex center my-3 rounded-lg bg-[#FFF] py-4 px-12 mt-12 paragraph-regular green transition-all hover:opacity-95 focus:opacity-95 active:opacity-85 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none gap-1">
               Mulai jelajahi
               <ArrowRightLineIcon />
             </button>

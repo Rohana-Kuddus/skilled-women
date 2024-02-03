@@ -11,22 +11,22 @@ const citySlice = createSlice({
       state.city = action.payload;
     }
   },
-  extraReducers: {
-    [getCities.fullfilled]: (state, action) => {
-      return [...action.payload];
-    },
-  }
+  // extraReducers: {
+  //   [getCities.fullfilled]: (state, action) => {
+  //     return [...action.payload];
+  //   },
+  // }
 });
 
 export const { setCity } = citySlice.actions;
 
 // function get cities
 
-export const getCities = createAsyncThunk(
-  "cities/getCities",
-  async() => {
-    const response = await axios.get("https://skilled-women-be-production.up.railway.app/cities");
-    return response.data;
-  });
+// export const getCities = createAsyncThunk(
+//   "cities/getCities",
+//   async() => {
+//     const response = await axios.get("https://skilled-women-be-production.up.railway.app/cities");
+//     return response.data;
+//   });
 
 export default citySlice.reducer;

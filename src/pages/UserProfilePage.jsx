@@ -5,7 +5,7 @@ import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Alert from "../components/Alert"
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import "../index.css";
 
