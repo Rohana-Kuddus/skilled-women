@@ -5,7 +5,7 @@ import CardJob from "../components/CardJob";
 import { setStatus } from "../redux/slices/alertSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../components/Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { getIndustry } from "../redux/slices/industrySlice";
 
@@ -142,21 +142,10 @@ function JobPage() {
         <div className="container mt-10">
           <div className="flex flex-wrap -mx-4 gap-4">
             {
-              selected.length > 0 ?
-                selected.map((val) => (
-                  <CardJob job={val} key={val.id}></CardJob>
-                ))
-                : jobs
-                  .filter((val) => {
-                    if (searchTerm == "") {
-                      return val;
-                    } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-                      return val;
-                    }
-                  })
-                  .map((val) => (
-                    <CardJob job={val} key={val.id}></CardJob>
-                  ))
+              job
+              .map((val) => (
+                <CardJob job={val} key={val.id}></CardJob>
+              ))
             }
           </div>
         </div>
