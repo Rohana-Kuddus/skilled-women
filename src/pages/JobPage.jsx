@@ -69,7 +69,6 @@ function JobPage() {
   ]
 
   const filterHandler = (e) => {
-    //akan hit api pekerjaan sesuai industry id
     const data = jobs.filter(val => val.industry === e.target.value);
     setSelected(data);
   };
@@ -142,10 +141,8 @@ function JobPage() {
         <div className="container mt-10">
           <div className="flex flex-wrap -mx-4 gap-4">
             {
-              job
-              .map((val) => (
-                <CardJob job={val} key={val.id}></CardJob>
-              ))
+              selected.length !== 0 ? selected.map(v => (<CardJob job={v} key={v.id}></CardJob>))
+               : jobs.map((val) => (<CardJob job={val} key={val.id}></CardJob>))
             }
           </div>
         </div>
