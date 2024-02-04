@@ -21,8 +21,8 @@ function Introduction({ data, setIsActive }) {
               <a href={data.percentageLink} className="paragraph-small dark" target="_blank">src:</a>
             </div>
             <div className="p-4 border-2 rounded-3xl border-[#F6DDD9] bg-[#F6DDD9] max-w-60">
-              <img src={data.industry.image} alt={data.industry.name.toLowerCase().replace(/\s+/g, '-')} className="w-20 h-auto mx-auto mb-2"/>
-              <h3 className="heading3 green">Industri {data.industry.name}</h3>
+              <img src={data.Industry.image} alt={data.Industry.name.toLowerCase().replace(/\s+/g, '-')} className="w-20 h-auto mx-auto mb-2"/>
+              <h3 className="heading3 green">Industri {data.Industry.name}</h3>
             </div>
             <div className="p-4 col-span-2 border-2 rounded-3xl border-[#F6DDD9]">
               <h1 className="heading1 green">{data.income}</h1>

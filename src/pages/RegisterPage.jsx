@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { getCity } from "../redux/slices/citySlice";
 
 function RegisterPage() {
-  // Pindah ke page login ketika "login" di klik
   const navigate = useNavigate();
-  const toLogin = () => {
-    navigate("/login");
-  };
+  const dispatch = useDispatch();
+  const { city } = useSelector(state => state.city);
+
+  useEffect(() => {
+    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/638b4253fce0330001fefd18'));
+    dispatch(getCity());
+  }, [city]);
 
   // input form
   const [register, setRegister] = useState({
@@ -20,14 +24,6 @@ function RegisterPage() {
     password: "",
     city: "",
   });
-
-  // set text and link for footer
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/638b4253fce0330001fefd18'))
-    return () => {dispatch(setFooterAnchor('',''))}
-  }, []);
 
   // jika button daftar sekarang di klik saat form kosong, maka muncul validasi untuk tiap form
   const [validationsErrors, setValidationsErrors] = useState({});
@@ -86,19 +82,6 @@ function RegisterPage() {
     }
   };
 
-   // ambil data kota di api, tapi belum benar kodenya
-
-  // const [dataCity, setDataCity] = useState([]);
-
-  // useEffect(() => {
-  //   const apiCity = "";
-
-  //   fetch(apiCity)
-  //     .then((response) => response.json())
-  //     .then((data) => setDataCity(data))
-  //     .catch((error) => console.log("Kota tidak ditemukan", error));
-  // }, []);
-
   return (
     <>
       <div className="text-center">
@@ -151,26 +134,12 @@ function RegisterPage() {
               )}
 
               <p className="label-form " htmlFor="city">City</p>
-              <select
-                className="input-text"
-                id="city"
-                type="text"
-                name="city"
-                value={register.city}
-                onChange={handleInput}
-                required
-              >
-                <option value="" disabled>
-                  Pilih Kota
-                </option>
-
-                {/* Ambil data dari API */}
-
-                {/* {dataCity.map((option) => (
-                <option key={option.id} value={option.value}>
-                  {option.label}
-                </option>
-              ))} */}
+              <select className="input-text" id="city" type="text" name="city" value={register.city} 
+                onChange={handleInput} required>
+                <option value="" disabled>Pilih Kota</option>
+                {city.map(v => (
+                  <option key={v.id} value={v.id}>{v.name}</option>
+                ))}
               </select>
               {validationsErrors.city && (
                 <p style={{ color: "red" }}>{validationsErrors.city}</p>
@@ -215,7 +184,7 @@ function RegisterPage() {
       <div className="text-center">
         <p className="label-form ">
           Sudah punya akun?&ensp;
-          <span className="underline cursor-pointer" onClick={toLogin}>
+          <span className="underline cursor-pointer" onClick={() => navigate('/login')}>
             Log in
           </span>
         </p>

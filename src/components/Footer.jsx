@@ -8,7 +8,7 @@ import "../styles/components/Footer.css"
 function Footer() {
   const { text, link } = useSelector(state => state.footer);
 
-  return ( 
+  return (
     <>
       <footer className="bg-white">
           <div className="footer-container">

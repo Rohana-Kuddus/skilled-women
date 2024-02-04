@@ -5,28 +5,23 @@ import CardJob from "../components/CardJob";
 import { setStatus } from "../redux/slices/alertSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../components/Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { getIndustry } from "../redux/slices/industrySlice";
 
 function JobPage() {
-  const Industry = [
-    {
-      "id": 1,
-      "name": "Kreatif"
-    },
-    {
-      "id": 2,
-      "name": "Agrikultur"
-    },
-    {
-      "id": 3,
-      "name": "Bisnis"
-    },
-    {
-      "id": 4,
-      "name": "Teknologi"
-    }
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isRegistered, setRegistered] = useState(true); // if user not login set alert, akan cek dari api
+  const [searchTerm, setSearchTerm] = useState(""); //filter by search
+  const [selected, setSelected] = useState([]); //filter by industry
+  const { status } = useSelector(state => state.alert);
+  const { industry } = useSelector(state => state.industry);
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+    dispatch(getIndustry());
+  }, [industry]);
 
   const jobs = [
     {
@@ -73,54 +68,27 @@ function JobPage() {
     }
   ]
 
-  //filter by search
-  const [searchTerm, setSearchTerm] = useState("")
-
-  //filter by industry
-  const [selected, setSelected] = useState([])
-
   const filterHandler = (e) => {
-    //akan hit api pekerjaan sesuai industry id
-    const data = jobs.filter(val => val.industry === e.target.value)
-    setSelected(data)
-  }
-
-  //if user not login set alert
-  //akan cek dari api
-  const [isRegistered, setRegistered] = useState(false);
-  // alert
-  const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
-  const navigate = useNavigate();
+    const data = jobs.filter(val => val.industry === e.target.value);
+    setSelected(data);
+  };
 
   const alert = {
     status: false,
-    text: 'Silahkan login atau daftar akun terlebih dahulu',
+    text: 'Silahkan login atau daftar akun terlebih dahulu.',
     button: {
       primary: 'Login',
       primaryAction: () => {
-        //ke page login
         navigate('/login');
         dispatch(setStatus(false));
       },
       secondary: 'Daftar sekarang',
       secondaryAction: () => {
-        //ke page register
         navigate('/register');
         // dispatch(setStatus(false));
       }
     }
-  }
-
-  //click button recomendation
-  const buttonHandler = () => {
-    dispatch(setStatus(true));
-  }
-  
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
+  };
 
   return ( 
     <div>
@@ -145,33 +113,26 @@ function JobPage() {
             <div className="pt-2 relative mx-auto green">
               <input className="border-2 border-gray-300 paragraph-regular black bg-white h-10 px-5 pr-16 rounded-md text-sm w-72 focus:outline-none"
                 type="search" name="search" placeholder="Cari Berdasarkan Pekerjaan"
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                }} />
+                onChange={(e) => setSearchTerm(e.target.value)} />
               <button type="submit" className="absolute right-0 top-0 mt-4 mr-4">
                 <SearchLineIcon className="green"></SearchLineIcon>
               </button>
             </div>
 
             {/* dropdown industri */}
-            <div className="relative pt-2 ">
+            <div className="relative pt-2">
               <select onChange={filterHandler} name="jobIndustry" className="inline-flex justify-start px-4 py-2 w-40 paragraph-regular bg-white border border-gray-300 rounded-md shadow-sm">
                 <option value="Pilih Industri">Pilih Industri</option>
-                {
-                  Industry.map((industry) => {
-                    return <option value={industry.name} key={industry.id}>{industry.name}</option>
-                  })
-                }
+                {industry.map((v) => (
+                  <option key={v.id} value={v.name}>{v.name}</option>
+                ))}
               </select>
             </div>
           </div>
-
           <div className="basis-1/4 pt-2 ">
-            <ButtonRecommendation name={'Pekerjaan'}  action={isRegistered ? () => window.open('url', '_blank', 'noreferrer') : buttonHandler}></ButtonRecommendation>
+            <ButtonRecommendation name={'Pekerjaan'} action={isRegistered ? 
+              () => window.open('url', '_blank', 'noreferrer') : () => dispatch(setStatus(true))}></ButtonRecommendation>
           </div> 
-
-          
-          
         </div> 
       </section>
 
@@ -180,21 +141,8 @@ function JobPage() {
         <div className="container mt-10">
           <div className="flex flex-wrap -mx-4 gap-4">
             {
-              selected.length > 0 ?
-                selected.map((val) => (
-                  <CardJob job={val} key={val.id}></CardJob>
-                ))
-                : jobs
-                  .filter((val) => {
-                    if (searchTerm == "") {
-                      return val;
-                    } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-                      return val;
-                    }
-                  })
-                  .map((val) => (
-                    <CardJob job={val} key={val.id}></CardJob>
-                  ))
+              selected.length !== 0 ? selected.map(v => (<CardJob job={v} key={v.id}></CardJob>))
+               : jobs.map((val) => (<CardJob job={val} key={val.id}></CardJob>))
             }
           </div>
         </div>

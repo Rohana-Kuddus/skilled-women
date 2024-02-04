@@ -1,39 +1,25 @@
+import { useParams } from "react-router-dom";
 import Arrow from "./Arrow";
 import CardRoadmap from "./CardRoadmap";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getRoadmap } from "../redux/slices/roadmapSlice";
+
 
 function StepRoadmap({ data }) {
   let flip = false;
-
+  const dispatch = useDispatch();
+  const { roadmap } = useSelector(state => state.roadmap);
+  const params = useParams();
+  const id = params.id
+  console.log(id);
+  
   // function hit redux api roadmap pakai id pekerjaan
+  useEffect(() => {
+    dispatch(getRoadmap(id))
+  }, [])
 
-  // dummy data roadmap. contoh bentuk data dari redux
-  const roadmap = [
-    {
-      id: 1,
-      name: 'Pengenalan petani hidroponik 1',
-      step: 1
-    },
-    {
-      id: 2,
-      name: 'Pengenalan petani hidroponik 2',
-      step: 2
-    },
-    {
-      id: 3,
-      name: 'Pengenalan petani hidroponik 3',
-      step: 3
-    },
-    {
-      id: 4,
-      name: 'Pengenalan petani hidroponik 4',
-      step: 4
-    },
-    {
-      id: 5,
-      name: 'Pengenalan petani hidroponik 5',
-      step: 5
-    }
-  ]
+  console.log('roadmap',roadmap);
 
   return (
     // styling: buat roadmap step dan border garis2 mengelilingi roadmap
