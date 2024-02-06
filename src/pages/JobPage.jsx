@@ -59,9 +59,9 @@ function JobPage() {
       </section>
 
       {/* section filter */}
-      <section className=" px-7">
+      <section className="px-7">
         <div className="flex flex-row justify-between">
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
             {/* search bar */}
             <div className="pt-2 relative mx-auto green">
               <input className="border-2 border-gray-300 paragraph-regular black bg-white h-10 px-5 pr-16 rounded-md text-sm w-72 focus:outline-none"
@@ -82,8 +82,9 @@ function JobPage() {
               </select>
             </div>
           </div>
-          <div className="basis-1/4 pt-2">
-            <ButtonRecommendation name={'Pekerjaan'} action={cookies.token ? 
+          
+          <div className="pt-2">
+            <ButtonRecommendation name={'Pekerjaan'} action={Object.keys(cookies).length !== 0 ? 
               () => window.open('url', '_blank', 'noreferrer') : () => dispatch(setStatus(true))}></ButtonRecommendation>
           </div> 
         </div> 

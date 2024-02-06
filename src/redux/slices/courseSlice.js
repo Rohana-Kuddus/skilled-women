@@ -82,15 +82,17 @@ export const getClass = (token, classId) => async (dispatch) => {
 };
 
 // function submit class recommendation
-export const submitClass = (token, payload) => async (dispatch) => {
+export const submitClass = (payload) => async (dispatch) => {
   try {
+    const { token, data } = payload;
+
     const { data: { message } } = await axios({
       method: 'post',
       url: 'https://skilled-women-be-production.up.railway.app/classes',
       headers: {
         'Authorization': token
       },
-      data: payload
+      data
     });
 
     return dispatch(setCourseMessage(message));
@@ -101,15 +103,17 @@ export const submitClass = (token, payload) => async (dispatch) => {
 };
 
 // function edit class recommendation
-export const editClass = (token, classId, payload) => async (dispatch) => {
+export const editClass = (payload) => async (dispatch) => {
   try {
+    const { classId, token, data } = payload;
+
     const { data: { message } } = await axios({
       method: 'put',
       url: `https://skilled-women-be-production.up.railway.app/classes/${classId}`,
       headers: {
         'Authorization': token
       },
-      data: payload
+      data
     });
 
     return dispatch(setCourseMessage(message));
@@ -120,8 +124,10 @@ export const editClass = (token, classId, payload) => async (dispatch) => {
 };
 
 // function vote class
-export const voteClass = (token, classId, payload) => async (dispatch) => {
+export const voteClass = (payload) => async (dispatch) => {
   try {
+    const { classId, token, vote } = payload;
+
     const { data: { message } } = await axios({
       method: 'patch',
       url: `https://skilled-women-be-production.up.railway.app/classes/${classId}`,
@@ -129,7 +135,7 @@ export const voteClass = (token, classId, payload) => async (dispatch) => {
         'Authorization': token
       },
       data: {
-        vote: payload
+        vote
       }
     });
 
@@ -141,8 +147,10 @@ export const voteClass = (token, classId, payload) => async (dispatch) => {
 };
 
 // function delete class
-export const deleteClass = (token, classId) => async (dispatch) => {
+export const deleteClass = (payload) => async (dispatch) => {
   try {
+    const { token, classId } = payload;
+
     const { data: { message } } = await axios({
       method: 'post',
       url: `https://skilled-women-be-production.up.railway.app/classes/${classId}`,

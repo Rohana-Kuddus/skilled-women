@@ -12,10 +12,12 @@ import { useState } from "react"
 import PropTypes from "prop-types"
 import "../styles/components/CardClass.css"
 import { deleteClass, voteClass } from "../redux/slices/courseSlice"
+import { useCookies } from "react-cookie"
 
 function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth = "w-32", imgHeight ="h-auto" }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cookies] = useCookies();
   const [active, setActive] = useState('none');
   const { status } = useSelector(state => state.alert);
 
@@ -33,11 +35,34 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
     }
   };
 
-  // dummy token
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNjc0ODg0NX0.HDhf3ah9l5abgcoRIdF_G6yK8UVJ7_ddmFYuwVf88Qg';
+  const alertLogin = {
+    status: false,
+    text: 'Silahkan login atau daftar akun terlebih dahulu.',
+    button: {
+      primary: 'Login',
+      primaryAction: () => {
+        navigate('/login');
+        dispatch(setStatus(false));
+      },
+      secondary: 'Daftar sekarang',
+      secondaryAction: () => {
+        navigate('/register');
+      }
+    }
+  };
+
+  const checkToken = Object.keys(cookies).length !== 0; // check if user loggedin
+
+  // vote payload
+  const payload = {
+    token: cookies.token,
+    classId: data.id
+  };
+
   const likeHandler = () => {
     if (active === 'none') {
-      dispatch(voteClass(token, data.id, true));
+      payload.vote = true;
+      dispatch(voteClass(payload));
       return setActive('like');
     };
 
@@ -46,14 +71,16 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
     };
 
     if (active === 'dislike') {
-      dispatch(voteClass(token, data.id, true));
+      payload.vote = true;
+      dispatch(voteClass(payload));
       return setActive('like');
     };
   };
 
   const dislikeHandler = () => {
     if (active === 'none') {
-      dispatch(voteClass(token, data.id, false));
+      payload.vote = false;
+      dispatch(voteClass(payload));
       return setActive('dislike');
     };
 
@@ -62,7 +89,8 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
     };
 
     if (active === 'like') {
-      dispatch(voteClass(token, data.id, false));
+      payload.vote = false;
+      dispatch(voteClass(payload));
       return setActive('dislike');
     };
   };
@@ -83,15 +111,13 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
 
           {/* buttons */}
           <div className="card-content flex flex-row justify-between items-center gap-2">
-            {/* akan ditambah error handling jika user klik sebelum login */}
             <div className="grid grid-cols-3 gap-2">
-              {/* hit api ketika di klik untuk tambah rating */}
-              <div onClick={likeHandler}>
+              <div onClick={checkToken ? likeHandler : () => dispatch(setStatus(true))}>
                 {active === 'none' || active !== 'like' ? 
                   <ThumbUpLineIcon color="#4F6C6A"></ThumbUpLineIcon> : <ThumbUpFillIcon color="#4F6C6A"></ThumbUpFillIcon>}
               </div>
               <p className="paragraph-regular green">{data.rating}</p>
-              <div onClick={dislikeHandler}>
+              <div onClick={checkToken ? dislikeHandler : () => dispatch(setStatus(true))}>
                 {active === 'none' || active !== 'dislike' ? 
                   <ThumbDownLineIcon color="#4F6C6A"></ThumbDownLineIcon> : <ThumbDownFillIcon color="#4F6C6A"></ThumbDownFillIcon>}
               </div>

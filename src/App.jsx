@@ -25,20 +25,15 @@ function App() {
   useEffect(() => {
     if (token) {
       const today = new Date();
-      today.setDate(today.getDate() + 2);
+      today.setDate(today.getDate() + 7);
   
       setCookie('token', token, [{
         path: '/',
         expires: today,
-        secure: true,
-        httpOnly: true
+        secure: true
       }]);
     } else if (!token && cookies.token) {
-      removeCookie('token', [{
-        path: '/',
-        secure: true,
-        httpOnly: true
-      }]);
+      removeCookie('token');
     };
   }, [token]);
 

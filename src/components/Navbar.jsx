@@ -86,7 +86,7 @@ function Navbar() {
                     alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4" onClick={() => navigate('/profiles/:id')} />
                   <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setStatus(true))} margin="my-0"></ButtonPrimary>
                 </div>
-                : <ButtonPrimary buttonText="Coba Sekarang" onClick={() => navigate('/register')} margin="my-0"></ButtonPrimary>}
+                : <ButtonPrimary buttonText="Coba Sekarang" onClick={() => navigate('/register')} margin="my-0 ml-4"></ButtonPrimary>}
             </div>
           </div>
         )}

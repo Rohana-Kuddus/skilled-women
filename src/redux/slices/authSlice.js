@@ -35,18 +35,13 @@ export const registerUser = (payload) => async (dispatch) => {
   };
 };
 
-const obj = {
-  email: "johndoe@email.com",
-  password: "4321"
-};
-
 // function login + input session cookies
 export const loginUser = (payload) => async (dispatch) => {
   try {
     const { data: { token } } = await axios({
       method: 'post',
       url: 'https://skilled-women-be-production.up.railway.app/auth/login',
-      data: obj
+      data: payload
     });
 
     return dispatch(setToken(token));

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const alertSlice = createSlice({
   name: 'alert',
   initialState: {
-    status: false
+    status: false,
+    name: ''
   },
   reducers: {
     setAlert(state, action) {
