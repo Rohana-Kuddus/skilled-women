@@ -5,16 +5,16 @@ import CardJob from "../components/CardJob";
 import { setStatus } from "../redux/slices/alertSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../components/Alert";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { getIndustry } from "../redux/slices/industrySlice";
 import { getJobList } from "../redux/slices/jobSlice";
-import { loginUser } from "../redux/slices/authSlice";
+import { useCookies } from "react-cookie";
 
 function JobPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isRegistered, setRegistered] = useState(true); // if user not login set alert, akan cek dari api
+  const [cookies] = useCookies();
   const { status } = useSelector(state => state.alert);
   const { industry } = useSelector(state => state.industry);
   const { job } = useSelector(state => state.job);
@@ -48,9 +48,6 @@ function JobPage() {
 
   return ( 
     <div>
-      <div>
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button} closeBtn></Alert>}
-      </div>
       {/* hero section */}
       <section>
         <div className="container">
@@ -86,7 +83,7 @@ function JobPage() {
             </div>
           </div>
           <div className="basis-1/4 pt-2">
-            <ButtonRecommendation name={'Pekerjaan'} action={isRegistered ? 
+            <ButtonRecommendation name={'Pekerjaan'} action={cookies.token ? 
               () => window.open('url', '_blank', 'noreferrer') : () => dispatch(setStatus(true))}></ButtonRecommendation>
           </div> 
         </div> 
@@ -102,6 +99,8 @@ function JobPage() {
             ))}
         </div>
       </section>
+      
+      {status && <Alert status={alert.status} text={alert.text} button={alert.button} closeBtn={true}></Alert>}
     </div>
   );
 }

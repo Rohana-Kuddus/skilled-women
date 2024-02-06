@@ -17,7 +17,7 @@ function JobDetailPage() {
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
     dispatch(getJobDetail(params.id));
-  }, []);
+  }, [jobDetail]);
 
   return (
     <div>

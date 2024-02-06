@@ -12,7 +12,7 @@ function FaqPage() {
   }, []);
   return (
     <>
-      <div class="flex flex-col align-center">
+      <div className="flex flex-col align-center">
         {/* HERO */}
         <div className="text-white text-center text-balance py-16 px-2"
         style={{backgroundColor:"var(--primary-color)"}}
@@ -28,7 +28,7 @@ function FaqPage() {
         <div className="my-12 mx-40 space-y-2">
           <div
             className="group flex flex-col gap-2 bg-white dark p-5 border-2 border-gray-300 rounded-md"
-            tabindex="1"
+            tabIndex="1"
           >
             <div className="flex cursor-pointer items-center justify-between">
               <span className="heading3"> Apa itu Skilled Women? </span>
@@ -41,7 +41,7 @@ function FaqPage() {
 
           <div
             className="group flex flex-col gap-2 bg-white dark p-5 border-2 border-gray-300 rounded-md"
-            tabindex="2"
+            tabIndex="2"
           >
             <div className="flex cursor-pointer items-center justify-between">
               <span className="heading3"> Apa saja fitur yang dimiliki Skilled Women? </span>
@@ -54,7 +54,7 @@ function FaqPage() {
 
           <div
             className="group flex flex-col gap-2 bg-white dark p-5 border-2 border-gray-300 rounded-md"
-            tabindex="3"
+            tabIndex="3"
           >
             <div className="flex cursor-pointer items-center justify-between">
               <span className="heading3"> Bagaimana saya bisa mengakses kelas dari pekerjaan yang dipilih? </span>

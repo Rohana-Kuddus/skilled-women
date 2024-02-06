@@ -2,18 +2,13 @@ import React from "react";
 import PropTypes from "prop-types"
 import "../index.css";
 
-function ButtonSecondary({ name, action, padding = "px-2", height = "h-2" }) {
+function ButtonSecondary({ name, action, padding = "px-4" }) {
   return (
     <>
-      <button className={`paragraph-regular dark ${padding} ${height} rounded-lg hover:bg-gray-100`}
-      style={{
-        borderColor: "var(--primary-color)",
-        borderWidth: "1px",
-      }}
-      onClick={action}
-    >
-      {name}
-    </button>
+      <button className={`paragraph-regular dark ${padding} py-2 rounded-lg hover:bg-gray-100 border
+       border-[#4F6C6A]`} onClick={action}>
+        {name}
+      </button>
     </>
   );
 }

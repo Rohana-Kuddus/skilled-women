@@ -16,15 +16,13 @@ function StepRoadmap({ data }) {
     dispatch(getRoadmap(params.id));
   }, []);
 
-  console.log('roadmap',roadmap);
-
   return (
     // styling: buat roadmap step dan border garis2 mengelilingi roadmap
     <div className="border-2 border-dashed border-[#4F6C6A] p-5">
       <div className="flex flex-wrap">
         {roadmap.map((v, i)=> (
           <div className={flip ? 'flex flex-row-reverse' : 'flex'} key={v.id}>
-            <CardRoadmap roadmap={v} job={data}></CardRoadmap>
+            <CardRoadmap data={v}></CardRoadmap>
             {i !== 4 ? <Arrow flip={flip}></Arrow> : ''}
             {(i + 1) % 2 === 0 ? flip = false : flip = true}
           </div>

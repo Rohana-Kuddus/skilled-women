@@ -35,6 +35,10 @@ export const registerUser = (payload) => async (dispatch) => {
   };
 };
 
+const obj = {
+  email: "johndoe@email.com",
+  password: "4321"
+};
 
 // function login + input session cookies
 export const loginUser = (payload) => async (dispatch) => {
@@ -42,7 +46,7 @@ export const loginUser = (payload) => async (dispatch) => {
     const { data: { token } } = await axios({
       method: 'post',
       url: 'https://skilled-women-be-production.up.railway.app/auth/login',
-      data: payload
+      data: obj
     });
 
     return dispatch(setToken(token));
@@ -53,5 +57,8 @@ export const loginUser = (payload) => async (dispatch) => {
 };
 
 // function logout + clear session cookies
+export const logoutUser = () => async (dispatch) => {
+  return dispatch(setToken(''));
+};
 
 export default authSlice.reducer;

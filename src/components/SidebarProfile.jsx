@@ -6,14 +6,18 @@ import MenuLineIcon from "remixicon-react/MenuLineIcon";
 import Alert from "./Alert";
 import "../styles/components/SidebarProfile.css";
 import "../index.css";
+import { logoutUser } from "../redux/slices/authSlice";
 
 function SidebarProfile({ id }) {
   const [isOpen, setOpen] = useState(window.innerWidth >= 768);
+  const dispatch = useDispatch();
+  const { status } = useSelector(state => state.alert);
 
   // adjust open and close sidebar based on screen size
   const resizeSidebar = () => {
     window.innerWidth >= 768 ? setOpen(true) : setOpen(false);
   };
+
   useEffect(() => {
     window.addEventListener("resize", resizeSidebar);
     return () => {
@@ -29,26 +33,19 @@ function SidebarProfile({ id }) {
     setOpen(false);
   };
 
-    // alert
-    // saat user click tombol yang ada komponen alert seharusnya yang ketrigger sesuai tombol yang di klik 
-    const dispatch = useDispatch();
-    const { status } = useSelector(state => state.alert);
-  
-    const alert = {
-      status: false,
-      text: 'Apakah Anda yakin ingin keluar?',
-      button: {
-        primary: 'Keluar',
-          primaryAction: () => dispatch(setStatus(false)),
-        secondary: 'Batal',
-          secondaryAction: () => dispatch(setStatus(false))
+  const alert = {
+    status: false,
+    text: 'Apakah Anda yakin ingin keluar?',
+    button: {
+      primary: 'Keluar',
+      primaryAction: () => {
+        dispatch(logoutUser());
+        dispatch(setStatus(false));
       },
-    };
-
-  // ketika user klik tombol keluar, tampilan navbar seharusnya tidak langsung berubah, tunggu komponen alert
-    const handleLogout = () => {
-      dispatch(setStatus(true));
-   };
+      secondary: 'Batal',
+      secondaryAction: () => dispatch(setStatus(false))
+    }
+  };
 
   return (
     <>
@@ -100,7 +97,7 @@ function SidebarProfile({ id }) {
               </div>
               <div className="border-t-2 border-gray-200"></div>
               <div className="my-5 mx-2 p-1 text-center hover:bg-red-200 active:bg-red-200 rounded-md">
-                <button onClick={handleLogout} className="text-red-500">
+                <button onClick={() => dispatch(setStatus(true))} className="text-red-500">
                   Keluar
                 </button>
               </div>

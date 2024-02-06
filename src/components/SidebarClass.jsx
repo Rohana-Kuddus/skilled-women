@@ -6,6 +6,7 @@ import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { getClassRoadmap } from "../redux/slices/courseSlice"
+import { useParams } from "react-router-dom"
 
 function SidebarClass({ data, setIsOpen }) {
   const navigate = useNavigate();
