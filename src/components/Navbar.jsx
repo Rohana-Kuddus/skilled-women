@@ -83,7 +83,7 @@ function Navbar() {
                 <div className="flex">
                   <img
                     src={user.image ? user.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'} 
-                    alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4" onClick={() => navigate('/profiles/:id')} />
+                    alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4" onClick={() => navigate(`/profiles/${user.id}`)} />
                   <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setAlert({ status: true, name: 'logout' }))} 
                     margin="my-0"></ButtonPrimary>
                 </div>

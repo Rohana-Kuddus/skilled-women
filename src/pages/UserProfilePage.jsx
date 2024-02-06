@@ -10,11 +10,15 @@ import { setAlert } from "../redux/slices/alertSlice";
 import "../index.css";
 import "../styles/pages/UserProfilePage.css";
 import { getCity } from "../redux/slices/citySlice";
+import { editUserProfile, getUserProfile } from "../redux/slices/userSlice";
+import { useCookies } from "react-cookie";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
   const { status, name } = useSelector(state => state.alert);
   const { city } = useSelector(state => state.city);
+  const { user } = useSelector(state => state.user);
+  const [cookies] = useCookies();
   
   // dropdown
   const [isOpen, setIsOpen] = useState("");
@@ -25,7 +29,8 @@ function UserProfilePage() {
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
     dispatch(getCity());
-  }, [city]);
+    dispatch(getUserProfile(cookies.token));
+  }, [user]);
 
   useEffect(() => {
     if (isOpen !== "" && dropdownRef.current) {
@@ -34,11 +39,11 @@ function UserProfilePage() {
   }, [isOpen]);
 
   const [input, setInput] = useState({
-    // data dummy
-    username: "Jane Doe",
-    email: "jane@email.com",
-    gender: "Perempuan",
-    city: "Jakarta"
+    username: user.username,
+    email: user.email,
+    gender: user.gender,
+    city: user.city,
+    image: user.image
   });
 
   // change profile picture
@@ -49,7 +54,7 @@ function UserProfilePage() {
   const handleFileChange = (e) => {
     setInput((prev) => ({
       ...prev,
-      profilePicture: e.target.files[0],
+      image: e.target.files[0],
     }));
   };
 
@@ -101,10 +106,7 @@ function UserProfilePage() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    // hit api update profile
-    console.log({ message: 'success update input', data: { ...input } });
-
+    dispatch(editUserProfile(cookies.token, input));
     dispatch(setAlert({ status: true, name: 'profile' }));
   };
 
@@ -123,7 +125,7 @@ function UserProfilePage() {
             <div className="main flex flex-col">
               <div className="flex flex-col items-center">
                 <img
-                  src="https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile"
+                  src={input.image}
                   className="rounded-full w-20 m-6"
                 />
                 {/* edit button */}

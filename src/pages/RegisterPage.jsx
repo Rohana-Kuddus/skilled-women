@@ -5,57 +5,48 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { getCity } from "../redux/slices/citySlice";
+import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
+import EyeLineIcon from "remixicon-react/EyeLineIcon";
+import { registerUser } from "../redux/slices/authSlice";
 
 function RegisterPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { city } = useSelector(state => state.city);
+  const [validationsErrors, setValidationsErrors] = useState({});
+  const [passwordType, setPasswordType] = useState('password');
+  const [register, setRegister] = useState({
+    username: "",
+    email: "",
+    gender: "",
+    password: "",
+    cityId: "",
+  });
 
   useEffect(() => {
     dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/638b4253fce0330001fefd18'));
     dispatch(getCity());
   }, [city]);
 
-  // input form
-  const [register, setRegister] = useState({
-    username: "",
-    email: "",
-    gender: "",
-    password: "",
-    city: "",
-  });
-
-  // jika button daftar sekarang di klik saat form kosong, maka muncul validasi untuk tiap form
-  const [validationsErrors, setValidationsErrors] = useState({});
-
   const validateData = () => {
     const errors = {};
 
-    // validasi username hanya huruf dan angka
     if (!/^[a-zA-Z0-9]+$/.test(register.username)) {
       errors.username = "Username harus hanya berisi huruf dan angka";
-    }
-
-    // validasi email dengan format @
+    };
     if (!/^.+@.+\..+$/.test(register.email)) {
       errors.email = "Format email tidak valid";
-    }
-
-    // validasi password, minimal 1 angka, 1 huruf dan 1 karakter
-    if (!/(?=.*\d)(?=,*[a-zA-Z])(?=.*\W)/.test(register.password)) {
+    };
+    if (!/(?=.*\d)(?=.*[A-Z])(?=.*\W)/.test(register.password)) {
       errors.password =
-        "Password harus mengandung minaml 1 angka, 1 huruf dan 1 karakter";
-    }
-
-    // validasi gender
+        "Password harus mengandung minimal 1 angka, 1 huruf dan 1 karakter";
+    };
     if (!register.gender) {
       errors.gender = "Jenis Kelamin harus dipilih";
-    }
-
-    // validasi kota
-    if (!register.city) {
+    };
+    if (!register.cityId) {
       errors.city = "Kota harus dipilih";
-    }
+    };
 
     return errors;
   };
@@ -71,15 +62,13 @@ function RegisterPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(register);
 
     const errors = validateData();
-
     if (Object.keys(errors).length === 0) {
-      console.log("Register", register);
+      dispatch(registerUser(register));
     } else {
       setValidationsErrors(errors);
-    }
+    };
   };
 
   return (
@@ -124,19 +113,18 @@ function RegisterPage() {
                 onChange={handleInput}
                 required
               >
-                <option className="hover:bg-green-800" value="perempuan">
-                  Perempuan
-                </option>
-                <option value="laki-laki">Laki-laki</option>
+                <option value="" disabled>Pilih Gender</option>
+                <option value="F">Perempuan</option>
+                <option value="M">Laki-laki</option>
               </select>
               {validationsErrors.gender && (
                 <p style={{ color: "red" }}>{validationsErrors.gender}</p>
               )}
 
-              <p className="label-form " htmlFor="city">City</p>
-              <select className="input-text" id="city" type="text" name="city" value={register.city} 
+              <p className="label-form" htmlFor="city">City</p>
+              <select className="input-text" id="city" type="text" name="cityId" value={register.city}
                 onChange={handleInput} required>
-                <option value="" disabled>Pilih Kota</option>
+                <option defaultValue="" selected disabled>Pilih Kota</option>
                 {city.map(v => (
                   <option key={v.id} value={v.id}>{v.name}</option>
                 ))}
@@ -165,7 +153,7 @@ function RegisterPage() {
               <p className="label-form" htmlFor="password">Password</p>
               <input
                 className="input-text"
-                type="password"
+                type={passwordType}
                 id="password"
                 name="password"
                 placeholder="********"
@@ -173,6 +161,11 @@ function RegisterPage() {
                 onChange={handleInput}
                 required
               ></input>
+              <span name="confirmPassword" onClick={() => passwordType === 'password' 
+                ? setPasswordType('text') : setPasswordType('password')}>
+                {passwordType === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
+                  : <EyeLineIcon className="green"></EyeLineIcon>}
+              </span>
               {validationsErrors.password && (
                 <p style={{ color: "red" }}>{validationsErrors.password}</p>
               )}

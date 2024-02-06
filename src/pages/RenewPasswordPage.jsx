@@ -10,6 +10,18 @@ import { setFooterAnchor } from "../redux/slices/footerSlice";
 function RenewPasswordPage() {
   const dispatch = useDispatch();
   const { status, name } = useSelector(state => state.alert);
+  const [input, setInput] = useState({
+    newPassword: '',
+    confirmPassword: ''
+  });
+  const [error, setError] = useState({
+    newPassword: '',
+    confirmPassword: ''
+  });
+  const [passwordType, setPasswordType] = useState({
+    newPassword: 'password',
+    confirmPassword: 'password'
+  });
 
   const alert = {
     status: true,
@@ -19,21 +31,6 @@ function RenewPasswordPage() {
       primaryAction: () => dispatch(setAlert({ status: false, name: 'password' }))
     }
   };
-
-  const [input, setInput] = useState({
-    newPassword: '',
-    confirmPassword: ''
-  });
-
-  const [error, setError] = useState({
-    newPassword: '',
-    confirmPassword: ''
-  });
-
-  const [passwordType, setPasswordType] = useState({
-    newPassword: 'password',
-    confirmPassword: 'password'
-  });
 
   // handler change visibiity
   const visibilityHandler = (e) => {
@@ -111,7 +108,7 @@ function RenewPasswordPage() {
   // submit input
   const buttonHandler = () => {
     if (error.newPassword === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
-      // akan buat function hit api ubah password
+      // dispatch(editUserPassword(cookies.token, { password: input.password }));
       dispatch(setAlert({ status: true, name: 'password' }));
     };
   };

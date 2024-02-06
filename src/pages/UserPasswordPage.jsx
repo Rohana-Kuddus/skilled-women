@@ -7,10 +7,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { editUserPassword } from "../redux/slices/userSlice";
+import { useCookies } from "react-cookie";
 
 function UserPasswordPage() {
   const dispatch = useDispatch();
   const { status, name } = useSelector(state => state.alert);
+  const [cookies] = useCookies;
+  const [input, setInput] = useState({
+    password: '',
+    confirmPassword: ''
+  });
+  const [error, setError] = useState({
+    password: '',
+    confirmPassword: ''
+  });
+  const [passwordType, setPasswordType] = useState({
+    password: 'password',
+    confirmPassword: 'password'
+  });
 
   const alert = {
     status: true,
@@ -21,28 +36,14 @@ function UserPasswordPage() {
     }
   };
 
-  // input value
-  const [input, setInput] = useState({
-    password: '',
-    confirmPassword: ''
-  });
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
-  // error handling
-  const [error, setError] = useState({
-    password: '',
-    confirmPassword: ''
-  });
-
-  // change password visibility
-  const [passwordType, setPasswordType] = useState({
-    password: 'password',
-    confirmPassword: 'password'
-  });
-  
   // handler change visibiity
   const visibilityHandler = (e) => {
     const name = e.currentTarget.getAttribute('name');
-    
+
     let value;
     switch (name) {
       case 'password':
@@ -52,7 +53,7 @@ function UserPasswordPage() {
       case 'confirmPassword':
         passwordType.confirmPassword === 'password' ? value = 'text' : value = 'password';
         break;
-      
+
       default:
         value = 'password';
         break;
@@ -66,7 +67,7 @@ function UserPasswordPage() {
 
   const onInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     setInput(prev => ({
       ...prev,
       [name]: value
@@ -78,8 +79,8 @@ function UserPasswordPage() {
 
     setError(prev => {
       const stateObj = { ...prev, [name]: '' };
- 
-      switch (name) { 
+
+      switch (name) {
         case 'password':
           if (!value) {
             stateObj[name] = 'Please enter Password.';
@@ -89,7 +90,7 @@ function UserPasswordPage() {
             stateObj['confirmPassword'] = input.confirmPassword ? '' : error.confirmPassword;
           }
           break;
- 
+
         case 'confirmPassword':
           if (!value) {
             stateObj[name] = 'Please enter Confirm Password.';
@@ -97,11 +98,11 @@ function UserPasswordPage() {
             stateObj[name] = 'Password and Confirm Password does not match.';
           }
           break;
- 
+
         default:
           break;
       };
- 
+
       return stateObj;
     });
   };
@@ -111,18 +112,13 @@ function UserPasswordPage() {
   const checkNumber = /\d/.test(input.password) ? 'line-through' : '';
   const checkCharacter = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(input.password) ? 'line-through' : '';
 
-  // submit input
   const buttonHandler = () => {
-    if (error.password === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
-      // akan buat function hit api ubah password
+    if (error.password === '' && error.confirmPassword === '' && checkCapital !== ''
+      && checkNumber !== '' && checkCharacter !== '') {
+      dispatch(editUserPassword(cookies.token, { password: input.password }));
       dispatch(setAlert({ status: true, name: 'password' }));
     };
   };
-
-    // reset footer's text + link
-    useEffect(() => {
-      dispatch(setFooterAnchor("", ""));
-    }, []);
 
   return (
     <div>
@@ -136,7 +132,7 @@ function UserPasswordPage() {
       <div>
         <form action="">
           <label htmlFor="password" className="label-form">Kata sandi baru</label>
-          <input type={passwordType.password} id="password" className="input-text" name="password" value={input.password} 
+          <input type={passwordType.password} id="password" className="input-text" name="password" value={input.password}
             onChange={onInputChange} onBlur={validateInput} autoFocus />
           <span name="password" onClick={visibilityHandler}>
             {passwordType.password === 'password' ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
@@ -145,7 +141,7 @@ function UserPasswordPage() {
           {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
 
           <label htmlFor="confirmPassword" className="label-form">Konfirmasi kata sandi</label>
-          <input type={passwordType.confirmPassword} id="confirmPassword" className="input-text" name="confirmPassword" 
+          <input type={passwordType.confirmPassword} id="confirmPassword" className="input-text" name="confirmPassword"
             value={input.confirmPassword} onChange={onInputChange} onBlur={validateInput} />
           <span name="confirmPassword" onClick={visibilityHandler}>
             {passwordType.confirmPassword === 'password' ? <EyeOffLineIcon className="green"></EyeOffLineIcon>

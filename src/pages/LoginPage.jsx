@@ -4,19 +4,25 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
+import EyeLineIcon from "remixicon-react/EyeLineIcon";
 
 function LoginPage() {
-  // akan ke page register jika tulisan "daftar sekarang" di klik 
   const navigate = useNavigate();
-  const toRegister = () => {
-    navigate("/register");
-  };
-
-  // input form
+  const dispatch = useDispatch();
+  const [passwordType, setPasswordType] = useState('password');
   const [user, setUser] = useState({
-    username: "",
+    email: "",
     password: "",
   });
+  const [error, setError] = useState({
+    email: "",
+    password: ""
+  });
+
+  useEffect(() => {
+    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'))
+  }, []);
 
   const handleInput = (event) => {
     setUser({
@@ -25,17 +31,28 @@ function LoginPage() {
     });
   };
 
-  const login = (event) => {
-    event.preventDefault();
-    console.log(user);
+  const validateInput = () => {
+    if (!user.email) {
+      error.email = 'Email tidak boleh kosong.';
+    } else {
+      error.email = '';
+    };
+
+    if (!user.password) {
+      error.password = 'Password tidak boleh kosong.';
+    } else {
+      error.password = '';
+    };
   };
 
-  // set text and link for footer
-  const dispatch = useDispatch();
+  const login = (event) => {
+    event.preventDefault();
+    validateInput();
 
-  useEffect(() => {
-     dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'))
-  }, []);
+    if (!error.email && !error.password) {
+      dispatch(loginUser(user));
+    };
+  };
 
   return (
     <>
@@ -57,30 +74,37 @@ function LoginPage() {
             <p className="label-form">Email</p>
             <input
               className="input-text"
-              type="text"
-              name="username"
+              type="email"
+              name="email"
               placeholder="janedoe@email.com"
-              value={user.username}
+              value={user.email}
               onChange={handleInput}
             ></input>
-            <br />
+            {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
+
             <p className="label-form">Password</p>
             <input
               className="input-text"
-              type="password"
+              type={passwordType}
               name="password"
               placeholder="********"
               value={user.password}
               onChange={handleInput}
             ></input>
-            <p className="label-form text-center">Forgot Password?</p>
+            <span name="confirmPassword" onClick={() => passwordType === 'password'
+              ? setPasswordType('text') : setPasswordType('password')}>
+              {passwordType === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
+                : <EyeLineIcon className="green"></EyeLineIcon>}
+            </span>
+            {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
           </div>
 
           <div className="text-center">
+            <p className="label-form text-center">Forgot Password?</p>
             <ButtonPrimary buttonText="Log in" onClick={login} />
             <p className="label-form">
               Belum punya akun?&ensp;
-              <span className="underline cursor-pointer" onClick={toRegister}>Daftar sekarang</span>
+              <span className="underline cursor-pointer" onClick={() => navigate("/register")}>Daftar sekarang</span>
             </p>
           </div>
         </div>

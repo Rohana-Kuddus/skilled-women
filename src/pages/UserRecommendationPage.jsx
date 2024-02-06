@@ -38,14 +38,9 @@ function UserRecommendationPage() {
 
   return (
     <div>
-      <div
-        className="flex flex-row gap-12"
-        style={{ fontFamily: "var(--paragraph-font)" }}
-      >
-
+      <div className="flex flex-row gap-12" style={{ fontFamily: "var(--paragraph-font)" }}>
         <SidebarProfile />
 
-        {/* user's class recommendation (card) */}
         <div className="green flex flex-col items-center mt-16">
           {course.map((i) => (
             <div key={i.id} className="mb-2">
@@ -53,10 +48,7 @@ function UserRecommendationPage() {
             </div>
           ))}
 
-          {/* button recommendation */}
-          <div>
-            <ButtonRecommendation name="Kelas" padding="px-32" action={() => navigate('/recommendations')} />
-          </div>
+          <ButtonRecommendation name="Kelas" padding="px-32" action={() => navigate('/recommendations')} />
         </div>
       </div>
 
