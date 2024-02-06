@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LandingPage from "./pages/LandingPage"
 import JobPage from "./pages/JobPage"
@@ -16,7 +16,7 @@ import RecommendationPage from "./pages/RecommendationPage"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 
-function App() {  
+function App() {
   return (
     <>
       <BrowserRouter>

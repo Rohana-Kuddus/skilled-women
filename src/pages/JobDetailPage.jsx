@@ -6,33 +6,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { getJobDetail } from "../redux/slices/jobSlice";
 import { useParams } from "react-router-dom";
+import Loading from "../components/Loading";
 
 function JobDetailPage() {
-  const [isActive, setIsActive] = useState('intro');
   const dispatch = useDispatch();
   const { jobDetail } = useSelector(state => state.job);
+  const [isActive, setIsActive] = useState('intro');
   const params = useParams();
 
   useEffect(() => {
-    console.log('render');
-    dispatch(getJobDetail(params.id));
     dispatch(setFooterAnchor("", ""));
-  }, [jobDetail]);
+    dispatch(getJobDetail(params.id));
+  }, []);
 
-  return ( 
+  return (
     <div>
-      {/* akan ditambah props data dari api */}
-      {/* <Hero data={jobDetail}></Hero> */}
+      {Object.keys(jobDetail).length !== 0 ?
+        <div>
+          {<Hero data={jobDetail}></Hero>}
 
-      {/* tab */}
-      <div>
-        <h3 className="heading3 green" onClick={() => setIsActive('intro')}>Pengenalan</h3>
-        <h3 className="heading3 green" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
-      </div>
+          {/* tab */}
+          <div>
+            <h3 className="heading3 green" onClick={() => setIsActive('intro')}>Pengenalan</h3>
+            <h3 className="heading3 green" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
+          </div>
 
-      {/* akan ditambah props data dari redux api */}
-      {/* {isActive === 'intro' && <Introduction data={jobDetail} setIsActive={setIsActive}></Introduction>} */}
-      {isActive === 'roadmap' && <Roadmap data={jobDetail}></Roadmap>}
+          {isActive === 'intro' && <Introduction data={jobDetail} setIsActive={setIsActive}></Introduction>}
+          {isActive === 'roadmap' && <Roadmap data={jobDetail}></Roadmap>}
+        </div>
+        : <Loading></Loading>}
     </div>
   );
 }

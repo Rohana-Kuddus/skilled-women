@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { getIndustry } from "../redux/slices/industrySlice";
 import { getJobList } from "../redux/slices/jobSlice";
+import { loginUser } from "../redux/slices/authSlice";
 
 function JobPage() {
   const dispatch = useDispatch();

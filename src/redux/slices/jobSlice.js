@@ -47,7 +47,6 @@ export const getJobDetail = (jobId) => async (dispatch) => {
       url: `https://skilled-women-be-production.up.railway.app/jobs/${jobId}`,
       responseType: 'json'
     });
-    console.log(data);
     
     return dispatch(setJobDetail({ data, message }));
   } catch (err) {

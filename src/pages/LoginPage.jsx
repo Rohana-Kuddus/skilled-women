@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function LoginPage() {
-  
   // akan ke page register jika tulisan "daftar sekarang" di klik 
   const navigate = useNavigate();
   const toRegister = () => {
