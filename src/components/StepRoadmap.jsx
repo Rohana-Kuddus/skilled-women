@@ -21,7 +21,6 @@ function StepRoadmap() {
   }, [roadmap]);
 
   return (
-    // styling: buat roadmap step dan border garis2 mengelilingi roadmap
     <div className="border-2 border-dashed border-[#4F6C6A] p-5">
       <div className="flex flex-col justify-center">
         {roadmap.map((v, i)=> (

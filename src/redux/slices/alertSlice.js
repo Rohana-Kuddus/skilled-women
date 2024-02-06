@@ -7,17 +7,18 @@ const alertSlice = createSlice({
     name: ''
   },
   reducers: {
-    setAlert(state, action) {
-      state.status = action.payload;
+    setStatus(state, action) {
+      state.status = action.payload.status;
+      state.name = action.payload.name;
     }
   }
 });
 
-export const { setAlert } = alertSlice.actions;
+export const { setStatus } = alertSlice.actions;
 
 // function
-export const setStatus = (payload) => {
-  return setAlert(payload);
+export const setAlert = (payload) => {
+  return setStatus(payload);
 };
 
 export default alertSlice.reducer;

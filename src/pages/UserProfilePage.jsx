@@ -6,20 +6,32 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import Alert from "../components/Alert"
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setStatus } from "../redux/slices/alertSlice";
+import { setAlert } from "../redux/slices/alertSlice";
 import "../index.css";
 import "../styles/pages/UserProfilePage.css";
 import { getCity } from "../redux/slices/citySlice";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
+  const { status, name } = useSelector(state => state.alert);
   const { city } = useSelector(state => state.city);
+  
+  // dropdown
+  const [isOpen, setIsOpen] = useState("");
+  const [searchCity, setSearchCity] = useState("");
+  const dropdownRef = useRef();
+  const searchRef = useRef();
 
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
     dispatch(getCity());
   }, [city]);
+
+  useEffect(() => {
+    if (isOpen !== "" && dropdownRef.current) {
+      filterItems();
+    }
+  }, [isOpen]);
 
   const [input, setInput] = useState({
     // data dummy
@@ -51,12 +63,6 @@ function UserProfilePage() {
     }));
   };
 
-  // dropdown
-  const [isOpen, setIsOpen] = useState("");
-  const [searchCity, setSearchCity] = useState("");
-  const dropdownRef = useRef();
-  const searchRef = useRef();
-
   const toggleDropdown = (dropdownName) => {
     setIsOpen(dropdownName);
   };
@@ -84,18 +90,12 @@ function UserProfilePage() {
     filterItems();
   };
 
-  useEffect(() => {
-    if (isOpen !== "" && dropdownRef.current) {
-      filterItems();
-    }
-  }, [isOpen]);
-
   const alert = {
     status: true,
     text: 'Profile berhasil disimpan',
     button: {
       primary: 'Tutup',
-      primaryAction: () => dispatch(setStatus(false))
+      primaryAction: () => dispatch(setAlert({ status: false, name: 'profile' }))
     }
   };
 
@@ -105,11 +105,11 @@ function UserProfilePage() {
     // hit api update profile
     console.log({ message: 'success update input', data: { ...input } });
 
-    dispatch(setStatus(true));
+    dispatch(setAlert({ status: true, name: 'profile' }));
   };
 
   return (
-    <>
+    <div>
       <div className="flex flex-row justify-between">
         <div>
           <SidebarProfile />
@@ -298,8 +298,9 @@ function UserProfilePage() {
           </div>
         </div>
       </div>
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
-    </>
+
+      {status && name === 'profile' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+    </div>
   );
 }
 

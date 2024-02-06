@@ -4,20 +4,20 @@ import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setStatus } from "../redux/slices/alertSlice";
+import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function UserPasswordPage() {
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
+  const { status, name } = useSelector(state => state.alert);
 
   const alert = {
     status: true,
     text: 'Kata sandi Anda berhasil diubah!',
     button: {
       primary: 'Tutup',
-      primaryAction: () => dispatch(setStatus(false))
+      primaryAction: () => dispatch(setAlert({ status: false, name: 'password' }))
     }
   };
 
@@ -115,7 +115,7 @@ function UserPasswordPage() {
   const buttonHandler = () => {
     if (error.password === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
       // akan buat function hit api ubah password
-      dispatch(setStatus(true));
+      dispatch(setAlert({ status: true, name: 'password' }));
     };
   };
 
@@ -167,7 +167,7 @@ function UserPasswordPage() {
       {/* panggil button primary untuk ganti password */}
       <ButtonPrimary buttonText={'Ganti kata sandi'} onClick={buttonHandler}></ButtonPrimary>
 
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {status && name === 'password' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>
   );
 }

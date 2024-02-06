@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setStatus } from "../redux/slices/alertSlice"
+import { setAlert } from "../redux/slices/alertSlice"
 import MenuLineIcon from "remixicon-react/MenuLineIcon";
 import Alert from "./Alert";
 import "../styles/components/SidebarProfile.css";
@@ -11,7 +11,7 @@ import { logoutUser } from "../redux/slices/authSlice";
 function SidebarProfile({ id }) {
   const [isOpen, setOpen] = useState(window.innerWidth >= 768);
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
+  const { status, name } = useSelector(state => state.alert);
 
   // adjust open and close sidebar based on screen size
   const resizeSidebar = () => {
@@ -40,15 +40,15 @@ function SidebarProfile({ id }) {
       primary: 'Keluar',
       primaryAction: () => {
         dispatch(logoutUser());
-        dispatch(setStatus(false));
+        dispatch(setAlert({ status: false, name: 'signout' }));
       },
       secondary: 'Batal',
-      secondaryAction: () => dispatch(setStatus(false))
+      secondaryAction: () => dispatch(setAlert({ status: false, name: 'signout' }))
     }
   };
 
   return (
-    <>
+    <div>
       <div className="flex flex-row">
         <button
           onBlur={handleBlur}
@@ -97,7 +97,7 @@ function SidebarProfile({ id }) {
               </div>
               <div className="border-t-2 border-gray-200"></div>
               <div className="my-5 mx-2 p-1 text-center hover:bg-red-200 active:bg-red-200 rounded-md">
-                <button onClick={() => dispatch(setStatus(true))} className="text-red-500">
+                <button onClick={() => dispatch(setAlert({ status: true, name: 'signout' }))} className="text-red-500">
                   Keluar
                 </button>
               </div>
@@ -105,8 +105,9 @@ function SidebarProfile({ id }) {
           </aside>
         )}
       </div>
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
-    </>
+
+      {status && name === 'signout' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+    </div>
   );
 }
 

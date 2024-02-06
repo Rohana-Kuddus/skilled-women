@@ -2,7 +2,7 @@ import SearchLineIcon from "remixicon-react/SearchLineIcon"
 import ButtonRecommendation from "../components/ButtonRecommendation";
 import { useEffect, useState } from "react";
 import CardJob from "../components/CardJob";
-import { setStatus } from "../redux/slices/alertSlice";
+import { setAlert } from "../redux/slices/alertSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../components/Alert";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ function JobPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cookies] = useCookies();
-  const { status } = useSelector(state => state.alert);
+  const { status, name } = useSelector(state => state.alert);
   const { industry } = useSelector(state => state.industry);
   const { job } = useSelector(state => state.job);
 
@@ -37,7 +37,7 @@ function JobPage() {
       primary: 'Login',
       primaryAction: () => {
         navigate('/login');
-        dispatch(setStatus(false));
+        dispatch(setAlert({ status: false, name: 'login' }));
       },
       secondary: 'Daftar sekarang',
       secondaryAction: () => {
@@ -84,8 +84,9 @@ function JobPage() {
           </div>
           
           <div className="pt-2">
-            <ButtonRecommendation name={'Pekerjaan'} action={Object.keys(cookies).length !== 0 ? 
-              () => window.open('url', '_blank', 'noreferrer') : () => dispatch(setStatus(true))}></ButtonRecommendation>
+            <ButtonRecommendation name={'Pekerjaan'} action={Object.keys(cookies).length !== 0 
+              ? () => window.open('url', '_blank', 'noreferrer') 
+              : () => dispatch(setAlert({ status: true, name: 'login' }))}></ButtonRecommendation>
           </div> 
         </div> 
       </section>
@@ -101,7 +102,8 @@ function JobPage() {
         </div>
       </section>
       
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button} closeBtn={true}></Alert>}
+      {status && name === 'login' && <Alert status={alert.status} text={alert.text} button={alert.button} 
+        closeBtn={true} name={'login'}></Alert>}
     </div>
   );
 }

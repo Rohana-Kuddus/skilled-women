@@ -3,14 +3,14 @@ import ButtonRecommendation from "./ButtonRecommendation";
 import StepRoadmap from "./StepRoadmap";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "./Alert";
-import { setStatus } from "../redux/slices/alertSlice";
 import { useNavigate } from "react-router-dom";
+import { setAlert } from "../redux/slices/alertSlice";
 
 function Roadmap({ data }) {
   const navigate = useNavigate();
   const [cookies] = useCookies();
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
+  const { status, name } = useSelector(state => state.alert);
 
   const alert = {
     status: false,
@@ -19,7 +19,7 @@ function Roadmap({ data }) {
       primary: 'Login',
       primaryAction: () => {
         navigate('/login');
-        dispatch(setStatus(false));
+        dispatch(setAlert({ status: false, name: 'roadmap' }));
       },
       secondary: 'Daftar sekarang',
       secondaryAction: () => {
@@ -38,12 +38,13 @@ function Roadmap({ data }) {
 
         {/* perlu ubah url jadi link gform rekomendasi roadmap */}
         <ButtonRecommendation name={'Roadmap'} action={Object.keys(cookies).length !== 0 ?
-          () => window.open('url', '_blank', 'noreferrer') : () => dispatch(setStatus(true))}></ButtonRecommendation>
+          () => window.open('url', '_blank', 'noreferrer') : () => dispatch(setAlert({ status: true, name: 'roadmap' }))}></ButtonRecommendation>
 
         <StepRoadmap></StepRoadmap>
       </div>
 
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button} closeBtn={true}></Alert>}
+      {status && name === 'roadmap' && <Alert status={alert.status} text={alert.text} button={alert.button} 
+        closeBtn={true} name={'roadmap'}></Alert>}
     </div>
   );
 }

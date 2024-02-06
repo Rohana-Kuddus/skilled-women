@@ -8,14 +8,14 @@ import { useEffect } from "react"
 import { getClassRoadmap } from "../redux/slices/courseSlice"
 import { useParams } from "react-router-dom"
 import { useCookies } from "react-cookie"
-import { setStatus } from "../redux/slices/alertSlice"
+import { setAlert } from "../redux/slices/alertSlice"
 import Alert from "./Alert"
 
 function SidebarClass({ data, setIsOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookies] = useCookies();
-  const { status } = useSelector(state => state.alert);
+  const { status, name } = useSelector(state => state.alert);
   const { course } = useSelector(state => state.course);
   const params = useParams();
 
@@ -30,7 +30,7 @@ function SidebarClass({ data, setIsOpen }) {
       primary: 'Login',
       primaryAction: () => {
         navigate('/login');
-        dispatch(setStatus(false));
+        dispatch(setAlert({ status: false, name: 'class' }));
       },
       secondary: 'Daftar sekarang',
       secondaryAction: () => {
@@ -51,7 +51,7 @@ function SidebarClass({ data, setIsOpen }) {
         <div>
           <h3 className="heading3 green font-bold">{data.name}</h3>
           <ButtonRecommendation name={'Kelas'} action={Object.keys(cookies).length !== 0 ?
-            () => navigate('/recommendations') : () => dispatch(setStatus(true))}></ButtonRecommendation>
+            () => navigate('/recommendations') : () => dispatch(setAlert({ status: true, name: 'class' }))}></ButtonRecommendation>
         </div>
 
         <div>
@@ -63,7 +63,8 @@ function SidebarClass({ data, setIsOpen }) {
         </div>
       </div>
 
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button} closeBtn={true}></Alert>}
+      {status && name === 'class'  && <Alert status={alert.status} text={alert.text} button={alert.button} 
+        closeBtn={true} name={'class'}></Alert>}
     </div>
   );
 }

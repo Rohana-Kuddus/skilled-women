@@ -6,30 +6,45 @@ import { useNavigate } from "react-router-dom";
 import "../index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { getClassUser } from "../redux/slices/courseSlice";
+import { deleteClass, getClassUser } from "../redux/slices/courseSlice";
+import { useCookies } from "react-cookie";
+import Alert from "../components/Alert";
 
 function UserRecommendationPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cookies] = useCookies();
   const { course } = useSelector(state => state.course);
+  const { status, name } = useSelector(state => state.alert);
 
-  // dummy token
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNjc0ODg0NX0.HDhf3ah9l5abgcoRIdF_G6yK8UVJ7_ddmFYuwVf88Qg';
+  const alert = {
+    status: false,
+    text: `Tindakan ini tidak dapat dibatalkan <br> Apakah Anda yakin ingin menghapusnya?`,
+    button: {
+      primary: 'Hapus',
+      primaryAction: () => {
+        // dispatch(deleteClass(data.id));
+        dispatch(setAlert({ status: false, name: 'deleteClass' }));
+      },
+      secondary: 'Batal',
+      secondaryAction: () => dispatch(setAlert({ status: false, name: 'deleteClass' }))
+    }
+  };
+
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
-    dispatch(getClassUser(token));
+    dispatch(getClassUser(cookies.token));
   }, [course]);
 
   return (
-    <>
+    <div>
       <div
         className="flex flex-row gap-12"
         style={{ fontFamily: "var(--paragraph-font)" }}
       >
-        {/* sidebar */}
-        <div>
-          <SidebarProfile />
-        </div>
+
+        <SidebarProfile />
+
         {/* user's class recommendation (card) */}
         <div className="green flex flex-col items-center mt-16">
           {course.map((i) => (
@@ -37,17 +52,16 @@ function UserRecommendationPage() {
               <CardClass data={i} editBtn={true}></CardClass>
             </div>
           ))}
+
           {/* button recommendation */}
           <div>
-            <ButtonRecommendation
-              name="Kelas"
-              padding="px-32"
-              action={() => navigate('/recommendations')}
-            />
+            <ButtonRecommendation name="Kelas" padding="px-32" action={() => navigate('/recommendations')} />
           </div>
         </div>
       </div>
-    </>
+
+      {status && name === 'deleteClass' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+    </div>
   );
 }
 

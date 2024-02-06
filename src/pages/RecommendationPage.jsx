@@ -1,32 +1,37 @@
 import SearchLineIcon from "remixicon-react/SearchLineIcon"
 import ButtonPrimary from "../components/ButtonPrimary";
 import { useDispatch, useSelector } from "react-redux";
-import { setStatus } from "../redux/slices/alertSlice";
+import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { useEffect, useState } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useLocation } from "react-router-dom";
 import { getClass } from "../redux/slices/courseSlice";
+import { useCookies } from "react-cookie";
+import { getJobList } from "../redux/slices/jobSlice";
+import { getRoadmap } from "../redux/slices/roadmapSlice";
 
 function RecommendationPage() {
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
+  const { status, name } = useSelector(state => state.alert);
   const { courseDetail } = useSelector(state => state.course);
+  const { job } = useSelector(state => state.job);
+  const { roadmap } = useSelector(state => state.roadmap);
+  const [cookies] = useCookies();
 
-  // check if user edit page or add new course
+  // check edit page or add new course
   const location = useLocation();
   if (location.state !== null) {
     const { classId } = location.state;
 
-    // dummy token
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNjc0ODg0NX0.HDhf3ah9l5abgcoRIdF_G6yK8UVJ7_ddmFYuwVf88Qg';
     useEffect(() => {
-      dispatch(getClass(token, classId));
+      dispatch(getClass(cookies.token, classId));
     }, [courseDetail]);
   };
 
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
+    dispatch(getJobList());
   }, []);
 
   // input states
@@ -58,87 +63,12 @@ function RecommendationPage() {
     text: 'Rekomendasi berhasil disimpan',
     button: {
       primary: 'Tutup',
-      primaryAction: () => dispatch(setStatus(false))
+      primaryAction: () => dispatch(setAlert({ status: false, name: 'recommendation' }))
     }
   };
 
-  // dummy data roadmap, nanti akan ambil dari selctor
-  const roadmap = [
-    {
-      id: 1,
-      name: 'Pengenalan petani hidroponik 1',
-      step: 1
-    },
-    {
-      id: 2,
-      name: 'Pengenalan petani hidroponik 2',
-      step: 2
-    },
-    {
-      id: 3,
-      name: 'Pengenalan petani hidroponik 3',
-      step: 3
-    },
-    {
-      id: 4,
-      name: 'Pengenalan petani hidroponik 4',
-      step: 4
-    },
-    {
-      id: 5,
-      name: 'Pengenalan petani hidroponik 5',
-      step: 5
-    }
-  ];
-
-  // dummy data job. akan diambil pakai selctor redux
-  const jobs = [
-    {
-      title: "Graphic Designer",
-      image: "https://source.unsplash.com/tuned-on-macbook-CGpifH3FjOA",
-      industry: "Kreatif",
-      description: "Ciptakan kreasi desain art kamu secara digital!",
-      id: 1
-    },
-    {
-      title: "Petani Hidroponik",
-      image: "https://source.unsplash.com/text-s_AgJxMc4zk",
-      industry: "Agrikultur",
-      description: "Cocok untuk kamu yang ingin membuka usaha tanaman hidroponik atau berkebun sendiri ~",
-      id: 2
-    },
-    {
-      title: "Fotografer",
-      image: "https://source.unsplash.com/person-holding-canon-dslr-camera-hfk6xOjQlFk",
-      industry: "Kreatif",
-      description: "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
-      id: 3
-    },
-    {
-      title: "Digital Marketing Consoultant",
-      image: "https://source.unsplash.com/person-writing-on-white-paper-U33fHryBYBU",
-      industry: "Bisnis",
-      description: "Bantu konsultasi tim marketing kamu dengan menjadi digital marketing consoultant",
-      id: 4
-    },
-    {
-      title: "Video Editor ",
-      image: "https://source.unsplash.com/black-flat-screen-tv-turned-on-displaying-game-B4f_Kx5jvpg",
-      industry: "Kreatif",
-      description: "Jago ngedit video? Jadi Video editor aja!",
-      id: 5
-    },
-    {
-      title: "Pilot Drone",
-      image: "https://source.unsplash.com/brown-and-black-wooden-table-U9vKDttdNLA",
-      industry: "Teknologi",
-      description: "Hobi main game console & pesawat? Jadi pilot drone yuk! ",
-      id: 6
-    }
-  ];
-
   // akan diubah hit api sesuai search
-  const searchedJob = jobs.filter(v => v.title.toLowerCase().includes(search.toLowerCase()));
+  const searchedJob = job.filter(v => v.title.toLowerCase().includes(search.toLowerCase()));
 
   const selectHandler = (e) => {
     const { options } = e.target;
@@ -199,7 +129,7 @@ function RecommendationPage() {
     if (check) {
       // hit api save kelas
       console.log(input);
-      dispatch(setStatus(true));
+      dispatch(setAlert({ status: true, name: 'recommendation' }));
     };
   };
 
@@ -248,8 +178,8 @@ function RecommendationPage() {
               <li key={v.id} value={v.id} onClick={(e) => {
                 setInput(prev => ({ ...prev, job: v.id }));
                 setSearch(v.title);
+                dispatch(getRoadmap(v.id));
                 e.target.setAttribute('class', 'hidden');
-                // akan ditambah hit api untuk ambil roadmap berdasar pekerjaan
               }}>{v.title}</li>
             ))}
           </ul>
@@ -260,14 +190,11 @@ function RecommendationPage() {
           <select name="roadmap" onChange={selectHandler} onBlur={errorHandler}>
             <option defaultValue={-1}>Pilih roadmap</option>
             {roadmap.map((v, i) => (
-              <option key={i} value={i}>{v.name}</option>
+              <option key={i} value={v.name}>{v.name}</option>
             ))}
           </select>
           {select.map((v, i) => (
-            <p key={i} className="paragraph-regular dark">
-              {v}
-              {/* {roadmap[id].name} */}
-            </p>
+            <p key={i} className="paragraph-regular dark">{v}</p>
           ))}
           {error.roadmap && <p className="paragraph-regular text-[#FE0101]">{error.roadmap}</p>}
 
@@ -299,7 +226,7 @@ function RecommendationPage() {
 
       </div>
 
-      {status && <Alert status={alert.status} text={alert.text}
+      {status && name === 'recommendation' && <Alert status={alert.status} text={alert.text}
         button={alert.button}></Alert>}
     </div>
   );

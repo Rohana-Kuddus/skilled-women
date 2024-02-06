@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setStatus } from "../redux/slices/alertSlice"
+import { setAlert } from "../redux/slices/alertSlice"
 import MenuLineIcon from "remixicon-react/MenuLineIcon";
 import Logo from "../assets/logo.svg";
 import Alert from "./Alert";
@@ -15,9 +15,9 @@ import { getUserProfile } from "../redux/slices/userSlice";
 function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
-  const [cookies] = useCookies();
+  const { status, name } = useSelector(state => state.alert);
   const { user } = useSelector(state => state.user);
+  const [cookies] = useCookies();
   const [isOpen, setOpen] = useState(window.innerWidth >= 1024); // change the navbar view based on device size
 
   const resizeNav = () => {
@@ -48,10 +48,10 @@ function Navbar() {
       primary: 'Keluar',
       primaryAction: () => {
         dispatch(logoutUser());
-        dispatch(setStatus(false));
+        dispatch(setAlert({ status: false, name: 'logout' }));
       },
       secondary: 'Batal',
-      secondaryAction: () => dispatch(setStatus(false))
+      secondaryAction: () => dispatch(setAlert({ status: false, name: 'logout' }))
     },
   };
 
@@ -84,7 +84,8 @@ function Navbar() {
                   <img
                     src={user.image ? user.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'} 
                     alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4" onClick={() => navigate('/profiles/:id')} />
-                  <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setStatus(true))} margin="my-0"></ButtonPrimary>
+                  <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setAlert({ status: true, name: 'logout' }))} 
+                    margin="my-0"></ButtonPrimary>
                 </div>
                 : <ButtonPrimary buttonText="Coba Sekarang" onClick={() => navigate('/register')} margin="my-0 ml-4"></ButtonPrimary>}
             </div>
@@ -92,7 +93,7 @@ function Navbar() {
         )}
       </nav>
 
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {status && name === 'logout' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>
   );
 }
