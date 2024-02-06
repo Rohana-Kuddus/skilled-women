@@ -11,9 +11,10 @@ function SidebarClass({ data, setIsOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { course } = useSelector(state => state.course);
+  const params = useParams();
 
   useEffect(() => {
-    dispatch(getClassRoadmap(data.clasId, data.roadmapId));
+    dispatch(getClassRoadmap(params.id, data.id));
   }, [course]);
 
   return ( 

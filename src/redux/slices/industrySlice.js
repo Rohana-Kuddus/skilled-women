@@ -4,11 +4,13 @@ import axios from "axios";
 const industrySlice = createSlice({
   name: 'industry',
   initialState: {
-    industry: []
+    industry: [],
+    message: ''
   },
   reducers: {
     setIndustry(state, action) {
-      state.industry = action.payload;
+      state.industry = action.payload.data;
+      state.message = action.payload.message;
     }
   }
 });
@@ -16,15 +18,18 @@ const industrySlice = createSlice({
 export const { setIndustry } = industrySlice.actions;
 
 // function get industries
-export const getIndustry = () => {
-  return async (dispatch) => {
-    const { data: { data } } = await axios({
+export const getIndustry = () => async (dispatch) => {
+  try {
+    const { data: { data, message } } = await axios({
       method: 'get',
       url: 'https://skilled-women-be-production.up.railway.app/industries',
       responseType: 'json'
     });
 
-    dispatch(setIndustry(data));
+    return dispatch(setIndustry({ data, message }));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setIndustry({ data: [], message: err.response.data.message }));
   };
 };
 

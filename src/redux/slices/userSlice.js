@@ -5,49 +5,77 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {},
-    class: [],
+    message: ''
   },
   reducers: {
     setUser(state, action) {
-      state.user = action.payload;
+      state.user = action.payload.data;
+      state.message = action.payload.message;
     },
-    setClass(state, action) {
-      state.class = action.payload;
-    },
-  },
-//   extraReducers: (builder) => {
-//     builder.addCase(getUserProfile.fulfilled, (state, action) => {
-//       state.user = action.payload;
-//     });
-//  }
+    setUserMessage(state, action) {
+      state.message = action.payload;
+    }
+  }
 });
 
-export const { setUser, setClass } = userSlice.actions;
+export const { setUser, setUserMessage } = userSlice.actions;
 
 
-// // belum yakin sintaksnya works
+// function get user profile
+export const getUserProfile = (token) => async (dispatch) => {
+  try {
+    const { data: { data, message } } = await axios({
+      method: 'get',
+      url: 'https://skilled-women-be-production.up.railway.app/users',
+      headers: {
+        'Authorization': token
+      },
+      responseType: 'json'
+    });
 
+    return dispatch(setUser({ data, message }));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setUser({ data: {}, message: err.response.data.message }));
+  };
+};
 
-// // function get user profile
-// export const getUserProfile = async (userId) => {
-//   const response = await axios.get(`https://skilled-women-be-production.up.railway.app/users/${userId}`);
-//   return response.data;
-// };
+// function edit user profile
+export const editUserProfile = (token, payload) => async (dispatch) => {
+  try {
+    const { data: { message } } = await axios({
+      method: 'put',
+      url: 'https://skilled-women-be-production.up.railway.app/users',
+      headers: {
+        'Authorization': token
+      },
+      data: payload
+    });
 
-// // function edit user profile
-// export const editUserProfile = async (userId, updatedData) => {
-//   const response = await axios.put(`https://skilled-women-be-production.up.railway.app/users/${userId}`, updatedData);
-//   return response.data;
-// }; 
-// // function edit user password
-// export const editUserPassword = async (userId, newPassword) => {
-//   const response = await axios.patch(`https://skilled-women-be-production.up.railway.app/users/${userId}/password`, { password: newPassword });
-//   return response.data;
-// }; 
-// // function get class by user
-// export const getClassByUser = async (userId) => {
-//   const response = await axios.get(`https://skilled-women-be-production.up.railway.app/users/${userId}/classes`);
-//   return response.data;
-// }; 
+    return dispatch(setUserMessage(message));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setUser(err.response.data.message));
+  };
+}; 
+
+// function edit user password
+export const editUserPassword = (token, payload) => async (dispatch) => {
+  try {
+    const { data: { message } } = await axios({
+      method: 'patch',
+      url: 'https://skilled-women-be-production.up.railway.app/users',
+      headers: {
+        'Authorization': token
+      },
+      data: payload
+    });
+
+    return dispatch(setUserMessage(message));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setUser(err.response.data.message));
+  };
+};
 
 export default userSlice.reducer;

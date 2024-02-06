@@ -11,13 +11,10 @@ function StepRoadmap({ data }) {
   const dispatch = useDispatch();
   const { roadmap } = useSelector(state => state.roadmap);
   const params = useParams();
-  const id = params.id
-  console.log(id);
   
-  // function hit redux api roadmap pakai id pekerjaan
   useEffect(() => {
-    dispatch(getRoadmap(id))
-  }, [])
+    dispatch(getRoadmap(params.id));
+  }, []);
 
   console.log('roadmap',roadmap);
 

@@ -8,41 +8,45 @@ const courseSlice = createSlice({
   initialState: {
     course: [],
     courseDetail: {},
-    statusCode: 200
+    message: ''
   },
   reducers: {
     setCourse(state, action) {
-      state.course = action.payload;
+      state.course = action.payload.data;
+      state.message = action.payload.message;
     },
     setCourseDetail(state, action) {
-      state.courseDetail = action.payload;
+      state.courseDetail = action.payload.data;
+      state.message = action.payload.message;
     },
-    setStatusCode(state, action) {
-      state.statusCode = action.payload;
+    setCourseMessage(state, action) {
+      state.message = action.payload;
     }
   }
 });
 
-export const { setCourse, setCourseDetail, setStatusCode } = courseSlice.actions;
+export const { setCourse, setCourseDetail, setCourseMessage } = courseSlice.actions;
 
 // function get class by roadmap
-export const getClassRoadmap = (jobId, roadmapId) => {
-  return async (dispatch) => {
-    const { status, data: { data } } = await axios({
+export const getClassRoadmap = (jobId, roadmapId) => async (dispatch) => {
+  try {
+    const { data: { data, message } } = await axios({
       method: 'get',
       url: `https://skilled-women-be-production.up.railway.app/jobs/${jobId}/roadmaps/${roadmapId}/classes`,
       responseType: 'json'
     });
     
-    dispatch(setStatusCode(status));
-    dispatch(setCourse(data));
+    return dispatch(setCourse({ data, message }));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setCourse({ data: [], message: err.response.data.message }));
   };
 };
 
 // function get class by user
-export const getClassUser = (token) => {
-  return async (dispatch) => {
-    const { status, data: { data } } = await axios({
+export const getClassUser = (token) => async (dispatch) => {
+  try {
+    const { data: { data, message } } = await axios({
       method: 'get',
       url: 'https://skilled-women-be-production.up.railway.app/users/classes',
       headers: {
@@ -51,15 +55,17 @@ export const getClassUser = (token) => {
       responseType: 'json'
     });
     
-    dispatch(setStatusCode(status));
-    dispatch(setCourse(data));
+    return dispatch(setCourse({ data, message }));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setCourse({ data: [], message: err.response.data.message }));
   };
 };
 
 // function get detail class
-export const getClass = (token, classId) => {
-  return async (dispatch) => {
-    const { status, data: { data } } = await axios({
+export const getClass = (token, classId) => async (dispatch) => {
+  try {
+    const { data: { data, message } } = await axios({
       method: 'get',
       url: `https://skilled-women-be-production.up.railway.app/classes/${classId}`,
       headers: {
@@ -68,15 +74,17 @@ export const getClass = (token, classId) => {
       responseType: 'json'
     });
 
-    dispatch(setStatusCode(status));
-    dispatch(setCourseDetail(data));
+    return dispatch(setCourseDetail({ data, message }));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setCourseDetail({ data: {}, message: err.response.data.message }));
   };
 };
 
 // function submit class recommendation
-export const submitClass = (token, payload) => {
-  return async (dispatch) => {
-    const { status } = await axios({
+export const submitClass = (token, payload) => async (dispatch) => {
+  try {
+    const { data: { message } } = await axios({
       method: 'post',
       url: 'https://skilled-women-be-production.up.railway.app/classes',
       headers: {
@@ -85,14 +93,17 @@ export const submitClass = (token, payload) => {
       data: payload
     });
 
-    dispatch(setStatusCode(status));
+    return dispatch(setCourseMessage(message));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setCourseMessage(err.response.data.message));
   };
 };
 
 // function edit class recommendation
-export const editClass = (token, classId, payload) => {
-  return async (dispatch) => {
-    const { status } = await axios({
+export const editClass = (token, classId, payload) => async (dispatch) => {
+  try {
+    const { data: { message } } = await axios({
       method: 'put',
       url: `https://skilled-women-be-production.up.railway.app/classes/${classId}`,
       headers: {
@@ -101,14 +112,17 @@ export const editClass = (token, classId, payload) => {
       data: payload
     });
 
-    dispatch(setStatusCode(status));
+    return dispatch(setCourseMessage(message));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setCourseMessage(err.response.data.message));
   };
 };
 
 // function vote class
-export const voteClass = (token, classId, payload) => {
-  return async (dispatch) => {
-    const { status } = await axios({
+export const voteClass = (token, classId, payload) => async (dispatch) => {
+  try {
+    const { data: { message } } = await axios({
       method: 'patch',
       url: `https://skilled-women-be-production.up.railway.app/classes/${classId}`,
       headers: {
@@ -119,14 +133,17 @@ export const voteClass = (token, classId, payload) => {
       }
     });
 
-    dispatch(setStatusCode(status));
+    return dispatch(setCourseMessage(message));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setCourseMessage(err.response.data.message));
   };
 };
 
 // function delete class
-export const deleteClass = (token, classId) => {
-  return async (dispatch) => {
-    const { status } = await axios({
+export const deleteClass = (token, classId) => async (dispatch) => {
+  try {
+    const { data: { message } } = await axios({
       method: 'post',
       url: `https://skilled-women-be-production.up.railway.app/classes/${classId}`,
       headers: {
@@ -134,7 +151,10 @@ export const deleteClass = (token, classId) => {
       }
     });
 
-    dispatch(setStatusCode(status));
+    return dispatch(setCourseMessage(message));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setCourseMessage(err.response.data.message));
   };
 };
 
