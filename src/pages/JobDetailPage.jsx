@@ -60,7 +60,7 @@ function JobDetailPage() {
 
       {/* tab */}
       <div className=" flex flex-row justify-between items-center p-20">
-        <h3 className="heading3 green bg-[#EDEDED]" onClick={() => setIsActive('intro')}>Pengenalan</h3>
+        <h3 className="heading3 green" onClick={() => setIsActive('intro')}>Pengenalan</h3>
         <h3 className="heading3 green" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
       </div>
 

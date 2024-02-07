@@ -6,7 +6,6 @@ import ButtonPrimary from "./ButtonPrimary"
 import ButtonSecondary from "./ButtonSecondary"
 import { useDispatch } from "react-redux"
 import { setStatus } from "../redux/slices/alertSlice"
-// import Alert from "../styles/components/alert.Css"
 
 import "../index.css"
 import "../styles/components/Alert.css"
@@ -15,19 +14,45 @@ function Alert({ status, text, button, closeBtn }) {
   const dispatch = useDispatch();
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center">
-      {closeBtn ? <CloseLineIcon color="#4F6C6A" onClick={() => dispatch(setStatus(false))}></CloseLineIcon> : ''}
 
-      <div className="pop-up-inner p-2 rounded w-2/5 h-auto text-center">
-        {status ? <CheckLineIcon color="green"></CheckLineIcon> : <ErrorWarningLineIcon className="w-37.5" color="red"></ErrorWarningLineIcon>}
-        <p className="paragraph-regular green" dangerouslySetInnerHTML={{ __html: text }}></p>
+    <div className="close-Btn-div">
+    {closeBtn && (
+      <CloseLineIcon
+        color="#4F6C6A"
+        onClick={() => dispatch(setStatus(false))}
+        className="closeBtn"
+      ></CloseLineIcon>
+    )}
 
-        <div className="flex flex-row justify-center">
-          {button.secondary ? <ButtonSecondary name={button.secondary} action={button.secondaryAction}></ButtonSecondary> : ''}
-          {button.primary ? <ButtonPrimary buttonText={button.primary} onClick={button.primaryAction}></ButtonPrimary> : ''}
-        </div>
+    <div className="pop-up-inner">
+      {status ? (
+        <CheckLineIcon color="green" className="status-icon"></CheckLineIcon>
+      ) : (
+        <ErrorWarningLineIcon color="red" className="status-icon"></ErrorWarningLineIcon>
+      )}
+      <h1 className="h1" dangerouslySetInnerHTML={{ __html: text }}></h1>
+
+      <div className="button-alert">
+        {button.secondary && (
+          <ButtonSecondary name={button.secondary} action={button.secondaryAction}></ButtonSecondary>
+        )}
+        {button.primary && <ButtonPrimary buttonText={button.primary} onClick={button.primaryAction}></ButtonPrimary>}
       </div>
     </div>
+  </div>
+    // <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center">
+    //   {closeBtn ? <CloseLineIcon color="#4F6C6A" onClick={() => dispatch(setStatus(false))}></CloseLineIcon> : ''}
+
+    //   <div className="pop-up-inner p-2 rounded w-2/5 h-auto text-center">
+    //     {status ? <CheckLineIcon color="green"></CheckLineIcon> : <ErrorWarningLineIcon className="w-37.5" color="red"></ErrorWarningLineIcon>}
+    //     <p className="paragraph-regular green" dangerouslySetInnerHTML={{ __html: text }}></p>
+
+    //     <div className="flex flex-row justify-center">
+    //       {button.secondary ? <ButtonSecondary name={button.secondary} action={button.secondaryAction}></ButtonSecondary> : ''}
+    //       {button.primary ? <ButtonPrimary buttonText={button.primary} onClick={button.primaryAction}></ButtonPrimary> : ''}
+    //     </div>
+    //   </div>
+    // </div>
   );
 }
 

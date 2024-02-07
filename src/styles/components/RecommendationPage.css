@@ -1,0 +1,9 @@
+@import url(/src/index.css);
+
+.rekomendasi-p {
+  @apply paragraph-regular dark text-wrap;
+}
+
+.form {
+  @apply flex flex-col items-center;
+}

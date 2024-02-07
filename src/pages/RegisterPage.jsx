@@ -4,19 +4,18 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import "../styles/components/RegisterPage.css";
 
 // import { useSelector } from "react-redux";
 // import { getCities } from "../redux/slices/citySlice";
 
-
 function RegisterPage() {
-
   // Pindah ke page login ketika "login" di klik
   const navigate = useNavigate();
   const toLogin = () => {
     navigate("/login");
   };
-  
+
   // input form
   const [register, setRegister] = useState({
     username: "",
@@ -30,8 +29,15 @@ function RegisterPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/638b4253fce0330001fefd18'))
-    return () => {dispatch(setFooterAnchor('',''))}
+    dispatch(
+      setFooterAnchor(
+        "Icons by Icons8",
+        "https://icons8.com/illustrations/illustration/638b4253fce0330001fefd18"
+      )
+    );
+    return () => {
+      dispatch(setFooterAnchor("", ""));
+    };
   }, []);
 
   // jika button daftar sekarang di klik saat form kosong, maka muncul validasi untuk tiap form
@@ -53,7 +59,7 @@ function RegisterPage() {
     // validasi password, minimal 1 angka, 1 huruf dan 1 karakter
     if (!/(?=.*\d)(?=,*[a-zA-Z])(?=.*\W)/.test(register.password)) {
       errors.password =
-        "Password harus mengandung minaml 1 angka, 1 huruf dan 1 karakter";
+        "Password harus mengandung minimal 1 angka, 1 huruf\n dan 1 karakter";
     }
 
     // validasi gender
@@ -101,7 +107,7 @@ function RegisterPage() {
 
   return (
     <>
-      <div className="text-center">
+      <div className="mulai">
         <h1 className="heading1">Get Started</h1>
         <p className="paragraf-reguler">
           Hey, Selamat datang! <br /> Masukkan detail data sesuai form dan buat
@@ -109,15 +115,17 @@ function RegisterPage() {
         </p>
       </div>
 
-      <div className="flex flex-row justify-center gap-24">
-        <div>
-          <img src="https://imgur.com/dEyAXJg.png"></img>
-        </div>
+      <div className="justify-center">
+        <div className="register">
+          <div>
+            <img src="https://imgur.com/Ow0Trpe.png"></img>
+          </div>
 
-        <form >
-          <div className="flex justify-center gap-6">
+          <form className="register-form">
             <div>
-              <p className="label-form" htmlFor="username">Username</p>
+              <p className="label-form" htmlFor="username">
+                Username
+              </p>
               <input
                 className="input-text"
                 type="text"
@@ -129,10 +137,12 @@ function RegisterPage() {
                 required
               />
               {validationsErrors.username && (
-                <p style={{ color: "red" }}>{validationsErrors.username}</p>
+                <p className="text-[#ff0000]">{validationsErrors.username}</p>
               )}
 
-              <p className="label-form " htmlFor="gender">Gender</p>
+              <p className="label-form " htmlFor="gender">
+                Gender
+              </p>
               <select
                 className="input-text "
                 id="gender"
@@ -147,10 +157,12 @@ function RegisterPage() {
                 <option value="laki-laki">Laki-laki</option>
               </select>
               {validationsErrors.gender && (
-                <p style={{ color: "red" }}>{validationsErrors.gender}</p>
+                <p className="text-[#ff0000]">{validationsErrors.gender}</p>
               )}
 
-              <p className="label-form " htmlFor="city">City</p>
+              <p className="label-form " htmlFor="city">
+                City
+              </p>
               <select
                 className="input-text"
                 id="city"
@@ -158,7 +170,6 @@ function RegisterPage() {
                 name="city"
                 value={register.city}
                 onChange={handleInput}
-                
                 required
               >
                 <option value="" disabled>
@@ -172,12 +183,14 @@ function RegisterPage() {
               ))} */}
               </select>
               {validationsErrors.city && (
-                <p style={{ color: "red" }}>{validationsErrors.city}</p>
+                <p className="text-[#ff0000]">{validationsErrors.city}</p>
               )}
             </div>
 
             <div>
-              <p className="label-form " htmlFor="email">Email</p>
+              <p className="label-form " htmlFor="email">
+                Email
+              </p>
               <input
                 className="input-text"
                 type="email"
@@ -189,10 +202,12 @@ function RegisterPage() {
                 required
               ></input>
               {validationsErrors.email && (
-                <p style={{ color: "red" }}>{validationsErrors.email}</p>
+                <p className="text-[#ff0000]">{validationsErrors.email}</p>
               )}
 
-              <p className="label-form" htmlFor="password">Password</p>
+              <p className="label-form" htmlFor="password">
+                Password
+              </p>
               <input
                 className="input-text"
                 type="password"
@@ -204,22 +219,26 @@ function RegisterPage() {
                 required
               ></input>
               {validationsErrors.password && (
-                <p style={{ color: "red" }}>{validationsErrors.password}</p>
+                <p className="text-[#ff0000]">{validationsErrors.password}</p>
               )}
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
 
-      <div className="text-center">
-        <p className="label-form ">
-          Sudah punya akun?&ensp;
-          <span className="underline cursor-pointer" onClick={toLogin}>
-            Log in
-          </span>
-        </p>
+        <div className="text-center">
+          <p className="text-[#4F6C6A] text-sm mt-4">
+            Sudah punya akun?&ensp;
+            <span className="underline cursor-pointer" onClick={toLogin}>
+              Log in
+            </span>
+          </p>
 
-        <ButtonPrimary type="submit" buttonText="Daftar Sekarang" onClick={handleSubmit} />
+          <ButtonPrimary
+            type="submit"
+            buttonText="Daftar Sekarang"
+            onClick={handleSubmit}
+          />
+        </div>
       </div>
     </>
   );
