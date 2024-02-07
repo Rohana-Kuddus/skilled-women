@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import "../styles/pages/renewPassword.css"
 
 function UserPasswordPage() {
   const dispatch = useDispatch();
@@ -82,9 +83,9 @@ function UserPasswordPage() {
       switch (name) { 
         case 'password':
           if (!value) {
-            stateObj[name] = 'Please enter Password.';
+            stateObj[name] = 'Silakan isi Password';
           } else if (input.confirmPassword && value !== input.confirmPassword) {
-            stateObj['confirmPassword'] = 'Password and Confirm Password does not match.';
+            stateObj['confirmPassword'] = 'Password dan Confirm Password tidak cocok';
           } else {
             stateObj['confirmPassword'] = input.confirmPassword ? '' : error.confirmPassword;
           }
@@ -92,9 +93,9 @@ function UserPasswordPage() {
  
         case 'confirmPassword':
           if (!value) {
-            stateObj[name] = 'Please enter Confirm Password.';
+            stateObj[name] = 'Silakan isi Confirm password';
           } else if (input.password && value !== input.password) {
-            stateObj[name] = 'Password and Confirm Password does not match.';
+            stateObj[name] = 'Password dan Confirm Password tidak cocok';
           }
           break;
  
@@ -125,36 +126,43 @@ function UserPasswordPage() {
     }, []);
 
   return (
-    <div>
-      <SidebarProfile></SidebarProfile>
+    <div className="flex flex-row">
+      <SidebarProfile/>
+      <div className="userPasswordForm">
 
-      <div>
-        <h1 className="heading1 green">Ganti Kata Sandi</h1>
-        <p className="paragraph-regular dark">Masukkan kata sandi baru di bawah untuk mengganti kata sandi Anda.</p>
+      <div className="text-center text-balance break-words mb-4">
+        <h1 className="heading1 green break-words">Ganti Kata Sandi</h1>
+        <p className="paragraph-regular dark break-words">Masukkan kata sandi baru di bawah untuk mengganti kata sandi Anda.</p>
       </div>
 
-      <div>
+      <div className="passwordForm">
         <form action="">
           <label htmlFor="password" className="label-form">Kata sandi baru</label>
-          <input type={passwordType.password} id="password" className="input-text" name="password" value={input.password} 
+          <div className="relative flex flex-row items-center">
+          <input type={passwordType.password} id="password" className="inputPassword" name="password" value={input.password} 
             onChange={onInputChange} onBlur={validateInput} autoFocus />
-          <span name="password" onClick={visibilityHandler}>
-            {passwordType.password === 'password' ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
-              : <EyeLineIcon className="green"></EyeLineIcon>}
+          <span name="password" onClick={visibilityHandler} className="passwordIcon">
+            {passwordType.password === 'password' ? <EyeOffLineIcon className="green"/>
+              : <EyeLineIcon className="green"/>}
           </span>
+          </div>
           {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
 
+          <div className="mt-4">
           <label htmlFor="confirmPassword" className="label-form">Konfirmasi kata sandi</label>
-          <input type={passwordType.confirmPassword} id="confirmPassword" className="input-text" name="confirmPassword" 
+          <div className="relative flex flex-row items-center">
+          <input type={passwordType.confirmPassword} id="confirmPassword" className="inputPassword" name="confirmPassword" 
             value={input.confirmPassword} onChange={onInputChange} onBlur={validateInput} />
-          <span name="confirmPassword" onClick={visibilityHandler}>
-            {passwordType.confirmPassword === 'password' ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
-              : <EyeLineIcon className="green"></EyeLineIcon>}
+          <span name="confirmPassword" onClick={visibilityHandler} className="passwordIcon">
+            {passwordType.confirmPassword === 'password' ? <EyeOffLineIcon className="green"/>
+              : <EyeLineIcon className="green"/>}
           </span>
-          {error.confirmPassword && <p className="paragraph-regular text-[#FE0101]">{error.confirmPassword}</p>}
+          </div>
+          </div>
+          {error.confirmPassword && <p className="paragraph-regular text-[#FE0101] text-balance break-words">{error.confirmPassword}</p>}
         </form>
 
-        <div>
+        <div className="my-4">
           <p className="paragraph-small dark">Kata sandi Anda harus mengandung:</p>
           <ul className="ml-4 list-disc">
             <li className={`paragraph-small dark ${checkCapital}`}>1 atau lebih huruf kapital</li>
@@ -164,11 +172,11 @@ function UserPasswordPage() {
         </div>
       </div>
 
-      {/* panggil button primary untuk ganti password */}
-      <ButtonPrimary buttonText={'Ganti kata sandi'} onClick={buttonHandler}></ButtonPrimary>
+      <ButtonPrimary buttonText={'Ganti kata sandi'} onClick={buttonHandler} padding="max-[380px]:px-[3.6em] max-[430px]:px-[6.8em] md:px-[11em]"/>
 
       {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>
+  </div>
   );
 }
 

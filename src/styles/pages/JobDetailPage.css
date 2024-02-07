@@ -1,0 +1,8 @@
+@import url(/src/index.css);
+
+.tabSection{
+    @apply flex flex-row justify-evenly mx-2 lg:mx-auto gap-4 lg:gap-0;
+}
+.tab{
+    @apply bg-[--secondary-color] heading3 green w-96 py-2 text-center rounded-t-md border-b-2 border-[--primary-color] cursor-pointer hover:bg-gray-100;
+}

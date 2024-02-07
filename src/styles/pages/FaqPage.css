@@ -1,0 +1,21 @@
+@import url(/src/index.css);
+
+.faqHero{
+    @apply text-white text-center text-balance py-16 px-2;
+}
+
+.faqSection{
+    @apply flex flex-col m-12 mt-20 space-y-2 items-center;
+}
+.faqDropdown{
+    @apply flex flex-col lg:max-w-3xl sm:max-w-fit p-5 gap-2 bg-white dark border-2 border-gray-300 rounded-md;
+}
+.faqDropdownSection{
+    @apply flex cursor-pointer items-center justify-between;
+}
+.faqTransitionContent{
+    @apply transition-all duration-500 group-focus:-rotate-90;
+}
+.faqContent{
+    @apply invisible h-auto max-h-0 items-center opacity-0 transition-all group-focus:visible group-focus:max-h-screen group-focus:opacity-100 group-focus:duration-1000 paragraph-regular font-extralight;
+}

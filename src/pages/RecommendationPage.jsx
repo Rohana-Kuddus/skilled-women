@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useLocation } from "react-router-dom";
 import { getClass } from "../redux/slices/courseSlice";
+import "../styles/components/RecommendationPage.css";
 
 function RecommendationPage() {
   const dispatch = useDispatch();
@@ -230,17 +231,17 @@ function RecommendationPage() {
   };
 
   return (
-    <div>
-      <div>
-        <h1 className="heading1 green">Berikan Rekomendasi Kelas</h1>
-        <p className="paragraph-regular dark">
-          Yuk bantu sesama perempuan untuk mendapat edukasi terbaik yang ada!
+    <div className="text-center">
+      <div className="m-12">
+        <h1 className="heading1 green ">Berikan Rekomendasi Kelas</h1>
+        <p className="rekomendasi-p">
+          Yuk bantu sesama perempuan untuk mendapat edukasi terbaik yang ada!<br />
           isi form dengan data yang lengkap dan lihat kelas mu di list kelas.
         </p>
       </div>
 
       <div>
-        <form>
+        <form className="form">
           <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
           <input type="text" name="job" className="input-text" autoFocus value={search} onChange={(e) => setSearch(e.target.value)} onBlur={errorHandler} />
           <ul>

@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setStatus } from "../redux/slices/alertSlice";
 import Edit2LineIcon from "remixicon-react/Edit2LineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
-import Alert from "../components/Alert"
+import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { setStatus } from "../redux/slices/alertSlice";
+import "../styles/pages/UserProfilePage.css";
 import "../index.css";
 import "../styles/pages/UserProfilePage.css";
 import { getCity } from "../redux/slices/citySlice";
@@ -22,11 +23,10 @@ function UserProfilePage() {
   }, [city]);
 
   const [input, setInput] = useState({
-    // data dummy
-    username: "Jane Doe",
+    username: "janedoe1",
     email: "jane@email.com",
     gender: "Perempuan",
-    city: "Jakarta"
+    city: "Jakarta",
   });
 
   // change profile picture
@@ -41,7 +41,7 @@ function UserProfilePage() {
     }));
   };
 
-  // belum ada form validation
+  // input handler
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -70,8 +70,8 @@ function UserProfilePage() {
         const text = item.textContent.toLowerCase();
 
         searchCity === "" ||
-          text.includes(searchCity.toLowerCase()) ||
-          searchCity.toLowerCase().includes(text)
+        text.includes(searchCity.toLowerCase()) ||
+        searchCity.toLowerCase().includes(text)
           ? (item.style.display = "block")
           : (item.style.display = "none");
       });
@@ -90,173 +90,216 @@ function UserProfilePage() {
     }
   }, [isOpen]);
 
+  // validate form
+  const [errors, setErrors] = useState({});
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!/^[a-zA-Z0-9]+$/.test(input.username)) {
+      newErrors.username = "Format username tidak valid (a,A,1)";
+    }
+
+    if (!/\S+@\S+\.\S+/.test(input.email)) {
+      newErrors.email = "Format email tidak valid";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // alert
+  const { status } = useSelector((state) => state.alert);
+
   const alert = {
     status: true,
-    text: 'Profile berhasil disimpan',
+    text: "Profile berhasil disimpan!",
     button: {
-      primary: 'Tutup',
-      primaryAction: () => dispatch(setStatus(false))
+      primary: "Tutup",
+      primaryAction: () => dispatch(setStatus(false)),
+    },
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const isFormValid = validateForm();
+
+    if (isFormValid) {
+      const validationErrors = validateForm();
+
+      if (Object.keys(validationErrors).length === 0) {
+        dispatch(setStatus(true));
+      } else {
+        setErrors(validationErrors);
+      }
+    } else {
+      setErrors(newErrors);
     }
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    // hit api update profile
-    console.log({ message: 'success update input', data: { ...input } });
-
-    dispatch(setStatus(true));
-  };
+  // reset footer's text + link
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   return (
     <>
-      <div className="flex flex-row justify-between">
-        <div>
-          <SidebarProfile />
-        </div>
-        <div
-          className="mr-24 mt-12"
-          style={{ fontFamily: "var(--paragraph-font)" }}
-        >
-          <div className="flex flex-col justify-start">
-            {/* profile photo */}
-            <div className="main flex flex-col">
-              <div className="flex flex-col items-center">
-                <img
-                  src="https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile"
-                  className="rounded-full w-20 m-6"
-                />
-                {/* edit button */}
-                <div className="flex flex-row mb-12 gap-1 border-2 rounded-2xl px-4 align-middle justify-between">
+      <div
+        className="flex flex-row"
+        style={{ fontFamily: "var(--paragraph-font)" }}
+      >
+        <SidebarProfile />
+        <div className="profileSection">
+          {/* profile photo */}
+          <div className="flex flex-col items-center">
+            <img
+              src="https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile"
+              className="rounded-full w-20 m-6"
+            />
+            {/* edit button */}
+            <div className="editBtn">
+              <input
+                type="file"
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={handleFileChange}
+                ref={fileInputRef}
+              />
+              <button onClick={triggerFileInputClick}>Edit</button>
+              <Edit2LineIcon />
+            </div>
+          </div>
+
+          {/* user information section */}
+          <form onSubmit={handleSubmit}>
+            <div className="userForm">
+              <div className="w-max">
+                {/* username */}
+                <div className="flex flex-col">
+                  <label className="label-form" htmlFor="username">
+                    Username
+                  </label>
                   <input
-                    type="file"
-                    style={{ display: "none" }}
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    ref={fileInputRef}
+                    type="text"
+                    name="username"
+                    value={input.username}
+                    onChange={inputHandler}
+                    className="formInput"
                   />
-                  <button onClick={triggerFileInputClick}>Edit</button>
-                  <Edit2LineIcon />
+                </div>
+                {errors.username && (
+                  <p style={{ color: "red" }}>{errors.username}</p>
+                )}
+                {/* jenis kelamin */}
+                <div className="flex flex-col">
+                  <label className="label-form" htmlFor="gender">
+                    Jenis Kelamin
+                  </label>
+                  <div className="relative inline-block">
+                    <div>
+                      <button
+                        type="button"
+                        name="gender"
+                        onClick={() => toggleDropdown("gender")}
+                        className="formDropdown"
+                        aria-haspopup="true"
+                        aria-expanded="true"
+                      >
+                        <div className="innerDropdown">
+                          <span className="ml-4">{input.gender}</span>
+                          <ArrowDownSLineIcon className="arrowDropdown" />
+                        </div>
+                      </button>
+                    </div>
+                    {isOpen === "gender" ? (
+                      <div className="dropdownOption">
+                        <div
+                          className="py-1"
+                          role="menu"
+                          aria-orientation="vertical"
+                          aria-labelledby="options-menu"
+                        >
+                          <a
+                            className="options"
+                            role="menuitem"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              inputHandler({
+                                target: {
+                                  name: "gender",
+                                  value: "Laki-Laki",
+                                },
+                              });
+                              toggleDropdown();
+                            }}
+                          >
+                            Laki-Laki
+                          </a>
+                          <a
+                            className="options"
+                            role="menuitem"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              inputHandler({
+                                target: {
+                                  name: "gender",
+                                  value: "Perempuan",
+                                },
+                              });
+                              toggleDropdown();
+                            }}
+                          >
+                            Perempuan
+                          </a>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* user information section */}
-            <div>
-              <form className="flex flex-row">
-                {/* form column 1 */}
-                <div className="mr-6">
-                  {/* username */}
-                  <div className="flex flex-col">
-                    <label htmlFor="username">Username</label>
-                    <input
-                      type="text"
-                      name="username"
-                      value={input.username}
-                      onChange={inputHandler}
-                      className="py-2 pl-4 pr-16 bg-gray-200 rounded-md"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    {/* jenis kelamin */}
-                    <label htmlFor="gender">Jenis Kelamin</label>
-                    <div className="relative inline-block">
-                      <div>
-                        <button
-                          type="button"
-                          name="gender"
-                          onClick={() => toggleDropdown("gender")}
-                          className="inline-flex justify-center w-full rounded-md py-1.5 bg-gray-200 hover:bg-gray-100"
-                          aria-haspopup="true"
-                          aria-expanded="true"
-                        >
-                          <div className="flex items-center gap-24">
-                            <span className="flex-grow">{input.gender}</span>
-                            <ArrowDownSLineIcon className="h-8 transition-all duration-500 group-focus:-rotate-180" />
-                          </div>
-                        </button>
-                      </div>
-                      {isOpen === "gender" ? (
-                        <div className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white">
-                          <div
-                            className="py-1"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="options-menu"
-                          >
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                              role="menuitem"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                inputHandler({
-                                  target: {
-                                    name: "gender",
-                                    value: "Laki-Laki",
-                                  },
-                                });
-                                toggleDropdown();
-                              }}
-                            >
-                              Laki-Laki
-                            </a>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                              role="menuitem"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                inputHandler({
-                                  target: {
-                                    name: "gender",
-                                    value: "Perempuan",
-                                  },
-                                });
-                                toggleDropdown();
-                              }}
-                            >
-                              Perempuan
-                            </a>
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-                {/* form column 2 */}
+              <div className="w-max">
+                {/* email */}
                 <div className="flex flex-col">
-                  {/* email */}
-                  <label htmlFor="email">Email</label>
+                  <label className="label-form" htmlFor="email">
+                    Email
+                  </label>
                   <input
                     type="email"
                     name="email"
                     value={input.email}
                     onChange={inputHandler}
-                    className="py-2 pl-4 pr-16 bg-gray-200 rounded-md"
+                    className="formInput"
                   />
-                  {/* Kota */}
-                  <label htmlFor="kota">Kota</label>
+                  {errors.email && (
+                    <p style={{ color: "red" }}>{errors.email}</p>
+                  )}
+                </div>
+
+                {/* Kota */}
+                <div className="flex flex-col">
+                  <label className="label-form" htmlFor="kota">
+                    Kota
+                  </label>
                   <div className="relative inline-block">
                     <div>
                       <button
                         type="button"
                         name="city"
                         onClick={() => toggleDropdown("city")}
-                        className="inline-flex justify-center w-full rounded-md py-1.5 bg-gray-200 hover:bg-gray-100"
+                        className="formDropdown"
                         aria-haspopup="true"
                         aria-expanded="true"
                       >
-                        <div className="flex items-center gap-32">
-                          <span className="flex-grow">{input.city}</span>
-                          <ArrowDownSLineIcon className="h-8 transition-all duration-500 group-focus:-rotate-180" />
+                        <div className="innerDropdown">
+                          <span className="ml-4">{input.city}</span>
+                          <ArrowDownSLineIcon className="arrowDropdown" />
                         </div>
                       </button>
                     </div>
+
+                    {/* city dropdown */}
                     {isOpen === "city" ? (
-                      <div
-                        className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white"
-                        ref={dropdownRef}
-                      >
+                      <div className="dropdownOption" ref={dropdownRef}>
                         <div
                           className="py-1"
                           role="menu"
@@ -266,14 +309,14 @@ function UserProfilePage() {
                           {/* Search input */}
                           <input
                             ref={searchRef}
-                            className="block w-full px-4 py-2 text-gray-800 border rounded-md border-gray-300 focus:outline-none"
+                            className="searchDropdown"
                             type="text"
                             placeholder="Search items"
                             autoComplete="off"
                             onChange={handleSearch}
                           />
                           {city.map(v => (
-                            <a href="#" role="menuitem" className="option" key={v.id} onClick={(e) => {
+                            <a href="#" role="menuitem" className="options" key={v.id} onClick={(e) => {
                               e.preventDefault();
                               inputHandler({
                                 target: {
@@ -289,16 +332,27 @@ function UserProfilePage() {
                     ) : null}
                   </div>
                 </div>
-                {/* button */}
-                <div>
-                  <ButtonPrimary buttonText="Simpan Profile" onClick={submitHandler} submit={true}></ButtonPrimary>
-                </div>
-              </form>
+              </div>
+              {/* button */}
+              <div className="submitBtn">
+                <ButtonPrimary
+                  type="submit"
+                  onClick={handleSubmit}
+                  buttonText="Simpan Profile"
+                  padding="px-[4.5rem] lg:px-72"
+                />
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {status && (
+        <Alert
+          status={alert.status}
+          text={alert.text}
+          button={alert.button}
+        ></Alert>
+      )}
     </>
   );
 }
