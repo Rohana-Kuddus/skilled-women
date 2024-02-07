@@ -4,7 +4,7 @@ import axios from "axios";
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNzI3NjAyMH0.ekptPyNAs5Vv7rw_Q-LClmDYZPtw9HvDZ7KYFBbSYYM',
+    token: '',
     authMessage: ''
   },
   reducers: {

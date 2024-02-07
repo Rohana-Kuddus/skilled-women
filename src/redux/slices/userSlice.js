@@ -54,7 +54,7 @@ export const editUserProfile = (token, payload) => async (dispatch) => {
     return dispatch(setUserMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setUser(err.response.data.message));
+    return dispatch(setUserMessage(err.response.data.message));
   };
 }; 
 
@@ -73,7 +73,24 @@ export const editUserPassword = (token, payload) => async (dispatch) => {
     return dispatch(setUserMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setUser(err.response.data.message));
+    return dispatch(setUserMessage(err.response.data.message));
+  };
+};
+
+// function check user
+export const checkUser = (payload) => async (dispatch) => {
+  console.log(payload);
+  try {
+    const { data: { message } } = await axios({
+      method: 'post',
+      url: 'https://skilled-women-be-production.up.railway.app/users',
+      data: payload
+    });
+    
+    return dispatch(setUserMessage(message));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setUserMessage(err.response.data.message));
   };
 };
 

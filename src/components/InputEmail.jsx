@@ -1,17 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "./ButtonPrimary";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { checkUser } from "../redux/slices/userSlice";
+import { getToast } from "../redux/slices/toastSlice";
+import Toast from "./Toast";
 
 function InputEmail() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
+  const { userMessage } = useSelector(state => state.user);
+  const { toast, toastName } = useSelector(state => state.toast);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // hit api cek data ada di db
-    navigate('/password/reset');
+    
+    dispatch(checkUser({ email: input })); // check user exists
+
+    if (!userMessage.includes('Success')) {
+      dispatch(getToast({ toast: true, toastName: 'user' }));
+
+      setTimeout(() => {
+        dispatch(getToast({ toast: false, toastName: 'user' }));
+      }, 3000);
+    } else {
+      navigate('/password/reset');
+    };
   };
 
   return ( 
@@ -44,6 +61,8 @@ function InputEmail() {
           Kembali ke laman <span className="underline hover:cursor-pointer" onClick={() => navigate('/login')}>Log in</span> 
         </p>
       </form>
+
+      {toast && toastName === 'user' && <Toast message={'User tidak ditemukan.'}></Toast>}
     </div>
   );
 }
