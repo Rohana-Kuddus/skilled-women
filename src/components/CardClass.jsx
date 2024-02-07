@@ -80,12 +80,12 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
           {/* buttons */}
           <div className="card-content flex flex-row justify-between items-center gap-2">
             <div className="grid grid-cols-3 gap-2">
-              <div onClick={checkToken ? likeHandler : () => dispatch(setAlert({ status: true, name: 'class' }))}>
+              <div onClick={checkToken ? likeHandler : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}>
                 {active === 'none' || active !== 'like' ? 
                   <ThumbUpLineIcon color="#4F6C6A"></ThumbUpLineIcon> : <ThumbUpFillIcon color="#4F6C6A"></ThumbUpFillIcon>}
               </div>
               <p className="paragraph-regular green">{data.rating}</p>
-              <div onClick={checkToken ? dislikeHandler : () => dispatch(setAlert({ status: true, name: 'class' }))}>
+              <div onClick={checkToken ? dislikeHandler : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}>
                 {active === 'none' || active !== 'dislike' ? 
                   <ThumbDownLineIcon color="#4F6C6A"></ThumbDownLineIcon> : <ThumbDownFillIcon color="#4F6C6A"></ThumbDownFillIcon>}
               </div>
@@ -95,7 +95,7 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
               <ButtonPrimary buttonText={'Lihat Kelas'} onClick={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
               : <div className="flex flex-row items-center gap-2">
                 <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations', { state: { classId: data.id } })} padding="px-8"></ButtonPrimary>
-                <ButtonSecondary name={'Hapus'} action={() => dispatch(setAlert({ status: true, name: 'deleteClass' }))} padding="px-7" height="h-10"></ButtonSecondary>
+                <ButtonSecondary name={'Hapus'} action={() => dispatch(setAlert({ alert: true, alertName: 'deleteClass' }))} padding="px-7" height="h-10"></ButtonSecondary>
                 </div>
               }
           </div>

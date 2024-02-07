@@ -5,12 +5,12 @@ const citySlice = createSlice({
   name: 'city',
   initialState: {
     city: [],
-    message: ''
+    cityMessage: ''
   },
   reducers: {
     setCity(state, action) {
       state.city = action.payload.data;
-      state.message = action.payload.message;
+      state.cityMessage = action.payload.message;
     }
   }
 });

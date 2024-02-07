@@ -12,7 +12,7 @@ import { useCookies } from "react-cookie";
 
 function UserPasswordPage() {
   const dispatch = useDispatch();
-  const { status, name } = useSelector(state => state.alert);
+  const { alert, alertName } = useSelector(state => state.alert);
   const [cookies] = useCookies;
   const [input, setInput] = useState({
     password: '',
@@ -27,12 +27,12 @@ function UserPasswordPage() {
     confirmPassword: 'password'
   });
 
-  const alert = {
+  const alertObj = {
     status: true,
     text: 'Kata sandi Anda berhasil diubah!',
     button: {
       primary: 'Tutup',
-      primaryAction: () => dispatch(setAlert({ status: false, name: 'password' }))
+      primaryAction: () => dispatch(setAlert({ alert: false, alertName: 'password' }))
     }
   };
 
@@ -116,7 +116,7 @@ function UserPasswordPage() {
     if (error.password === '' && error.confirmPassword === '' && checkCapital !== ''
       && checkNumber !== '' && checkCharacter !== '') {
       dispatch(editUserPassword(cookies.token, { password: input.password }));
-      dispatch(setAlert({ status: true, name: 'password' }));
+      dispatch(setAlert({ alert: true, alertName: 'password' }));
     };
   };
 
@@ -163,7 +163,7 @@ function UserPasswordPage() {
       {/* panggil button primary untuk ganti password */}
       <ButtonPrimary buttonText={'Ganti kata sandi'} onClick={buttonHandler}></ButtonPrimary>
 
-      {status && name === 'password' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {alert && alertName === 'password' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
     </div>
   );
 }

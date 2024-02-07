@@ -5,12 +5,12 @@ const industrySlice = createSlice({
   name: 'industry',
   initialState: {
     industry: [],
-    message: ''
+    industryMessage: ''
   },
   reducers: {
     setIndustry(state, action) {
       state.industry = action.payload.data;
-      state.message = action.payload.message;
+      state.industryMessage = action.payload.message;
     }
   }
 });

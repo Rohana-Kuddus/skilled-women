@@ -6,12 +6,12 @@ const roadmapSlice = createSlice({
   name: 'roadmap',
   initialState: {
     roadmap: [],
-    message: ''
+    roadmapMessage: ''
   },
   reducers: {
     setRoadmap(state, action) {
       state.roadmap = action.payload.data;
-      state.message = action.payload.message;
+      state.roadmapMessage = action.payload.message;
     }
   }
 });

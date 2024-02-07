@@ -8,6 +8,7 @@ import course from "./slices/courseSlice"
 import industry from "./slices/industrySlice"
 import user from "./slices/userSlice"
 import roadmap from "./slices/roadmapSlice"
+import toast from "./slices/toastSlice"
 
 const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
     industry,
     job,
     user,
-    roadmap
+    roadmap,
+    toast
   }
 });
 

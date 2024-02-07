@@ -5,21 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import Alert from "./Alert";
 import { useNavigate } from "react-router-dom";
 import { setAlert } from "../redux/slices/alertSlice";
+import PropTypes from "prop-types";
 
 function Roadmap({ data }) {
   const navigate = useNavigate();
   const [cookies] = useCookies();
   const dispatch = useDispatch();
-  const { status, name } = useSelector(state => state.alert);
+  const { alert, alertName } = useSelector(state => state.alert);
 
-  const alert = {
+  const alertObj = {
     status: false,
     text: 'Silahkan login atau daftar akun terlebih dahulu.',
     button: {
       primary: 'Login',
       primaryAction: () => {
         navigate('/login');
-        dispatch(setAlert({ status: false, name: 'roadmap' }));
+        dispatch(setAlert({ alert: false, alertName: 'roadmap' }));
       },
       secondary: 'Daftar sekarang',
       secondaryAction: () => {
@@ -38,15 +39,20 @@ function Roadmap({ data }) {
 
         {/* perlu ubah url jadi link gform rekomendasi roadmap */}
         <ButtonRecommendation name={'Roadmap'} action={Object.keys(cookies).length !== 0 ?
-          () => window.open('url', '_blank', 'noreferrer') : () => dispatch(setAlert({ status: true, name: 'roadmap' }))}></ButtonRecommendation>
+          () => window.open('url', '_blank', 'noreferrer') : () => 
+          dispatch(setAlert({ alert: true, alertName: 'roadmap' }))}></ButtonRecommendation>
 
         <StepRoadmap></StepRoadmap>
       </div>
 
-      {status && name === 'roadmap' && <Alert status={alert.status} text={alert.text} button={alert.button} 
+      {alert && alertName === 'roadmap' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button} 
         closeBtn={true} name={'roadmap'}></Alert>}
     </div>
   );
+}
+
+Roadmap.propTypes = {
+  data: PropTypes.object
 }
 
 export default Roadmap;

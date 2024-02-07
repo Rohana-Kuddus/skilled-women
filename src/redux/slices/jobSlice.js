@@ -6,16 +6,16 @@ const jobSlice = createSlice({
   initialState: {
     job: [],
     jobDetail: {},
-    message: ''
+    jobMessage: ''
   },
   reducers: {
     setJob(state, action) {
       state.job = action.payload.data;
-      state.message = action.payload.message;
+      state.jobMessage = action.payload.message;
     },
     setJobDetail(state, action) {
       state.jobDetail = action.payload.data;
-      state.message = action.payload.message;
+      state.jobMessage = action.payload.message;
     }
   }
 });

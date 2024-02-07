@@ -5,14 +5,14 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     token: '',
-    message: ''
+    authMessage: ''
   },
   reducers: {
     setToken(state, action) {
       state.token = action.payload;
     },
     setAuthMessage(state, action) {
-      state.message = action.payload;
+      state.authMessage = action.payload;
     }
   }
 });

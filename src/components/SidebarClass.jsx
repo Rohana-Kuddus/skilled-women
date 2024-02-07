@@ -15,7 +15,7 @@ function SidebarClass({ data, setIsOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookies] = useCookies();
-  const { status, name } = useSelector(state => state.alert);
+  const { alert, alertName } = useSelector(state => state.alert);
   const { course } = useSelector(state => state.course);
   const params = useParams();
 
@@ -23,14 +23,14 @@ function SidebarClass({ data, setIsOpen }) {
     dispatch(getClassRoadmap(params.id, data.id));
   }, []);
 
-  const alert = {
+  const alertObj = {
     status: false,
     text: 'Silahkan login atau daftar akun terlebih dahulu.',
     button: {
       primary: 'Login',
       primaryAction: () => {
         navigate('/login');
-        dispatch(setAlert({ status: false, name: 'class' }));
+        dispatch(setAlert({ alert: false, alertName: 'class' }));
       },
       secondary: 'Daftar sekarang',
       secondaryAction: () => {
@@ -51,7 +51,7 @@ function SidebarClass({ data, setIsOpen }) {
         <div>
           <h3 className="heading3 green font-bold">{data.name}</h3>
           <ButtonRecommendation name={'Kelas'} action={Object.keys(cookies).length !== 0 ?
-            () => navigate('/recommendations') : () => dispatch(setAlert({ status: true, name: 'class' }))}></ButtonRecommendation>
+            () => navigate('/recommendations') : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}></ButtonRecommendation>
         </div>
 
         <div>
@@ -63,7 +63,7 @@ function SidebarClass({ data, setIsOpen }) {
         </div>
       </div>
 
-      {status && name === 'class'  && <Alert status={alert.status} text={alert.text} button={alert.button} 
+      {alert && alertName === 'class'  && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button} 
         closeBtn={true} name={'class'}></Alert>}
     </div>
   );

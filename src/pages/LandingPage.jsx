@@ -2,79 +2,30 @@ import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
 import CardJob from "../components/CardJob";
-import { useEffect, useState } from "react";
-
-// Import Swiper React components
+import { useEffect } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import Swiper core and required modules
 import { Navigation, Pagination } from 'swiper/modules';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useNavigate } from "react-router-dom";
+import { getJobList } from "../redux/slices/jobSlice";
 
 function LandingPage() {
   const navigate = useNavigate();
-  const [jobsData, setJobsData] = useState([
-    {
-      "title": "Graphic Designer",
-      "image": "https://source.unsplash.com/tuned-on-macbook-CGpifH3FjOA",
-      "industry": "Kreatif",
-      "description": "Ciptakan kreasi desain art kamu secara digital!",
-      "id": "1"
-    },
-    {
-      "title": "Petani Hidroponik",
-      "image": "https://source.unsplash.com/text-s_AgJxMc4zk",
-      "industry": "Agrikultur",
-      "description": "Cocok untuk kamu yang ingin membuka usaha tanaman hidroponik atau berkebun sendiri ~",
-      "id": "2"
-    },
-    {
-      "title": "Fotografer",
-      "image": "https://source.unsplash.com/person-holding-canon-dslr-camera-hfk6xOjQlFk",
-      "industry": "Kreatif",
-      "description": "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
-      "id": "3"
-    },
-    {
-      "title": "Digital Marketing Consoultant",
-      "image": "https://source.unsplash.com/person-writing-on-white-paper-U33fHryBYBU",
-      "industry": "Bisnis",
-      "description": "Bantu konsultasi tim marketing kamu dengan menjadi digital marketing consoultant",
-      "id": "4"
-    },
-    // {
-    //   "title": "Video Editor ",
-    //   "image": "https://source.unsplash.com/black-flat-screen-tv-turned-on-displaying-game-B4f_Kx5jvpg",
-    //   "industry": "Kreatif",
-    //   "description": "Jago ngedit video? Jadi Video editor aja!",
-    //   "id": "5"
-    // },
-    // {
-    //   "title": "Pilot Drone",
-    //   "image": "https://source.unsplash.com/brown-and-black-wooden-table-U9vKDttdNLA",
-    //   "industry": "Teknologi",
-    //   "description": "Hobi main game console & pesawat? Jadi pilot drone yuk! ",
-    //   "id": "6"
-    // }
-  ]);
-
-  // reset footer's text + link
   const dispatch = useDispatch();
+  const { job } = useSelector(state => state.job);
 
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
+    dispatch(getJobList({ limit: 4 }));
   }, []);
 
   return (
     <>
       {/* Hero section */}
-
       <div className="bg-[#4F6C6A] text-[#FFF] flex ">
         <div>
           <h1 className="heading1">
@@ -100,13 +51,9 @@ function LandingPage() {
         </div>
       </div>
 
-      {/* Hero section */}
-
       {/* Fitur info section */}
-
       <div className="heading1 green ">
         <h1 className="text-center">Berbagai Fitur di Skilled Women </h1>
-
         <div className="flex justify-center">
           <div>
             <div className="">
@@ -157,10 +104,8 @@ function LandingPage() {
           </div>
         </div>
       </div>
-      {/* Fitur info section */}
 
       {/* Benefit section */}
-
       <div className="bg-[#4F6C6A] text-[#fff]">
         <h1 className="heading1 text-center">
           Manfaat menggunakan Skilled Women{" "}
@@ -198,16 +143,13 @@ function LandingPage() {
         </div>
       </div>
 
-      {/* Benefit section */}
-
       {/* Roadmap section */}
-
       <div className="green">
         <h1 className="text-center heading1">
           Roadmap Pekerjaan di Skilled Women{" "}
         </h1>
 
-        <div className= "grid gap-y-15 grid-cols-2">
+        <div className="grid gap-y-15 grid-cols-2">
           <div>
             <h2 className="heading2">Roadmap pekerjaan untuk kamu!</h2>
             <p className="paragraph-regular">
@@ -218,26 +160,25 @@ function LandingPage() {
           </div>
 
           {/* job carousel */}
-            <div className='container'>
-              <Swiper
-                // install Swiper modules
-                modules={[Navigation, Pagination]}
-                spaceBetween={20}
-                slidesPerView={3}
-                navigation
-                pagination={{ clickable: true }}
-              >
-                {
-                  jobsData.map((val) => (
-                    <SwiperSlide key={val.id}>
-                      <CardJob job={val}></CardJob>
-                    </SwiperSlide>
-                    
-                  ))
-                }
-              </Swiper>
-            </div>
+          <div className='container'>
+            <Swiper
+              // install Swiper modules
+              modules={[Navigation, Pagination]}
+              spaceBetween={20}
+              slidesPerView={3}
+              navigation
+              pagination={{ clickable: true }}
+            >
+              {
+                job.map((val) => (
+                  <SwiperSlide key={val.id}>
+                    <CardJob job={val}></CardJob>
+                  </SwiperSlide>
 
+                ))
+              }
+            </Swiper>
+          </div>
         </div>
       </div>
     </>

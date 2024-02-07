@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const alertSlice = createSlice({
   name: 'alert',
   initialState: {
-    status: false,
-    name: ''
+    alert: false,
+    alertName: ''
   },
   reducers: {
     setStatus(state, action) {
-      state.status = action.payload.status;
-      state.name = action.payload.name;
+      state.alert = action.payload.alert;
+      state.alertName = action.payload.alertName;
     }
   }
 });

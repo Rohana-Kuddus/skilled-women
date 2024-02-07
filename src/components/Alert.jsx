@@ -12,10 +12,10 @@ function Alert({ status, text, button, closeBtn, name }) {
 
   return (
     <div>
-      {closeBtn ? <CloseLineIcon color="#4F6C6A" onClick={() => dispatch(setAlert({ status: false, name }))}></CloseLineIcon> : ''}
+      {closeBtn ? <CloseLineIcon color="#4F6C6A" onClick={() => dispatch(setAlert({ alert: false, alertName: name }))}></CloseLineIcon> : ''}
 
       <div>
-        {status ? <CheckLineIcon color="green"></CheckLineIcon> : <ErrorWarningLineIcon color="red"></ErrorWarningLineIcon>}
+        {status ? <CheckLineIcon color="#73B234"></CheckLineIcon> : <ErrorWarningLineIcon color="#E8A530"></ErrorWarningLineIcon>}
         <p className="paragraph-regular green" dangerouslySetInnerHTML={{ __html: text }}></p>
 
         <div>

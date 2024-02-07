@@ -5,21 +5,20 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {},
-    message: ''
+    userMessage: ''
   },
   reducers: {
     setUser(state, action) {
       state.user = action.payload.data;
-      state.message = action.payload.message;
+      state.userMessage = action.payload.message;
     },
     setUserMessage(state, action) {
-      state.message = action.payload;
+      state.userMessage = action.payload;
     }
   }
 });
 
 export const { setUser, setUserMessage } = userSlice.actions;
-
 
 // function get user profile
 export const getUserProfile = (token) => async (dispatch) => {

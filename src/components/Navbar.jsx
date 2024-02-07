@@ -15,7 +15,7 @@ import { getUserProfile } from "../redux/slices/userSlice";
 function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status, name } = useSelector(state => state.alert);
+  const { alert, alertName } = useSelector(state => state.alert);
   const { user } = useSelector(state => state.user);
   const [cookies] = useCookies();
   const [isOpen, setOpen] = useState(window.innerWidth >= 1024); // change the navbar view based on device size
@@ -41,17 +41,17 @@ function Navbar() {
     setOpen(!isOpen);
   };
 
-  const alert = {
+  const alertObj = {
     status: false,
     text: 'Apakah Anda yakin ingin keluar?',
     button: {
       primary: 'Keluar',
       primaryAction: () => {
         dispatch(logoutUser());
-        dispatch(setAlert({ status: false, name: 'logout' }));
+        dispatch(setAlert({ alert: false, alertName: 'logout' }));
       },
       secondary: 'Batal',
-      secondaryAction: () => dispatch(setAlert({ status: false, name: 'logout' }))
+      secondaryAction: () => dispatch(setAlert({ alert: false, alertName: 'logout' }))
     },
   };
 
@@ -84,7 +84,7 @@ function Navbar() {
                   <img
                     src={user.image ? user.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'} 
                     alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4" onClick={() => navigate(`/profiles/${user.id}`)} />
-                  <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setAlert({ status: true, name: 'logout' }))} 
+                  <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setAlert({ alert: true, alertName: 'logout' }))} 
                     margin="my-0"></ButtonPrimary>
                 </div>
                 : <ButtonPrimary buttonText="Coba Sekarang" onClick={() => navigate('/register')} margin="my-0 ml-4"></ButtonPrimary>}
@@ -93,7 +93,7 @@ function Navbar() {
         )}
       </nav>
 
-      {status && name === 'logout' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {alert && alertName === 'logout' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
     </div>
   );
 }

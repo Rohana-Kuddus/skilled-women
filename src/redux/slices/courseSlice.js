@@ -8,19 +8,19 @@ const courseSlice = createSlice({
   initialState: {
     course: [],
     courseDetail: {},
-    message: ''
+    courseMessage: ''
   },
   reducers: {
     setCourse(state, action) {
       state.course = action.payload.data;
-      state.message = action.payload.message;
+      state.courseMessage = action.payload.message;
     },
     setCourseDetail(state, action) {
       state.courseDetail = action.payload.data;
-      state.message = action.payload.message;
+      state.courseMessage = action.payload.message;
     },
     setCourseMessage(state, action) {
-      state.message = action.payload;
+      state.courseMessage = action.payload;
     }
   }
 });

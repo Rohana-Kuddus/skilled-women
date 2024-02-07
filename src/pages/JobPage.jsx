@@ -15,7 +15,7 @@ function JobPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cookies] = useCookies();
-  const { status, name } = useSelector(state => state.alert);
+  const { alert, alertName } = useSelector(state => state.alert);
   const { industry } = useSelector(state => state.industry);
   const { job } = useSelector(state => state.job);
 
@@ -30,14 +30,14 @@ function JobPage() {
     dispatch(getJobList({ [name]: value }));
   };
 
-  const alert = {
+  const alertObj = {
     status: false,
     text: 'Silahkan login atau daftar akun terlebih dahulu.',
     button: {
       primary: 'Login',
       primaryAction: () => {
         navigate('/login');
-        dispatch(setAlert({ status: false, name: 'login' }));
+        dispatch(setAlert({ alert: false, alertName: 'login' }));
       },
       secondary: 'Daftar sekarang',
       secondaryAction: () => {
@@ -86,7 +86,7 @@ function JobPage() {
           <div className="pt-2">
             <ButtonRecommendation name={'Pekerjaan'} action={Object.keys(cookies).length !== 0 
               ? () => window.open('url', '_blank', 'noreferrer') 
-              : () => dispatch(setAlert({ status: true, name: 'login' }))}></ButtonRecommendation>
+              : () => dispatch(setAlert({ alert: true, alertName: 'login' }))}></ButtonRecommendation>
           </div> 
         </div> 
       </section>
@@ -102,7 +102,7 @@ function JobPage() {
         </div>
       </section>
       
-      {status && name === 'login' && <Alert status={alert.status} text={alert.text} button={alert.button} 
+      {alert && alertName === 'login' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button} 
         closeBtn={true} name={'login'}></Alert>}
     </div>
   );

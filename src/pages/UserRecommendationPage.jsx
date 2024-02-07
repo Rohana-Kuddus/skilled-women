@@ -15,19 +15,19 @@ function UserRecommendationPage() {
   const dispatch = useDispatch();
   const [cookies] = useCookies();
   const { course } = useSelector(state => state.course);
-  const { status, name } = useSelector(state => state.alert);
+  const { alert, alertName } = useSelector(state => state.alert);
 
-  const alert = {
+  const alertObj = {
     status: false,
     text: `Tindakan ini tidak dapat dibatalkan <br> Apakah Anda yakin ingin menghapusnya?`,
     button: {
       primary: 'Hapus',
       primaryAction: () => {
         // dispatch(deleteClass(data.id));
-        dispatch(setAlert({ status: false, name: 'deleteClass' }));
+        dispatch(setAlert({ alert: false, alertName: 'deleteClass' }));
       },
       secondary: 'Batal',
-      secondaryAction: () => dispatch(setAlert({ status: false, name: 'deleteClass' }))
+      secondaryAction: () => dispatch(setAlert({ alert: false, alertName: 'deleteClass' }))
     }
   };
 
@@ -52,7 +52,7 @@ function UserRecommendationPage() {
         </div>
       </div>
 
-      {status && name === 'deleteClass' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {alert && alertName === 'deleteClass' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
     </div>
   );
 }

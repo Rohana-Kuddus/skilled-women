@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "./ButtonPrimary";
+import PropTypes from "prop-types";
 
 function InputEmail({ setNextPage }) {
   const navigate = useNavigate();
@@ -26,11 +27,15 @@ function InputEmail({ setNextPage }) {
         </div>
 
         <p>
-          Kembali ke laman <span className="underline" onClick={()=>navigate('/login')}>Log in</span> 
+          Kembali ke laman <span className="underline" onClick={() => navigate('/login')}>Log in</span> 
         </p>
       </form>
     </div>
   );
+}
+
+InputEmail.propTypes = {
+  setNextPage: PropTypes.func
 }
 
 export default InputEmail;

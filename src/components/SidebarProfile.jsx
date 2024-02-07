@@ -11,7 +11,7 @@ import { logoutUser } from "../redux/slices/authSlice";
 function SidebarProfile({ id }) {
   const [isOpen, setOpen] = useState(window.innerWidth >= 768);
   const dispatch = useDispatch();
-  const { status, name } = useSelector(state => state.alert);
+  const { alert, alertName } = useSelector(state => state.alert);
 
   // adjust open and close sidebar based on screen size
   const resizeSidebar = () => {
@@ -33,17 +33,17 @@ function SidebarProfile({ id }) {
     setOpen(false);
   };
 
-  const alert = {
+  const alertObj = {
     status: false,
     text: 'Apakah Anda yakin ingin keluar?',
     button: {
       primary: 'Keluar',
       primaryAction: () => {
         dispatch(logoutUser());
-        dispatch(setAlert({ status: false, name: 'signout' }));
+        dispatch(setAlert({ alert: false, alertName: 'signout' }));
       },
       secondary: 'Batal',
-      secondaryAction: () => dispatch(setAlert({ status: false, name: 'signout' }))
+      secondaryAction: () => dispatch(setAlert({ alert: false, alertName: 'signout' }))
     }
   };
 
@@ -97,7 +97,7 @@ function SidebarProfile({ id }) {
               </div>
               <div className="border-t-2 border-gray-200"></div>
               <div className="my-5 mx-2 p-1 text-center hover:bg-red-200 active:bg-red-200 rounded-md">
-                <button onClick={() => dispatch(setAlert({ status: true, name: 'signout' }))} className="text-red-500">
+                <button onClick={() => dispatch(setAlert({ alert: true, alertName: 'signout' }))} className="text-red-500">
                   Keluar
                 </button>
               </div>
@@ -106,7 +106,7 @@ function SidebarProfile({ id }) {
         )}
       </div>
 
-      {status && name === 'signout' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {alert && alertName === 'signout' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
     </div>
   );
 }

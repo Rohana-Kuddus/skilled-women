@@ -15,7 +15,7 @@ import { useCookies } from "react-cookie";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
-  const { status, name } = useSelector(state => state.alert);
+  const { alert, alertName } = useSelector(state => state.alert);
   const { city } = useSelector(state => state.city);
   const { user } = useSelector(state => state.user);
   const [cookies] = useCookies();
@@ -95,19 +95,19 @@ function UserProfilePage() {
     filterItems();
   };
 
-  const alert = {
+  const alertObj = {
     status: true,
     text: 'Profile berhasil disimpan',
     button: {
       primary: 'Tutup',
-      primaryAction: () => dispatch(setAlert({ status: false, name: 'profile' }))
+      primaryAction: () => dispatch(setAlert({ alert: false, alertName: 'profile' }))
     }
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(editUserProfile(cookies.token, input));
-    dispatch(setAlert({ status: true, name: 'profile' }));
+    dispatch(setAlert({ alert: true, alertName: 'profile' }));
   };
 
   return (
@@ -301,7 +301,7 @@ function UserProfilePage() {
         </div>
       </div>
 
-      {status && name === 'profile' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {alert && alertName === 'profile' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
     </div>
   );
 }

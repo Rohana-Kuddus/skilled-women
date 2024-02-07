@@ -6,15 +6,18 @@ import Alert from "../components/Alert";
 import { useEffect, useState } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useLocation } from "react-router-dom";
-import { getClass } from "../redux/slices/courseSlice";
+import { editClass, getClass, submitClass } from "../redux/slices/courseSlice";
 import { useCookies } from "react-cookie";
 import { getJobList } from "../redux/slices/jobSlice";
 import { getRoadmap } from "../redux/slices/roadmapSlice";
+import { getToast } from "../redux/slices/toastSlice";
+import Toast from "../components/Toast";
 
 function RecommendationPage() {
   const dispatch = useDispatch();
-  const { status, name } = useSelector(state => state.alert);
-  const { courseDetail } = useSelector(state => state.course);
+  const { alert, alertName } = useSelector(state => state.alert);
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { courseDetail, courseMessage } = useSelector(state => state.course);
   const { job } = useSelector(state => state.job);
   const { roadmap } = useSelector(state => state.roadmap);
   const [cookies] = useCookies();
@@ -34,52 +37,62 @@ function RecommendationPage() {
     dispatch(getJobList());
   }, []);
 
+  const checkCourse = Object.keys(courseDetail).length !== 0;
+
   // input states
-  const [search, setSearch] = useState(Object.keys(courseDetail).length !== 0 ? courseDetail.job : '');
-  const [select, setSelect] = useState(Object.keys(courseDetail).length !== 0 ? courseDetail.roadmap : []);
+  const [search, setSearch] = useState(checkCourse ? courseDetail.job : '');
+  const [select, setSelect] = useState(checkCourse ? courseDetail.roadmap : []);
+  const [hidden, setHidden] = useState('');
   const [payment, setPayment] = useState({
     status: 'paid',
     paidChecked: true,
     freeChecked: false
   });
   const [input, setInput] = useState({
-    job: courseDetail ? courseDetail.job : '',
-    roadmap: courseDetail ? courseDetail.roadmap : [],
-    name: courseDetail ? courseDetail.name : '',
-    link: courseDetail ? courseDetail.link : '',
-    status: courseDetail ? courseDetail.paid : true,
-    description: courseDetail ? courseDetail.description : ''
+    jobId: checkCourse ? courseDetail.job : '',
+    roadmapId: checkCourse ? courseDetail.roadmap : [],
+    name: checkCourse ? courseDetail.name : '',
+    link: checkCourse ? courseDetail.link : '',
+    paid: checkCourse ? courseDetail.paid : true,
+    description: checkCourse ? courseDetail.description : ''
   });
   const [error, setError] = useState({
     job: '',
     roadmap: '',
     name: '',
-    status: '',
+    paid: '',
     description: ''
   });
 
-  const alert = {
+  const alertObj = {
     status: true,
     text: 'Rekomendasi berhasil disimpan',
     button: {
       primary: 'Tutup',
-      primaryAction: () => dispatch(setAlert({ status: false, name: 'recommendation' }))
+      primaryAction: () => dispatch(setAlert({ alert: false, alertName: 'recommendation' }))
     }
   };
 
-  // akan diubah hit api sesuai search
-  const searchedJob = job.filter(v => v.title.toLowerCase().includes(search.toLowerCase()));
+  const searchHandler = (e) => {
+    const { value } = e.target;
+    setSearch(value);
+    setHidden('');
+    dispatch(getJobList({ search: value }));
+  };
 
   const selectHandler = (e) => {
     const { options } = e.target;
 
     for (let i = 0; i < options.length; i++) {
-      const selected = select.find(v => v == options[i].value);
+      const id = parseInt(options[i].value.replace(/\D+/g, ''));
+      const name = options[i].value.replace(/[0-9]/g, '');
+
+      const selected = select.find(v => v == name);
 
       if (options[i].selected && !selected) {
-        const arr = [...select, options[i].value];
+        const arr = [...select, name];
         setSelect(arr);
-        input.roadmap.push(options[i].value);
+        input.roadmapId.push(id);
       };
     };
   };
@@ -112,7 +125,7 @@ function RecommendationPage() {
     let { name, value } = e.target;
 
     if (value === 'paid' || value === 'free') {
-      name = 'status';
+      name = 'paid';
       value = value === 'paid' ? true : false;
     };
 
@@ -127,9 +140,29 @@ function RecommendationPage() {
 
     const check = checkError(error);
     if (check) {
-      // hit api save kelas
-      console.log(input);
-      dispatch(setAlert({ status: true, name: 'recommendation' }));
+      const payload = {
+        token: cookies.token,
+        data: input
+      };
+
+      if (location.state !== null) {
+        const { classId } = location.state;
+
+        payload.classId = classId;
+        dispatch(editClass(payload));
+      } else {
+        dispatch(submitClass(payload));
+      };
+
+      if (!courseMessage.includes('Success')) {
+        dispatch(getToast({ toast: true, toastName: 'addClass' }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'addClass' }));
+        }, 3000);
+      } else {
+        dispatch(setAlert({ alert: true, alertName: 'recommendation' }));
+      }
     };
   };
 
@@ -150,7 +183,7 @@ function RecommendationPage() {
   };
 
   const checkError = (obj) => {
-    for(let key in obj) {
+    for (let key in obj) {
       if (obj[key] != "") {
         return false;
       };
@@ -172,14 +205,13 @@ function RecommendationPage() {
       <div>
         <form>
           <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
-          <input type="text" name="job" className="input-text" autoFocus value={search} onChange={(e) => setSearch(e.target.value)} onBlur={errorHandler} />
-          <ul>
-            {search !== '' && searchedJob.map(v => (
-              <li key={v.id} value={v.id} onClick={(e) => {
-                setInput(prev => ({ ...prev, job: v.id }));
+          <input type="text" name="job" className="input-text" autoFocus value={search} onChange={searchHandler} onBlur={errorHandler} />
+          <ul className={`${hidden}`} onClick={() => setHidden('hidden')}>
+            {search !== '' && job.map(v => (
+              <li key={v.id} value={v.id} onClick={() => {
                 setSearch(v.title);
+                setInput(prev => ({ ...prev, jobId: v.id }));
                 dispatch(getRoadmap(v.id));
-                e.target.setAttribute('class', 'hidden');
               }}>{v.title}</li>
             ))}
           </ul>
@@ -190,7 +222,7 @@ function RecommendationPage() {
           <select name="roadmap" onChange={selectHandler} onBlur={errorHandler}>
             <option defaultValue={-1}>Pilih roadmap</option>
             {roadmap.map((v, i) => (
-              <option key={i} value={v.name}>{v.name}</option>
+              <option key={i} value={`${v.id} ${v.name}`}>{v.name}</option>
             ))}
           </select>
           {select.map((v, i) => (
@@ -207,7 +239,7 @@ function RecommendationPage() {
           {error.link && <p className="paragraph-regular text-[#FE0101]">{error.link}</p>}
 
           <div>
-            <label htmlFor="status" className="label-form">Status pembayaran</label>
+            <label htmlFor="paid" className="label-form">Status pembayaran</label>
 
             <input type="radio" name="paidChecked" value={'paid'} checked={payment.paidChecked} onChange={radioHandler} />
             <label className="paragraph-regular dark">Berbayar</label>
@@ -226,8 +258,9 @@ function RecommendationPage() {
 
       </div>
 
-      {status && name === 'recommendation' && <Alert status={alert.status} text={alert.text}
-        button={alert.button}></Alert>}
+      {alert && alertName === 'recommendation' && <Alert status={alertObj.status} text={alertObj.text}
+        button={alertObj.button}></Alert>}
+      {toast && toastName === 'addClass' && <Toast message={'Gagal menyimpan kelas.'}></Toast>}
     </div>
   );
 }

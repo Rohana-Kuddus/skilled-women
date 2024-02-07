@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { useCookies } from "react-cookie";
+import { editUserPassword } from "../redux/slices/userSlice";
 
 function RenewPasswordPage() {
   const dispatch = useDispatch();
-  const { status, name } = useSelector(state => state.alert);
+  const [cookies] = useCookies();
+  const { alert, alertName } = useSelector(state => state.alert);
   const [input, setInput] = useState({
     newPassword: '',
     confirmPassword: ''
@@ -23,12 +26,12 @@ function RenewPasswordPage() {
     confirmPassword: 'password'
   });
 
-  const alert = {
+  const alertObj = {
     status: true,
     text: 'Kata sandi Anda berhasil diubah!',
     button: {
       primary: 'Kembali ke halaman log in',
-      primaryAction: () => dispatch(setAlert({ status: false, name: 'password' }))
+      primaryAction: () => dispatch(setAlert({ alert: false, alertName: 'password' }))
     }
   };
 
@@ -108,8 +111,8 @@ function RenewPasswordPage() {
   // submit input
   const buttonHandler = () => {
     if (error.newPassword === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
-      // dispatch(editUserPassword(cookies.token, { password: input.password }));
-      dispatch(setAlert({ status: true, name: 'password' }));
+      dispatch(editUserPassword(cookies.token, { password: input.password }));
+      dispatch(setAlert({ alert: true, alertName: 'password' }));
     };
   };
 
@@ -175,7 +178,7 @@ function RenewPasswordPage() {
         <ButtonPrimary buttonText={"Ubah kata sandi"} onClick={buttonHandler}></ButtonPrimary>
       </div>
 
-        {status && name === 'password' && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+        {alert && alertName === 'password' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
     </div>
   );
 }

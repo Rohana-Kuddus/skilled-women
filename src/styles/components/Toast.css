@@ -1,0 +1,3 @@
+.toast {
+  @apply fixed left-4 bottom-4 z-50 rounded-md py-3 px-6 bg-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.08)];
+}
