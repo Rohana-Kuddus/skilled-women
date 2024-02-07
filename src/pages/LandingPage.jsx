@@ -257,14 +257,27 @@ function LandingPage() {
             </div>
           </div>
 
-          <div className="container">
+          <div className="roadmap-slider">
             <Swiper
               // install Swiper modules
               modules={[Navigation, Pagination]}
               spaceBetween={20}
-              slidesPerView={3}
+              // slidesPerView={3}
               navigation
               pagination={{ clickable: true }}
+              breakpoints={
+                {
+                  0: {
+                    slidesPerView: 1,
+                  },
+                  400:{
+                    slidesPerView:2,
+                  },
+                  639: {
+                    slidesPerView: 3,
+                  }
+                }
+              }
             >
               {jobsData.map((val) => (
                 <SwiperSlide key={val.id}>

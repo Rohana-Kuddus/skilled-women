@@ -37,7 +37,7 @@
 }
 
 .div-imgHero {
-  @apply w-full md:ml-72 md:mt-4;
+  @apply md:ml-72 md:mt-4;
 }
 
 /* {Fitur section} */
@@ -191,11 +191,11 @@
 }
 
 .roadmap-list {
-  @apply grid grid-cols-2 justify-between px-6 p-16 gap-12;
+  @apply flex flex-wrap justify-between px-6 p-16 gap-12;
 }
 
 .roadmap-konten {
-  @apply px-6 pt-6;
+  @apply px-6 pt-6 max-w-96;
 }
 
 .roadmap-text {
@@ -204,4 +204,8 @@
 
 .roadmap-h2-p {
   @apply heading2 mr-12;
+}
+
+.roadmap-slider {
+  @apply md:max-w-4xl
 }
