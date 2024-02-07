@@ -11,13 +11,12 @@ import { setStatus } from "../redux/slices/alertSlice"
 import { useState } from "react"
 import PropTypes from "prop-types"
 import "../styles/components/CardClass.css"
+import { deleteClass, voteClass } from "../redux/slices/courseSlice"
 
 function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize = "size-40" }) {
   const navigate = useNavigate();
-  const [active, setActive] = useState('none');
-
-  // activate alert
   const dispatch = useDispatch();
+  const [active, setActive] = useState('none');
   const { status } = useSelector(state => state.alert);
 
   const alert = {
@@ -25,8 +24,8 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
     text: `Tindakan ini tidak dapat dibatalkan <br> Apakah Anda yakin ingin menghapusnya?`,
     button: {
       primary: 'Hapus',
-      primaryAction: () => { // akan diubah dengan hit api delete
-        console.log('kelas berhasil dihapus');
+      primaryAction: () => {
+        dispatch(deleteClass(data.id));
         dispatch(setStatus(false));
       },
       secondary: 'Batal',
@@ -34,8 +33,11 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
     }
   };
 
+  // dummy token
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNjc0ODg0NX0.HDhf3ah9l5abgcoRIdF_G6yK8UVJ7_ddmFYuwVf88Qg';
   const likeHandler = () => {
     if (active === 'none') {
+      dispatch(voteClass(token, data.id, true));
       return setActive('like');
     };
 
@@ -44,12 +46,14 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
     };
 
     if (active === 'dislike') {
+      dispatch(voteClass(token, data.id, true));
       return setActive('like');
     };
   };
 
   const dislikeHandler = () => {
     if (active === 'none') {
+      dispatch(voteClass(token, data.id, false));
       return setActive('dislike');
     };
 
@@ -58,9 +62,10 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
     };
 
     if (active === 'like') {
+      dispatch(voteClass(token, data.id, false));
       return setActive('dislike');
     };
-  }; 
+  };
 
   return (
     <>
@@ -70,7 +75,7 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
 
         <div className="card flex flex-col mr-4 w-full py-4">
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
-          <p className="paragraph-regular dark">{data.title}</p>
+          <p className="paragraph-regular dark">{data.name}</p>
           <div>
             <p className="paragraph-small dark">{data.paid ? 'Berbayar' : 'Gratis'}</p>
           </div>
@@ -95,7 +100,7 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
             {!editBtn ?
               <ButtonPrimary buttonText={'Lihat Kelas'} onClick={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
               : <div className="flex flex-row items-center gap-2">
-                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations')} padding="px-8"></ButtonPrimary>
+                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations', { state: { classId: data.id } })} padding="px-8"></ButtonPrimary>
                 <ButtonSecondary name={'Hapus'} action={() => dispatch(setStatus(true))} padding="px-7" height="h-10"></ButtonSecondary>
                 </div>
               }

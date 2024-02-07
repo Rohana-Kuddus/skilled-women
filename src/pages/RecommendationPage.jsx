@@ -5,25 +5,46 @@ import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { useEffect, useState } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { useLocation } from "react-router-dom";
+import { getClass } from "../redux/slices/courseSlice";
+import "../styles/components/RecommendationPage.css";
 
 function RecommendationPage() {
   const dispatch = useDispatch();
   const { status } = useSelector(state => state.alert);
+  const { courseDetail } = useSelector(state => state.course);
 
-  const [search, setSearch] = useState('');
-  const [select, setSelect] = useState([]);
+  // check if user edit page or add new course
+  const location = useLocation();
+  if (location.state !== null) {
+    const { classId } = location.state;
+
+    // dummy token
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNjc0ODg0NX0.HDhf3ah9l5abgcoRIdF_G6yK8UVJ7_ddmFYuwVf88Qg';
+    useEffect(() => {
+      dispatch(getClass(token, classId));
+    }, [courseDetail]);
+  };
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
+
+  // input states
+  const [search, setSearch] = useState(Object.keys(courseDetail).length !== 0 ? courseDetail.job : '');
+  const [select, setSelect] = useState(Object.keys(courseDetail).length !== 0 ? courseDetail.roadmap : []);
   const [payment, setPayment] = useState({
     status: 'paid',
     paidChecked: true,
     freeChecked: false
   });
   const [input, setInput] = useState({
-    job: '',
-    roadmap: [],
-    name: '',
-    link: '',
-    status: true,
-    description: ''
+    job: courseDetail ? courseDetail.job : '',
+    roadmap: courseDetail ? courseDetail.roadmap : [],
+    name: courseDetail ? courseDetail.name : '',
+    link: courseDetail ? courseDetail.link : '',
+    status: courseDetail ? courseDetail.paid : true,
+    description: courseDetail ? courseDetail.description : ''
   });
   const [error, setError] = useState({
     job: '',
@@ -209,23 +230,18 @@ function RecommendationPage() {
     return true;
   };
 
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
-
   return (
-    <div>
-      <div>
-        <h1 className="heading1 green">Berikan Rekomendasi Kelas</h1>
-        <p className="paragraph-regular dark">
-          Yuk bantu sesama perempuan untuk mendapat edukasi terbaik yang ada!
+    <div className="text-center">
+      <div className="m-12">
+        <h1 className="heading1 green ">Berikan Rekomendasi Kelas</h1>
+        <p className="rekomendasi-p">
+          Yuk bantu sesama perempuan untuk mendapat edukasi terbaik yang ada!<br />
           isi form dengan data yang lengkap dan lihat kelas mu di list kelas.
         </p>
       </div>
 
       <div>
-        <form>
+        <form className="form">
           <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
           <input type="text" name="job" className="input-text" autoFocus value={search} onChange={(e) => setSearch(e.target.value)} onBlur={errorHandler} />
           <ul>
@@ -248,9 +264,10 @@ function RecommendationPage() {
               <option key={i} value={i}>{v.name}</option>
             ))}
           </select>
-          {select.map(id => (
-            <p key={id} className="paragraph-regular dark">
-              {roadmap[id].name}
+          {select.map((v, i) => (
+            <p key={i} className="paragraph-regular dark">
+              {v}
+              {/* {roadmap[id].name} */}
             </p>
           ))}
           {error.roadmap && <p className="paragraph-regular text-[#FE0101]">{error.roadmap}</p>}

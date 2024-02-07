@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import "../styles/components/LoginPage.css";
 
 function LoginPage() {
-  
-  // akan ke page register jika tulisan "daftar sekarang" di klik 
+  // akan ke page register jika tulisan "daftar sekarang" di klik
   const navigate = useNavigate();
   const toRegister = () => {
     navigate("/register");
+  };
+
+  const toForgotPassword = () => {
+    navigate("/password/email");
   };
 
   // input form
@@ -35,27 +39,32 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-     dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'))
+    dispatch(
+      setFooterAnchor(
+        "Icons by Icons8",
+        "https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14"
+      )
+    );
   }, []);
 
   return (
     <>
-      <div className="text-center">
-        <h1 className="heading1 dark">Log In</h1>
-        <p className="dark paragraph-regular">
+      <div className="login">
+        <h1 className="login-h1">Log In</h1>
+        <p className="login-p">
           Senang melihat kamu kembali! <br /> Masukkan data sesuai dengan yang
           telah kamu daftarkan.
         </p>
       </div>
 
-      <div className="flex flex-row justify-center">
+      <div className="login-konten">
         <div>
-          <img src="https://imgur.com/dEyAXJg.png" alt="login"></img>
+          <img src="https://imgur.com/Z8jSaVB.png" alt="login"></img>
         </div>
 
-        <div className="">
-          <div>
-            <p className="label-form">Email</p>
+        <div className="login-form">
+          <div className="mb-4">
+            <label className="label">Email</label>
             <input
               className="input-text"
               type="text"
@@ -64,8 +73,10 @@ function LoginPage() {
               value={user.username}
               onChange={handleInput}
             ></input>
-            <br />
-            <p className="label-form">Password</p>
+          </div>
+
+          <div className="mb-4">
+            <label className="label">Password</label>
             <input
               className="input-text"
               type="password"
@@ -74,18 +85,20 @@ function LoginPage() {
               value={user.password}
               onChange={handleInput}
             ></input>
-            <p className="label-form text-center">Forgot Password?</p>
+
+            <p className="forgot-password" onClick={toForgotPassword}>Forgot Password?</p>
           </div>
 
-          <div className="text-center">
+          <div className="button-div">
             <ButtonPrimary buttonText="Log in" onClick={login} />
-            <p className="label-form">
+            <p className="button-p">
               Belum punya akun?&ensp;
-              <span className="underline cursor-pointer" onClick={toRegister}>Daftar sekarang</span>
+              <span className="button-span" onClick={toRegister}>
+                Daftar sekarang
+              </span>
             </p>
           </div>
         </div>
-
       </div>
     </>
   );

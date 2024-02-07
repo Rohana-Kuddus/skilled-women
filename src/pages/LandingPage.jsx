@@ -3,16 +3,17 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
 import CardJob from "../components/CardJob";
 import { useEffect, useState } from "react";
+import "../styles/components/LandingPage.css";
 
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 // import Swiper core and required modules
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination } from "swiper/modules";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useNavigate } from "react-router-dom";
@@ -21,32 +22,37 @@ function LandingPage() {
   const navigate = useNavigate();
   const [jobsData, setJobsData] = useState([
     {
-      "title": "Graphic Designer",
-      "image": "https://source.unsplash.com/tuned-on-macbook-CGpifH3FjOA",
-      "industry": "Kreatif",
-      "description": "Ciptakan kreasi desain art kamu secara digital!",
-      "id": "1"
+      title: "Graphic Designer",
+      image: "https://source.unsplash.com/tuned-on-macbook-CGpifH3FjOA",
+      industry: "Kreatif",
+      description: "Ciptakan kreasi desain art kamu secara digital!",
+      id: "1",
     },
     {
-      "title": "Petani Hidroponik",
-      "image": "https://source.unsplash.com/text-s_AgJxMc4zk",
-      "industry": "Agrikultur",
-      "description": "Cocok untuk kamu yang ingin membuka usaha tanaman hidroponik atau berkebun sendiri ~",
-      "id": "2"
+      title: "Petani Hidroponik",
+      image: "https://source.unsplash.com/text-s_AgJxMc4zk",
+      industry: "Agrikultur",
+      description:
+        "Cocok untuk kamu yang ingin membuka usaha tanaman hidroponik atau berkebun sendiri ~",
+      id: "2",
     },
     {
-      "title": "Fotografer",
-      "image": "https://source.unsplash.com/person-holding-canon-dslr-camera-hfk6xOjQlFk",
-      "industry": "Kreatif",
-      "description": "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
-      "id": "3"
+      title: "Fotografer",
+      image:
+        "https://source.unsplash.com/person-holding-canon-dslr-camera-hfk6xOjQlFk",
+      industry: "Kreatif",
+      description:
+        "Hobi foto-foto atau suka fotoin temen kamu? Yuk belajar menjadi fotografer handal!",
+      id: "3",
     },
     {
-      "title": "Digital Marketing Consoultant",
-      "image": "https://source.unsplash.com/person-writing-on-white-paper-U33fHryBYBU",
-      "industry": "Bisnis",
-      "description": "Bantu konsultasi tim marketing kamu dengan menjadi digital marketing consoultant",
-      "id": "4"
+      title: "Digital Marketing Consoultant",
+      image:
+        "https://source.unsplash.com/person-writing-on-white-paper-U33fHryBYBU",
+      industry: "Bisnis",
+      description:
+        "Bantu konsultasi tim marketing kamu dengan menjadi digital marketing consoultant",
+      id: "4",
     },
     // {
     //   "title": "Video Editor ",
@@ -75,169 +81,198 @@ function LandingPage() {
     <>
       {/* Hero section */}
 
-      <div className="bg-[#4F6C6A] text-[#FFF] flex ">
-        <div>
-          <h1 className="heading1">
-            Ingin mempelajari keterampilan baru tetapi tidak tahu harus mulai
-            dari mana?
-          </h1>
-          <p className="paragraph-reguler">
-            Temukan panduan langkah demi langkah untuk mempelajari berbagai
-            keterampilan dan memulai langkahmu menjadi seorang perempuan
-            bertalenta!
-          </p>
-
-          <div className="">
-            <button className="flex center my-3 rounded-lg bg-[#FFF] py-2 px-4 paragraph-regular green transition-all hover:opacity-95 focus:opacity-95 active:opacity-85 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none gap-1">
-              Mulai jelajahi
-              <ArrowRightLineIcon />
+      <div className="hero">
+        <div className="div-1">
+          <div className="div-2">
+            <h1 className="div-h1">
+              Ingin mempelajari keterampilan baru tetapi tidak tahu harus mulai
+              dari mana?
+            </h1>
+          </div>
+          <div className="div-paragraph">
+            <p>
+              Temukan panduan langkah demi langkah untuk mempelajari berbagai
+              keterampilan dan memulai langkahmu menjadi seorang perempuan
+              bertalenta!
+            </p>
+          </div>
+          <div className="div-3">
+            <button className="div-button">
+              Mulai Jelajahi
+              <ArrowRightLineIcon className="div-arrowright" />
             </button>
           </div>
         </div>
 
-        <div className="rounded-full">
-          <img src="https://imgur.com/dEyAXJg.png" alt="" />
+        <div className="div-imgHero">
+          <img src="https://imgur.com/wp3X00G.png" alt="img" />
         </div>
       </div>
 
-      {/* Hero section */}
+      {/* Fitur section */}
 
-      {/* Fitur info section */}
-
-      <div className="heading1 green ">
-        <h1 className="text-center">Berbagai Fitur di Skilled Women </h1>
-
-        <div className="flex justify-center">
-          <div>
-            <div className="">
-              <img src="https://imgur.com/dEyAXJg.png" alt="" />
-              <h3 className="heading3">Roadmap</h3>
-              <p className="paragraph-small ">
-                Menyediakan roadmap yang bisa diikuti pengguna untuk <br />{" "}
-                mempelajari keterampilan baru. Cocok bagi pemula untuk <br />{" "}
-                mengetahui langkah demi langkah apa yang harus <br />{" "}
-                dipelajari. Di setiap langkah menampilkan kursus yang <br />{" "}
-                bersesuaian.
-              </p>
-            </div>
-
-            <div className="">
-              <img src="https://imgur.com/dEyAXJg.png" alt="" />
-              <h3 className="heading3">Rekomendasi kursus </h3>
-              <p className="paragraph-small ">
-                Untuk setiap langkah proses pembelajaran menampilkaan <br />{" "}
-                berbagai kursus dari penyedia berbeda, sehingga <br /> pengguna
-                dapat menemukan yang paling sesuai dengan <br /> kebutuhan
-                mereka.
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <div className="">
-              <img src="https://imgur.com/dEyAXJg.png" alt="" />
-              <h3 className="heading3">Informasi keterampilan</h3>
-              <p className="paragraph-small ">
-                Menyediakan informasi ringkas untuk perempuan yang <br /> ingin
-                mempelajari keterampilan baru dan membantu <br /> perempuan
-                mempelajari keterampilan baru dengan cepat <br /> dan efisien.
-              </p>
-            </div>
-
-            <div className="">
-              <img src="https://imgur.com/dEyAXJg.png" alt="" />
-              <h3 className="heading3">Daftar pekerjaan</h3>
-              <p className="paragraph-small ">
-                Menampilkan pekerjaan atau keterampilan yang up-to-
-                <br />
-                date dan sedang dibutuhkan di berbagai industri yang bisa <br />{" "}
-                dipelajari oleh perempuan.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Fitur info section */}
-
-      {/* Benefit section */}
-
-      <div className="bg-[#4F6C6A] text-[#fff]">
-        <h1 className="heading1 text-center">
-          Manfaat menggunakan Skilled Women{" "}
-        </h1>
-
-        <div className="flex justify-center">
-          <img src="https://imgur.com/dEyAXJg.png" alt="" />
-
-          <div className="heading2">
-            <h2>Ketahui lebih banyak tentang pekerjaan yang kamu minati</h2>
-            <p className="paragraph-regular">
-              Kamu bisa mengakses berbagai informasi tentang <br /> pekerjaan
-              yang diminati, mulai dari kelibihan dan <br /> kekurangannya,
-              perkiraan gaji dan lain-lain. Kamu juga <br /> bisa mengetahui
-              keterampilan apa saja yang perlu <br /> dipelajari melalui roadmap
-              pekerjaan. selain itu di setiap <br /> langkah roadmap kamu bisa
-              melihat daftar kursus online <br /> yang bersesuaian.
-            </p>
-          </div>
+      <div className="fitur">
+        <div className="fitur-h1">
+          <h1>Berbagai Fitur di Skilled Women</h1>
         </div>
 
-        <div className="flex justify-center">
-          <div className="heading2">
-            <h2>
-              Pelajari keterampilan-
-              <br />
-              keterampilan yang up-to-date
-            </h2>
-            <p className="paragraph-regular">
-              Kamu bisa melihat berbagai macam pekerjaan di banyak <br />
-              industri berbeda yang bisa kamu pelajari.
-            </p>
+        <div className="fitur-list">
+          <div className="fitur-roadmap">
+            <div className="fitur-roadmap-img">
+              <img src="https://imgur.com/ADp6mRl.png" alt="fitur1" />
+            </div>
+            <div className="fitur-roadmap-h3">
+              <h3>Roadmap</h3>
+            </div>
+            <div className="paragraph-regular text-[#4F6C6A]">
+              <p>
+                Menyediakan roadmap yang bisa diikuti pengguna untuk mempelajari
+                keterampilan baru. Cocok bagi pemula untuk mengetahui langkah
+                demi langkah apa yang harus dipelajari. Di setiap langkah
+                menampilkan kursus yang bersesuaian.
+              </p>
+            </div>
           </div>
-          <img src="https://imgur.com/dEyAXJg.png" alt="" />
+
+          <div className="fitur-info">
+            <div className="fitur-info-img">
+              <img src="https://imgur.com/EehpzFZ.png" alt="fitur1" />
+            </div>
+            <div className="fitur-info-h3">
+              <h3>Informasi keterampilan</h3>
+            </div>
+            <div className="fitur-info-p">
+              <p>
+                Menyediakan informasi ringkas untuk perempuan yang ingin
+                mempelajari keterampilan baru dan membantu perempuan mempelajari
+                keterampilan baru dengan cepat dan efisien.
+              </p>
+            </div>
+          </div>
+
+          <div className="fitur-rekomendasi">
+            <div className="fitur-rekomendasi-img">
+              <img src="https://imgur.com/gaOVDIu.png" alt="fitur1" />
+            </div>
+            <div className="fitur-rekomendasi-h3">
+              <h3>Rekomendasi kursus</h3>
+            </div>
+            <div className="fitur-rekomendasi-p">
+              <p>
+                Untuk setiap langkah proses pembelajaran menampilkaan berbagai
+                kursus dari penyedia berbeda, sehingga pengguna dapat menemukan
+                yang paling sesuai dengan kebutuhan mereka.
+              </p>
+            </div>
+          </div>
+
+          <div className="fitur-daftar">
+            <div className="fitur-daftar-img">
+              <img src="https://imgur.com/pgxsPLj.png" alt="fitur1" />
+            </div>
+            <div className="fitur-daftar-h3">
+              <h3>Daftar pekerjaan</h3>
+            </div>
+            <div className="fitur-daftar-p">
+              <p>
+                Menampilkan pekerjaan atau keterampilan yang up-to-date dan
+                sedang dibutuhkan di berbagai industri yang bisa dipelajari oleh
+                perempuan.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Benefit section */}
+
+      <div className="benefit">
+        <div className="benefit-h1">
+          <h1>Manfaat menggunakan Skilled Women</h1>
+        </div>
+
+        <div className="benefit-1">
+          <div className="benefit-1-img">
+            <img src="https://imgur.com/889iW6i.png" alt="img" />
+          </div>
+
+          <div className="benefit-1-konten">
+            <div className="benefit-1-h2">
+              <h2>Ketahui lebih banyak tentang pekerjaan yang kamu minati</h2>
+            </div>
+            <div className="benefit-1-p">
+              <p>
+                Kamu bisa mengakses berbagai informasi tentang pekerjaan yang
+                diminati, mulai dari kelibihan dan kekurangannya, perkiraan gaji
+                dan lain-lain. Kamu juga bisa mengetahui keterampilan apa saja
+                yang perlu dipelajari melalui roadmap pekerjaan. Selain itu di
+                setiap langkah roadmap kamu bisa melihat daftar kursus online
+                yang bersesuaian.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="benefit-2">
+          <div className="benefit-2-konten">
+            <div className="benefit-2-h2">
+              <h2>Pelajari keterampilan-keterampilan yang up-to-date</h2>
+            </div>
+            <div className="benefit-2-p">
+              <p>
+                Kamu bisa melihat berbagai macam pekerjaan di banyak industri
+                berbeda yang bisa kamu pelajari.
+              </p>
+            </div>
+          </div>
+          <div className="benefit-2-img">
+            <img src="https://imgur.com/r7joNG1.png" alt="img" />
+          </div>
+        </div>
+      </div>
 
       {/* Roadmap section */}
 
-      <div className="green">
-        <h1 className="text-center heading1">
-          Roadmap Pekerjaan di Skilled Women{" "}
-        </h1>
+      <div className="roadmap">
+        <div className="roadmap-h1">
+          <h1>Roadmap Pekerjaan di Skilled Women</h1>
+        </div>
 
-        <div className= "grid gap-y-15 grid-cols-2">
-          <div>
-            <h2 className="heading2">Roadmap pekerjaan untuk kamu!</h2>
-            <p className="paragraph-regular">
-              Pelajari Berbagai Alur Keterampilan dan <br /> langkah Langkah
-              untuk Meningkatkan <br /> Keahlian kamu!
-            </p>
-            <ButtonPrimary buttonText="Lihat Semua" onClick={() => navigate('/jobs')} />
+        <div className="roadmap-list ">
+          <div className="roadmap-konten">
+            <div className="roadmap-text">
+              <h2 className="roadmap-h2-p paragraph-reguler justify-text">
+                Roadmap pekerjaan untuk kamu!
+              </h2>
+              <p>
+                Pelajari Berbagai Alur Keterampilan dan langkah Langkah untuk
+                meningkatkan Keahlian kamu!
+              </p>
+            </div>
+            <div>
+              <ButtonPrimary
+                buttonText="Lihat Semua"
+                onClick={() => navigate("/jobs")}
+              />
+            </div>
           </div>
 
-          {/* job carousel */}
-            <div className='container'>
-              <Swiper
-                // install Swiper modules
-                modules={[Navigation, Pagination]}
-                spaceBetween={20}
-                slidesPerView={3}
-                navigation
-                pagination={{ clickable: true }}
-              >
-                {
-                  jobsData.map((val) => (
-                    <SwiperSlide key={val.id}>
-                      <CardJob job={val}></CardJob>
-                    </SwiperSlide>
-                    
-                  ))
-                }
-              </Swiper>
-            </div>
-
+          <div className="container">
+            <Swiper
+              // install Swiper modules
+              modules={[Navigation, Pagination]}
+              spaceBetween={20}
+              slidesPerView={3}
+              navigation
+              pagination={{ clickable: true }}
+            >
+              {jobsData.map((val) => (
+                <SwiperSlide key={val.id}>
+                  <CardJob job={val}></CardJob>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
       </div>
     </>

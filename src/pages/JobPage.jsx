@@ -6,29 +6,24 @@ import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import CardJob from "../components/CardJob";
 import ButtonRecommendation from "../components/ButtonRecommendation";
 import Alert from "../components/Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import { getIndustry } from "../redux/slices/industrySlice";
 import "../styles/pages/JobPage.css";
 
 function JobPage() {
-  const Industry = [
-    {
-      id: 1,
-      name: "Kreatif",
-    },
-    {
-      id: 2,
-      name: "Agrikultur",
-    },
-    {
-      id: 3,
-      name: "Bisnis",
-    },
-    {
-      id: 4,
-      name: "Teknologi",
-    },
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isRegistered, setRegistered] = useState(true); // if user not login set alert, akan cek dari api
+  const [searchTerm, setSearchTerm] = useState(""); //filter by search
+  const [selected, setSelected] = useState([]); //filter by industry
+  const { status } = useSelector(state => state.alert);
+  const { industry } = useSelector(state => state.industry);
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+    dispatch(getIndustry());
+  }, [industry]);
 
   const jobs = [
     {
@@ -82,15 +77,11 @@ function JobPage() {
     },
   ];
 
-  //filter by search
-  const [searchTerm, setSearchTerm] = useState("");
-
   //filter by industry
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-  const [selected, setSelected] = useState([]);
   const filterHandler = (industryName) => {
     // akan hit ke api untuk filter
     const data = jobs.filter((job) => job.industry === industryName);
@@ -102,40 +93,23 @@ function JobPage() {
 
   //if user not login set alert
   //akan cek dari api
-  const [isRegistered, setRegistered] = useState(false);
   // alert
-  const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.alert);
-  const navigate = useNavigate();
-
   const alert = {
     status: false,
-    text: "Silahkan login atau daftar akun terlebih dahulu",
+    text: 'Silahkan login atau daftar akun terlebih dahulu.',
     button: {
       primary: "Login",
       primaryAction: () => {
-        //ke page login
-        navigate("/login");
+        navigate('/login');
         dispatch(setStatus(false));
       },
       secondary: "Daftar sekarang",
       secondaryAction: () => {
-        //ke page register
-        navigate("/register");
+        navigate('/register');
         // dispatch(setStatus(false));
-      },
-    },
+      }
+    }
   };
-
-  //click button recomendation
-  const buttonHandler = () => {
-    dispatch(setStatus(true));
-  };
-
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
 
   return (
     <>
@@ -190,7 +164,7 @@ function JobPage() {
                     <a key="reset" className="options" role="menuitem" onClick={() => resetFilter()}>
                       Pilih Industri
                     </a>
-                    {Industry.map((industry) => (
+                    {industry.map((industry) => (
                       <a key={industry.id} className="options" role="menuitem" onClick={() => filterHandler(industry.name)}>
                         {industry.name}
                       </a>

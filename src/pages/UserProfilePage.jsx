@@ -9,10 +9,19 @@ import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import "../styles/pages/UserProfilePage.css";
 import "../index.css";
+import "../styles/pages/UserProfilePage.css";
+import { getCity } from "../redux/slices/citySlice";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
-  // data dummy
+  const { status } = useSelector(state => state.alert);
+  const { city } = useSelector(state => state.city);
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+    dispatch(getCity());
+  }, [city]);
+
   const [input, setInput] = useState({
     username: "janedoe1",
     email: "jane@email.com",
@@ -74,6 +83,7 @@ function UserProfilePage() {
     setSearchCity(event.target.value);
     filterItems();
   };
+
   useEffect(() => {
     if (isOpen !== "" && dropdownRef.current) {
       filterItems();
@@ -305,38 +315,18 @@ function UserProfilePage() {
                             autoComplete="off"
                             onChange={handleSearch}
                           />
-                          <a
-                            className="options"
-                            role="menuitem"
-                            onClick={(e) => {
+                          {city.map(v => (
+                            <a href="#" role="menuitem" className="options" key={v.id} onClick={(e) => {
                               e.preventDefault();
                               inputHandler({
                                 target: {
                                   name: "city",
-                                  value: "Jakarta",
-                                },
+                                  value: v.name
+                                }
                               });
                               toggleDropdown();
-                            }}
-                          >
-                            Jakarta
-                          </a>
-                          <a
-                            className="options"
-                            role="menuitem"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              inputHandler({
-                                target: {
-                                  name: "city",
-                                  value: "Surabaya",
-                                },
-                              });
-                              toggleDropdown();
-                            }}
-                          >
-                            Surabaya
-                          </a>
+                            }}>{v.name}</a>
+                          ))}
                         </div>
                       </div>
                     ) : null}
