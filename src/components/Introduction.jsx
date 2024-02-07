@@ -20,8 +20,8 @@ function Introduction({ data, setIsActive }) {
               <a href={data.percentageLink} className="paragraph-small dark" target="_blank">src:</a>
             </div>
             <div>
-              <img src={data.industry.image} alt={data.industry.name.toLowerCase().replace(/\s+/g, '-')} />
-              <h3 className="heading3 green">Industri {data.industry.name}</h3>
+              <img src={data.Industry.image} alt={data.Industry.name.toLowerCase().replace(/\s+/g, '-')} />
+              <h3 className="heading3 green">Industri {data.Industry.name}</h3>
             </div>
           </div>
         </div>
@@ -55,11 +55,11 @@ function Introduction({ data, setIsActive }) {
       <div>
         <h2 className="heading2 green">Perempuan Inspiratif {data.title}</h2>
         <div>
-          <img src={data.figure.image} alt={data.figure.name.toLowerCase().replace(/\s+/g, '-')} />
+          <img src={data.Figure.image} alt={data.Figure.name.toLowerCase().replace(/\s+/g, '-')} />
           <div>
-            <h2 className="heading2 green">{data.figure.name}</h2>
-            <h3 className="hedaing3 green">{data.figure.role}</h3>
-            <p className="paragraph-regular dark">{data.figure.description}</p>
+            <h2 className="heading2 green">{data.Figure.name}</h2>
+            <h3 className="hedaing3 green">{data.Figure.role}</h3>
+            <p className="paragraph-regular dark">{data.Figure.description}</p>
           </div>
         </div>
       </div>

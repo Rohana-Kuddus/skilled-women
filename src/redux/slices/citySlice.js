@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const citySlice = createSlice({
@@ -10,23 +10,22 @@ const citySlice = createSlice({
     setCity(state, action) {
       state.city = action.payload;
     }
-  },
-  // extraReducers: {
-  //   [getCities.fullfilled]: (state, action) => {
-  //     return [...action.payload];
-  //   },
-  // }
+  }
 });
 
 export const { setCity } = citySlice.actions;
 
 // function get cities
+export const getCity = () => {
+  return async (dispatch) => {
+    const { data: { data } } = await axios({
+      method: 'get',
+      url: 'https://skilled-women-be-production.up.railway.app/cities',
+      responseType: 'json'
+    });
 
-// export const getCities = createAsyncThunk(
-//   "cities/getCities",
-//   async() => {
-//     const response = await axios.get("https://skilled-women-be-production.up.railway.app/cities");
-//     return response.data;
-//   });
+    dispatch(setCity(data));
+  };
+};
 
 export default citySlice.reducer;
