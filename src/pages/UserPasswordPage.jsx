@@ -177,7 +177,7 @@ function UserPasswordPage() {
       <ButtonPrimary buttonText={'Ganti kata sandi'} onClick={buttonHandler}></ButtonPrimary>
 
       {alert && alertName === 'password' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
-      {toast && toastName === 'password' && <Toast message={'Gagal menyimpan password.'}></Toast>}
+      {toast && toastName === 'password' && <Toast message={userMessage}></Toast>}
     </div>
   );
 }

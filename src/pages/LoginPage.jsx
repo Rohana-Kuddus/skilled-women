@@ -8,12 +8,15 @@ import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
 import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
+import { loginUser } from "../redux/slices/authSlice";
+import { useCookies } from "react-cookie";
 
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cookies] = useCookies();
   const { toast, toastName } = useSelector(state => state.toast);
-  const { userMessage } = useSelector(state => state.user);
+  const { authMessage } = useSelector(state => state.auth);
   const [passwordType, setPasswordType] = useState('password');
   const [user, setUser] = useState({
     email: "",
@@ -25,7 +28,7 @@ function LoginPage() {
   });
 
   useEffect(() => {
-    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'))
+    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'));
   }, []);
 
   const handleInput = (event) => {
@@ -68,7 +71,7 @@ function LoginPage() {
     if (!error.email && !error.password) {
       dispatch(loginUser(user));
 
-      if (!userMessage.includes('Success')) {
+      if (!authMessage.includes('Success')) {
         dispatch(getToast({ toast: true, toastName: 'login' }));
 
         setTimeout(() => {
@@ -76,6 +79,11 @@ function LoginPage() {
         }, 3000);
       };
     };
+  };
+
+  const checkCookies = Object.keys(cookies).length !== 0;
+  if (checkCookies) {
+    navigate('/');
   };
 
   return (
@@ -119,16 +127,16 @@ function LoginPage() {
             ></input>
             <span name="password" onClick={() => passwordType === 'password'
               ? setPasswordType('text') : setPasswordType('password')}>
-              {passwordType === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
-                : <EyeLineIcon className="green"></EyeLineIcon>}
+              {passwordType === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+                : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
             </span>
             {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
           </div>
 
           <div className="text-center">
-            <p className="label-form text-center hover:cursor-pointer" onClick={() => navigate("/password/email")}>Forgot Password?</p>
+            <p className="paragraph-regular green font-bold hover:cursor-pointer" onClick={() => navigate("/password/email")}>Forgot Password?</p>
             <ButtonPrimary buttonText="Log in" onClick={login} />
-            <p className="label-form">
+            <p className="paragraph-regular green font-bold">
               Belum punya akun?&ensp;
               <span className="underline cursor-pointer" onClick={() => navigate("/register")}>Daftar sekarang</span>
             </p>
@@ -136,7 +144,7 @@ function LoginPage() {
         </div>
       </div>
 
-      {toast && toastName === 'login' && <Toast message={userMessage}></Toast>}
+      {toast && toastName === 'login' && <Toast message={authMessage}></Toast>}
     </div>
   );
 }

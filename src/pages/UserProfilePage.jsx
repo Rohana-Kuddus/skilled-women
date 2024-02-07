@@ -348,7 +348,7 @@ function UserProfilePage() {
 
       {alert && alertName === 'profile' && <Alert status={alertObj.status} text={alertObj.text} 
         button={alertObj.button}></Alert>}
-      {toast && toastName === 'profile' && <Toast message={'Gagal menyimpan profil.'}></Toast>}
+      {toast && toastName === 'profile' && <Toast message={userMessage}></Toast>}
     </div>
   );
 }

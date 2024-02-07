@@ -250,7 +250,7 @@ function RecommendationPage() {
 
       {alert && alertName === 'recommendation' && <Alert status={alertObj.status} text={alertObj.text}
         button={alertObj.button}></Alert>}
-      {toast && toastName === 'addClass' && <Toast message={'Gagal menyimpan kelas.'}></Toast>}
+      {toast && toastName === 'addClass' && <Toast message={courseMessage}></Toast>}
     </div>
   );
 }

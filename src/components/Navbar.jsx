@@ -49,6 +49,7 @@ function Navbar() {
       primaryAction: () => {
         dispatch(logoutUser());
         dispatch(setAlert({ alert: false, alertName: 'logout' }));
+        navigate('/');
       },
       secondary: 'Batal',
       secondaryAction: () => dispatch(setAlert({ alert: false, alertName: 'logout' }))
@@ -60,7 +61,7 @@ function Navbar() {
       <nav className="flex items-center justify-between p-4 flex-wrap bg-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
         {/* LOGO */}
         <Link to="/" className="top-0 p-2 mx-2 inline-flex items-center">
-          <img src={Logo} alt="skilldwomen_logo" className="w-60 logo" />
+          <img src={Logo} alt="skilldwomen_logo" className="w-60 logo hover:cursor-pointer" />
         </Link>
 
         {/* ICON MENU */}
@@ -83,7 +84,7 @@ function Navbar() {
                 <div className="flex">
                   <img
                     src={user.image ? user.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'} 
-                    alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4" onClick={() => navigate(`/profiles/${user.id}`)} />
+                    alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4 hover:cursor-pointer" onClick={() => navigate(`/profiles/${user.id}`)} />
                   <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setAlert({ alert: true, alertName: 'logout' }))} 
                     margin="my-0"></ButtonPrimary>
                 </div>

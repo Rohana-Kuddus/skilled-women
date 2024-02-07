@@ -9,6 +9,7 @@ import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
 import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import { registerUser } from "../redux/slices/authSlice";
 import Toast from "../components/Toast";
+import { getToast } from "../redux/slices/toastSlice";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -56,17 +57,22 @@ function RegisterPage() {
 
   const handleInput = (event) => {
     const { name, value } = event.target;
-    setRegister((prevData) => ({
-      ...prevData,
-      ...register,
-      [name]: value,
-    }));
+
+    if (value !== 'Pilih kota' && value !== 'Pilih gender') {
+      setRegister((prevData) => ({
+        ...prevData,
+        ...register,
+        [name]: value,
+      }));
+    };
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const errors = validateData();
+    setValidationsErrors(errors);
+
     if (Object.keys(errors).length === 0) {
       dispatch(registerUser(register));
 
@@ -76,9 +82,9 @@ function RegisterPage() {
         setTimeout(() => {
           dispatch(getToast({ toast: false, toastName: 'register'}));
         }, 3000);
+      } else {
+        navigate('/login');
       };
-    } else {
-      setValidationsErrors(errors);
     };
   };
 
@@ -124,7 +130,7 @@ function RegisterPage() {
                 onChange={handleInput}
                 required
               >
-                <option value="" disabled>Pilih gender</option>
+                <option defaultValue="Pilih gender">Pilih gender</option>
                 <option value="F">Perempuan</option>
                 <option value="M">Laki-laki</option>
               </select>
@@ -135,7 +141,7 @@ function RegisterPage() {
               <p className="label-form" htmlFor="city">City</p>
               <select className="input-text" id="city" type="text" name="cityId" value={register.city}
                 onChange={handleInput} required>
-                <option defaultValue="" selected disabled>Pilih kota</option>
+                <option value="Pilih kota">Pilih kota</option>
                 {city.map(v => (
                   <option key={v.id} value={v.id}>{v.name}</option>
                 ))}
@@ -174,7 +180,7 @@ function RegisterPage() {
               ></input>
               <span name="confirmPassword" onClick={() => passwordType === 'password' 
                 ? setPasswordType('text') : setPasswordType('password')}>
-                {passwordType === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
+                {passwordType === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
                   : <EyeLineIcon className="green"></EyeLineIcon>}
               </span>
               {validationsErrors.password && (
@@ -196,7 +202,7 @@ function RegisterPage() {
         <ButtonPrimary type="submit" buttonText="Daftar Sekarang" onClick={handleSubmit} />
       </div>
 
-      {toast && toastName === 'register' && <Toast message={'Gagal registrasi.'}></Toast>}
+      {toast && toastName === 'register' && <Toast message={authMessage}></Toast>}
     </div>
   );
 }

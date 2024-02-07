@@ -6,23 +6,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { useCookies } from "react-cookie";
-import { editUserPassword } from "../redux/slices/userSlice";
 import Toast from "../components/Toast";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getToast } from "../redux/slices/toastSlice";
+import { resetPassword } from "../redux/slices/authSlice";
 
 function RenewPasswordPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cookies] = useCookies();
+  const location = useLocation();
   const { alert, alertName } = useSelector(state => state.alert);
   const { toast, toastName } = useSelector(state => state.toast);
-  const { userMessage } = useSelector(state => state.user);
+  const { authMessage } = useSelector(state => state.auth);
   const [input, setInput] = useState({
     newPassword: '',
     confirmPassword: ''
   });
   const [error, setError] = useState({
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    validatePassword: ''
   });
   const [passwordType, setPasswordType] = useState({
     newPassword: 'password',
@@ -34,9 +37,16 @@ function RenewPasswordPage() {
     text: 'Kata sandi Anda berhasil diubah!',
     button: {
       primary: 'Kembali ke halaman log in',
-      primaryAction: () => dispatch(setAlert({ alert: false, alertName: 'password' }))
+      primaryAction: () => {
+        navigate('/login');
+        dispatch(setAlert({ alert: false, alertName: 'password' }));
+      }
     }
   };
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
 
   // handler change visibiity
   const visibilityHandler = (e) => {
@@ -113,10 +123,24 @@ function RenewPasswordPage() {
 
   // submit input
   const buttonHandler = () => {
-    if (error.newPassword === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
-      dispatch(editUserPassword(cookies.token, { password: input.password }));
+    if (checkCapital === '' || checkNumber === '' || checkCharacter === '') {
+      setError(prev => ({
+        ...prev,
+        validatePassword: 'Password must meet the requirements.'
+      }));
+    } else {
+      setError(prev => ({
+        ...prev,
+        validatePassword: ''
+      }));
+    };
 
-      if (!userMessage.includes('Success')) {
+    if (Object.values(error).every(v => v === '')) {
+      const { email } = location.state;
+
+      dispatch(resetPassword({ email, password: input.newPassword }));
+      
+      if (!authMessage.includes('Success')) {
         dispatch(getToast({ toast: true, toastName: 'password' }));
 
         setTimeout(() => {
@@ -127,11 +151,6 @@ function RenewPasswordPage() {
       }
     };
   };
-
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
 
   return (
     <div>
@@ -154,8 +173,8 @@ function RenewPasswordPage() {
             autoFocus
           ></input>
           <span name="newPassword" onClick={visibilityHandler}>
-            {passwordType.newPassword === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
-              : <EyeLineIcon className="green"></EyeLineIcon>}
+            {passwordType.newPassword === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+              : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
           </span>
         </div>
         {error.newPassword && <p className="paragraph-regular text-[#FE0101]">{error.newPassword}</p>}
@@ -172,8 +191,8 @@ function RenewPasswordPage() {
             onBlur={validateInput}
           ></input>
           <span name="confirmPassword" onClick={visibilityHandler}>
-            {passwordType.confirmPassword === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
-              : <EyeLineIcon className="green"></EyeLineIcon>}
+            {passwordType.confirmPassword === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+              : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
           </span>
         </div>
         {error.confirmPassword && <p className="paragraph-regular text-[#FE0101]">{error.confirmPassword}</p>}
@@ -185,13 +204,14 @@ function RenewPasswordPage() {
             <li className={`paragraph-small dark ${checkNumber}`}>1 atau lebih angka</li>
             <li className={`paragraph-small dark ${checkCharacter}`}>1 atau lebih karakter khusus</li>
           </ul>
+          {error.validatePassword && <p className="paragraph-regular text-[#FE0101]">{error.validatePassword}</p>}
         </div>
 
         <ButtonPrimary buttonText={"Ubah kata sandi"} onClick={buttonHandler}></ButtonPrimary>
       </div>
 
         {alert && alertName === 'password' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
-        {toast && toastName === 'password' && <Toast message={'Gagal menyimpan password.'}></Toast>}
+        {toast && toastName === 'password' && <Toast message={authMessage}></Toast>}
     </div>
   );
 }

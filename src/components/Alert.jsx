@@ -12,7 +12,7 @@ function Alert({ status, text, button, closeBtn, name }) {
 
   return (
     <div>
-      {closeBtn ? <CloseLineIcon color="#4F6C6A" onClick={() => dispatch(setAlert({ alert: false, alertName: name }))}></CloseLineIcon> : ''}
+      {closeBtn ? <CloseLineIcon className="hover:cursor-pointer" color="#4F6C6A" onClick={() => dispatch(setAlert({ alert: false, alertName: name }))}></CloseLineIcon> : ''}
 
       <div>
         {status ? <CheckLineIcon color="#73B234"></CheckLineIcon> : <ErrorWarningLineIcon color="#E8A530"></ErrorWarningLineIcon>}
