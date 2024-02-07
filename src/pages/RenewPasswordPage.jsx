@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setStatus } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import "../styles/pages/renewPassword.css"
 
 function RenewPasswordPage() {
   const dispatch = useDispatch();
@@ -79,9 +80,9 @@ function RenewPasswordPage() {
       switch (name) {
         case 'newPassword':
           if (!value) {
-            stateObj[name] = 'Please enter Password.';
+            stateObj[name] = 'Silakan isi Password.';
           } else if (input.confirmPassword && value !== input.confirmPassword) {
-            stateObj['confirmPassword'] = 'Password and Confirm Password does not match.';
+            stateObj['confirmPassword'] = 'Password dan Confirm Password tidak cocok';
           } else {
             stateObj['confirmPassword'] = input.confirmPassword ? '' : error.confirmPassword;
           }
@@ -89,9 +90,9 @@ function RenewPasswordPage() {
 
         case 'confirmPassword':
           if (!value) {
-            stateObj[name] = 'Please enter Confirm Password.';
+            stateObj[name] = 'Silakan isi Confirm password.';
           } else if (input.newPassword && value !== input.newPassword) {
-            stateObj[name] = 'Password and Confirm Password does not match.';
+            stateObj[name] = 'Password dan Confirm Password tidak cocok';
           }
           break;
 
@@ -122,17 +123,17 @@ function RenewPasswordPage() {
   }, []);
 
   return (
-    <div>
-      <div className="text-center">
-        <h1 className="heading1 dark">Perbarui Kata Sandi</h1>
-        <p className="paragraph-regular">Masukkan kata sandi baru kamu.</p>
+    <div className="userPasswordForm mt-8 mx-auto">
+      <div className="text-center text-balance break-words mb-">
+        <h1 className="heading1 dark break-words">Perbarui Kata Sandi</h1>
+        <p className="paragraph-regular break-words">Masukkan kata sandi baru kamu.</p>
       </div>
 
-      <div>
-        <div>
-          <label className="label-form">Kata sandi baru</label>
+      <div className="mt-4">
+          <label htmlFor="password" className="label-form">Kata sandi baru</label>
+        <div className="relative flex flex-row items-center">
           <input
-            className="input-text"
+            className="inputPassword"
             type={passwordType.newPassword}
             name="newPassword"
             placeholder="********"
@@ -141,17 +142,17 @@ function RenewPasswordPage() {
             onBlur={validateInput}
             autoFocus
           ></input>
-          <span name="newPassword" onClick={visibilityHandler}>
+          <span name="newPassword" onClick={visibilityHandler} className="passwordIcon">
             {passwordType.newPassword === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
               : <EyeLineIcon className="green"></EyeLineIcon>}
           </span>
         </div>
         {error.newPassword && <p className="paragraph-regular text-[#FE0101]">{error.newPassword}</p>}
 
-        <div>
-          <label className="label-form">Konfirmasi kata sandi</label>
+        <label htmlFor="confirmPassword" className="label-form">Konfirmasi kata sandi</label>
+        <div className="relative flex flex-row items-center">
           <input
-            className="input-text"
+            className="inputPassword"
             type={passwordType.confirmPassword}
             name="confirmPassword"
             placeholder="********"
@@ -159,14 +160,14 @@ function RenewPasswordPage() {
             onChange={inputHandler}
             onBlur={validateInput}
           ></input>
-          <span name="confirmPassword" onClick={visibilityHandler}>
+          <span name="confirmPassword" onClick={visibilityHandler} className="passwordIcon">
             {passwordType.confirmPassword === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
               : <EyeLineIcon className="green"></EyeLineIcon>}
           </span>
         </div>
-        {error.confirmPassword && <p className="paragraph-regular text-[#FE0101]">{error.confirmPassword}</p>}
+        {error.confirmPassword && <p className="paragraph-regular text-[#FE0101] break-words">{error.confirmPassword}</p>}
 
-        <div>
+        <div className="my-4">
           <p className="paragraph-small dark">Kata sandi Anda harus mengandung:</p>
           <ul className="ml-4 list-disc">
             <li className={`paragraph-small dark ${checkCapital}`}>1 atau lebih huruf kapital</li>
@@ -174,9 +175,8 @@ function RenewPasswordPage() {
             <li className={`paragraph-small dark ${checkCharacter}`}>1 atau lebih karakter khusus</li>
           </ul>
         </div>
-
-        <ButtonPrimary buttonText={"Ubah kata sandi"} onClick={buttonHandler}></ButtonPrimary>
       </div>
+        <ButtonPrimary buttonText={"Ubah kata sandi"} onClick={buttonHandler} padding="max-[380px]:px-[3.6em] max-[430px]:px-[6.8em] md:px-[10.4em]"/>
 
         {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>

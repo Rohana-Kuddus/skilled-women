@@ -7,6 +7,7 @@ import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { getClassRoadmap } from "../redux/slices/courseSlice";
 import { getJobDetail } from "../redux/slices/jobSlice";
 import { useParams } from "react-router-dom";
+import "../styles/pages/JobDetailPage.css"
 
 function JobDetailPage() {
   const [isActive, setIsActive] = useState('intro');
@@ -31,10 +32,9 @@ function JobDetailPage() {
       {/* <Hero data={job}></Hero> */}
 
       {/* tab */}
-      <div className=" flex flex-row justify-between items-center p-20">
-        <h3 className="heading3 green" onClick={() => setIsActive('intro')}>Pengenalan</h3>
-        <h3 className="heading3 green" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
-
+      <div className="tabSection">
+        <h3 className="tab" onClick={() => setIsActive('intro')}>Pengenalan</h3>
+        <h3 className="tab" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
       </div>
 
       {/* akan ditambah props data dari redux api */}
