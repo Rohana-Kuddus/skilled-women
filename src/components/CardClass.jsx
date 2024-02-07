@@ -12,7 +12,7 @@ import { useState } from "react"
 import PropTypes from "prop-types"
 import "../styles/components/CardClass.css"
 
-function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth = "w-32", imgHeight ="h-auto" }) {
+function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize = "size-40" }) {
   const navigate = useNavigate();
   const [active, setActive] = useState('none');
 
@@ -63,12 +63,12 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
   }; 
 
   return (
-    <div>
-      <div className="container flex flex-row gap-4 items-center border-2 rounded-md mb-4 w-full">
+    <>
+      <div className="cardContainer">
         {/* default icon untuk kelas tanpa image */}
-        <img src={data.image ? data.image : 'https://cdn-icons-png.flaticon.com/128/9257/9257182.png'} alt="kelas" className={`${imgScale} ${imgWidth} ${imgHeight} rounded-s-md`}/>
+        <img src={data.image ? data.image : 'https://cdn-icons-png.flaticon.com/128/9257/9257182.png'} alt="kelas" className={` ${imgScale} ${imgSize} rounded-s-md`}/>
 
-        <div className="card flex flex-col mr-4">
+        <div className="card flex flex-col mr-4 w-full py-4">
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
           <p className="paragraph-regular dark">{data.title}</p>
           <div>
@@ -77,7 +77,7 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
           <p className="paragraph-small dark">{data.description}</p>
 
           {/* buttons */}
-          <div className="card-content flex flex-row justify-between items-center gap-2">
+          <div className="reqBtn">
             {/* akan ditambah error handling jika user klik sebelum login */}
             <div className="grid grid-cols-3 gap-2">
               {/* hit api ketika di klik untuk tambah rating */}
@@ -104,7 +104,7 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
       </div>
 
       {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
-    </div>
+    </>
   );
 }
 

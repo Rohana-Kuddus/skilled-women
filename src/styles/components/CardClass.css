@@ -1,5 +1,12 @@
 @import url(/src/index.css);
 
+.cardContainer{
+    @apply container flex flex-row gap-4 items-center border-2 rounded-md mb-4 w-full;
+}
+.reqBtn{
+    @apply card-content flex flex-row justify-between items-center gap-2;
+}
+
 /* MEDIA */
 @media (max-width: 884px) {
     .container{

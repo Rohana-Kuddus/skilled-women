@@ -4,6 +4,7 @@ import Introduction from "../components/Introduction"
 import Roadmap from "../components/Roadmap"
 import { useDispatch } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import "../styles/pages/JobDetailPage.css"
 
 function JobDetailPage() {
   const [isActive, setIsActive] = useState('intro');
@@ -59,9 +60,9 @@ function JobDetailPage() {
       <Hero data={data}></Hero>
 
       {/* tab */}
-      <div>
-        <h3 className="heading3 green" onClick={() => setIsActive('intro')}>Pengenalan</h3>
-        <h3 className="heading3 green" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
+      <div className="tabSection">
+        <h3 className="tab" onClick={() => setIsActive('intro')}>Pengenalan</h3>
+        <h3 className="tab" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
       </div>
 
       {/* akan ditambah props data dari redux api */}

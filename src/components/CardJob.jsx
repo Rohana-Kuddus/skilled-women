@@ -8,9 +8,9 @@ function CardJob({ job }) {
   return (
     <>
       <div className="max-w-68 mx-auto">
-        <div className="shadow-md border-2 border-gray-200 rounded-3xl max-w-80">
+        <div className="shadow-md border-2 border-gray-200 rounded-3xl max-w-64 md:max-w-80">
           <img
-            className="card-img rounded-t-3xl w-full h-48 object-cover"
+            className="card-img"
             src={job.image}
           />
           <div className="flex flex-col justify-between p-5 h-72">
