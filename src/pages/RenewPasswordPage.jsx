@@ -8,11 +8,14 @@ import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useCookies } from "react-cookie";
 import { editUserPassword } from "../redux/slices/userSlice";
+import Toast from "../components/Toast";
 
 function RenewPasswordPage() {
   const dispatch = useDispatch();
   const [cookies] = useCookies();
   const { alert, alertName } = useSelector(state => state.alert);
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { userMessage } = useSelector(state => state.user);
   const [input, setInput] = useState({
     newPassword: '',
     confirmPassword: ''
@@ -112,7 +115,16 @@ function RenewPasswordPage() {
   const buttonHandler = () => {
     if (error.newPassword === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
       dispatch(editUserPassword(cookies.token, { password: input.password }));
-      dispatch(setAlert({ alert: true, alertName: 'password' }));
+
+      if (!userMessage.includes('Success')) {
+        dispatch(getToast({ toast: true, toastName: 'password' }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'password' }));
+        }, 3000);
+      } else {
+        dispatch(setAlert({ alert: true, alertName: 'password' }));
+      }
     };
   };
 
@@ -179,6 +191,7 @@ function RenewPasswordPage() {
       </div>
 
         {alert && alertName === 'password' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
+        {toast && toastName === 'password' && <Toast message={'Gagal menyimpan password.'}></Toast>}
     </div>
   );
 }

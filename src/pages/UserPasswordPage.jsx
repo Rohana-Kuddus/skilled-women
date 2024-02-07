@@ -9,11 +9,15 @@ import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { editUserPassword } from "../redux/slices/userSlice";
 import { useCookies } from "react-cookie";
+import { getToast } from "../redux/slices/toastSlice";
+import Toast from "../components/Toast";
 
 function UserPasswordPage() {
   const dispatch = useDispatch();
   const { alert, alertName } = useSelector(state => state.alert);
-  const [cookies] = useCookies;
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { userMessage } = useSelector(state => state.user);
+  const [cookies] = useCookies();
   const [input, setInput] = useState({
     password: '',
     confirmPassword: ''
@@ -116,7 +120,16 @@ function UserPasswordPage() {
     if (error.password === '' && error.confirmPassword === '' && checkCapital !== ''
       && checkNumber !== '' && checkCharacter !== '') {
       dispatch(editUserPassword(cookies.token, { password: input.password }));
-      dispatch(setAlert({ alert: true, alertName: 'password' }));
+
+      if (!userMessage.includes('Success')) {
+        dispatch(getToast({ toast: true, toastName: 'password' }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'password' }));
+        }, 3000);
+      } else {
+        dispatch(setAlert({ alert: true, alertName: 'password' }));
+      }
     };
   };
 
@@ -164,6 +177,7 @@ function UserPasswordPage() {
       <ButtonPrimary buttonText={'Ganti kata sandi'} onClick={buttonHandler}></ButtonPrimary>
 
       {alert && alertName === 'password' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
+      {toast && toastName === 'password' && <Toast message={'Gagal menyimpan password.'}></Toast>}
     </div>
   );
 }

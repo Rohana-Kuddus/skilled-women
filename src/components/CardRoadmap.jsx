@@ -8,7 +8,7 @@ function CardRoadmap({ data, isOpen, setIsOpen }) {
         <h2 className="heading2 white">{data.step}</h2>
       </div>
 
-      <div className="bg-[#4F6C6A]">
+      <div className="bg-[#4F6C6A] hover:cursor-pointer">
         <h3 className="heading3 white" onClick={() => setIsOpen({ status: true, id: data.id })}>{data.name}</h3>
       </div>
 

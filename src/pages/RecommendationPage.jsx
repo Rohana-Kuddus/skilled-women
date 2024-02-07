@@ -12,6 +12,7 @@ import { getJobList } from "../redux/slices/jobSlice";
 import { getRoadmap } from "../redux/slices/roadmapSlice";
 import { getToast } from "../redux/slices/toastSlice";
 import Toast from "../components/Toast";
+import Loading from "../components/Loading";
 
 function RecommendationPage() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function RecommendationPage() {
 
     useEffect(() => {
       dispatch(getClass(cookies.token, classId));
-    }, [courseDetail]);
+    }, []);
   };
 
   useEffect(() => {
@@ -42,12 +43,6 @@ function RecommendationPage() {
   // input states
   const [search, setSearch] = useState(checkCourse ? courseDetail.job : '');
   const [select, setSelect] = useState(checkCourse ? courseDetail.roadmap : []);
-  const [hidden, setHidden] = useState('');
-  const [payment, setPayment] = useState({
-    status: 'paid',
-    paidChecked: true,
-    freeChecked: false
-  });
   const [input, setInput] = useState({
     jobId: checkCourse ? courseDetail.job : '',
     roadmapId: checkCourse ? courseDetail.roadmap : [],
@@ -55,6 +50,12 @@ function RecommendationPage() {
     link: checkCourse ? courseDetail.link : '',
     paid: checkCourse ? courseDetail.paid : true,
     description: checkCourse ? courseDetail.description : ''
+  });
+  const [hidden, setHidden] = useState('');
+  const [payment, setPayment] = useState({
+    status: checkCourse ? courseDetail.paid === true ? 'paid' : 'free' : 'paid',
+    paidChecked: checkCourse ? courseDetail.paid === true ?  true : false : true,
+    freeChecked: checkCourse ? courseDetail.paid === true ? false : true : false
   });
   const [error, setError] = useState({
     job: '',
@@ -138,7 +139,7 @@ function RecommendationPage() {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const check = checkError(error);
+    const check = Object.keys(error).length !== 0;
     if (check) {
       const payload = {
         token: cookies.token,
@@ -180,16 +181,6 @@ function RecommendationPage() {
         [name]: ''
       }));
     };
-  };
-
-  const checkError = (obj) => {
-    for (let key in obj) {
-      if (obj[key] != "") {
-        return false;
-      };
-    };
-
-    return true;
   };
 
   return (
@@ -255,7 +246,6 @@ function RecommendationPage() {
 
           <ButtonPrimary buttonText="Simpan" onClick={submitHandler} submit={true}></ButtonPrimary>
         </form>
-
       </div>
 
       {alert && alertName === 'recommendation' && <Alert status={alertObj.status} text={alertObj.text}

@@ -12,12 +12,15 @@ import "../styles/pages/UserProfilePage.css";
 import { getCity } from "../redux/slices/citySlice";
 import { editUserProfile, getUserProfile } from "../redux/slices/userSlice";
 import { useCookies } from "react-cookie";
+import Toast from "../components/Toast";
+import { getToast } from "../redux/slices/toastSlice";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
   const { alert, alertName } = useSelector(state => state.alert);
+  const { toast, toastName } = useSelector(state => state.toast);
   const { city } = useSelector(state => state.city);
-  const { user } = useSelector(state => state.user);
+  const { user, userMessage } = useSelector(state => state.user);
   const [cookies] = useCookies();
   
   // dropdown
@@ -42,8 +45,12 @@ function UserProfilePage() {
     username: user.username,
     email: user.email,
     gender: user.gender,
-    city: user.city,
-    image: user.image
+    cityId: user.city,
+    image: user.image ? user.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'
+  });
+  const [error, setError] = useState({
+    username: '',
+    email: ''
   });
 
   // change profile picture
@@ -106,8 +113,37 @@ function UserProfilePage() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(editUserProfile(cookies.token, input));
-    dispatch(setAlert({ alert: true, alertName: 'profile' }));
+    
+    const check = Object.keys(error).length !== 0;
+    if (check) {
+      dispatch(editUserProfile(cookies.token, input));
+
+      if (!userMessage.includes('Success')) {
+        dispatch(getToast({ toast: true, toastName: 'profile' }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'profile' }));
+        }, 3000);
+      } else {
+        dispatch(setAlert({ alert: true, alertName: 'profile' }));
+      }
+    };
+  };
+
+  const errorHandler = (e) => {
+    const { name, value } = e.target;
+
+    if (!value) {
+      setError(prev => ({
+        ...prev,
+        [name]: 'Input dilarang kosong'
+      }));
+    } else {
+      setError(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    };
   };
 
   return (
@@ -142,6 +178,7 @@ function UserProfilePage() {
                 </div>
               </div>
             </div>
+
             {/* user information section */}
             <div>
               <form className="flex flex-row">
@@ -155,9 +192,12 @@ function UserProfilePage() {
                       name="username"
                       value={input.username}
                       onChange={inputHandler}
+                      onBlur={errorHandler}
                       className="py-2 pl-4 pr-16 bg-gray-200 rounded-md"
                     />
                   </div>
+                  {error.username && <p className="paragraph-regular text-[#FE0101]">{error.username}</p>}
+
                   <div className="flex flex-col">
                     {/* jenis kelamin */}
                     <label htmlFor="gender">Jenis Kelamin</label>
@@ -225,6 +265,7 @@ function UserProfilePage() {
                     </div>
                   </div>
                 </div>
+                
                 {/* form column 2 */}
                 <div className="flex flex-col">
                   {/* email */}
@@ -234,8 +275,11 @@ function UserProfilePage() {
                     name="email"
                     value={input.email}
                     onChange={inputHandler}
+                    onBlur={errorHandler}
                     className="py-2 pl-4 pr-16 bg-gray-200 rounded-md"
                   />
+                  {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
+
                   {/* Kota */}
                   <label htmlFor="kota">Kota</label>
                   <div className="relative inline-block">
@@ -249,7 +293,7 @@ function UserProfilePage() {
                         aria-expanded="true"
                       >
                         <div className="flex items-center gap-32">
-                          <span className="flex-grow">{input.city}</span>
+                          <span className="flex-grow">{input.cityId}</span>
                           <ArrowDownSLineIcon className="h-8 transition-all duration-500 group-focus:-rotate-180" />
                         </div>
                       </button>
@@ -279,8 +323,8 @@ function UserProfilePage() {
                               e.preventDefault();
                               inputHandler({
                                 target: {
-                                  name: "city",
-                                  value: v.name
+                                  name: "cityId",
+                                  value: v.id
                                 }
                               });
                               toggleDropdown();
@@ -291,6 +335,7 @@ function UserProfilePage() {
                     ) : null}
                   </div>
                 </div>
+
                 {/* button */}
                 <div>
                   <ButtonPrimary buttonText="Simpan Profile" onClick={submitHandler} submit={true}></ButtonPrimary>
@@ -301,7 +346,9 @@ function UserProfilePage() {
         </div>
       </div>
 
-      {alert && alertName === 'profile' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
+      {alert && alertName === 'profile' && <Alert status={alertObj.status} text={alertObj.text} 
+        button={alertObj.button}></Alert>}
+      {toast && toastName === 'profile' && <Toast message={'Gagal menyimpan profil.'}></Toast>}
     </div>
   );
 }

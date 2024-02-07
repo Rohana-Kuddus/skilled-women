@@ -27,8 +27,8 @@ function JobDetailPage() {
 
           {/* tab */}
           <div>
-            <h3 className="heading3 green" onClick={() => setIsActive('intro')}>Pengenalan</h3>
-            <h3 className="heading3 green" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
+            <h3 className="heading3 green hover:cursor-pointer" onClick={() => setIsActive('intro')}>Pengenalan</h3>
+            <h3 className="heading3 green hover:cursor-pointer" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
           </div>
 
           {isActive === 'intro' && <Introduction data={jobDetail} setIsActive={setIsActive}></Introduction>}

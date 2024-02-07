@@ -74,10 +74,10 @@ function Navbar() {
           <div className={`${isOpen ? "" : "opacity-0 scale-0"}`}>
             {/* belum dibuat hover */}
             <div className="flex items-center justify-end mr-4">
-              <p className="paragraph-regular dark mx-4" onClick={() => navigate('/')}>Home</p >
-              <p className="paragraph-regular dark mx-4" onClick={() => navigate('/jobs')}>Pekerjaan</p >
-              <p className="paragraph-regular dark mx-4" onClick={() => navigate('/about')}>Tentang Kami</p >
-              <p className="paragraph-regular dark mx-4" onClick={() => navigate('/faq')}>FAQ</p >
+              <p className="paragraph-regular dark mx-4 hover:cursor-pointer" onClick={() => navigate('/')}>Home</p >
+              <p className="paragraph-regular dark mx-4 hover:cursor-pointer" onClick={() => navigate('/jobs')}>Pekerjaan</p >
+              <p className="paragraph-regular dark mx-4 hover:cursor-pointer" onClick={() => navigate('/about')}>Tentang Kami</p >
+              <p className="paragraph-regular dark mx-4 hover:cursor-pointer" onClick={() => navigate('/faq')}>FAQ</p >
 
               {Object.keys(cookies).length !== 0 ?
                 <div className="flex">

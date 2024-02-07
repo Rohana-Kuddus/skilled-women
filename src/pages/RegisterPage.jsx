@@ -8,11 +8,14 @@ import { getCity } from "../redux/slices/citySlice";
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
 import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import { registerUser } from "../redux/slices/authSlice";
+import Toast from "../components/Toast";
 
 function RegisterPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { city } = useSelector(state => state.city);
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { authMessage } = useSelector(state => state.auth);
   const [validationsErrors, setValidationsErrors] = useState({});
   const [passwordType, setPasswordType] = useState('password');
   const [register, setRegister] = useState({
@@ -66,13 +69,21 @@ function RegisterPage() {
     const errors = validateData();
     if (Object.keys(errors).length === 0) {
       dispatch(registerUser(register));
+
+      if (!authMessage.includes('Success')) {
+        dispatch(getToast({ toast: true, toastName: 'register'}));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'register'}));
+        }, 3000);
+      };
     } else {
       setValidationsErrors(errors);
     };
   };
 
   return (
-    <>
+    <div>
       <div className="text-center">
         <h1 className="heading1">Get Started</h1>
         <p className="paragraf-reguler">
@@ -113,7 +124,7 @@ function RegisterPage() {
                 onChange={handleInput}
                 required
               >
-                <option value="" disabled>Pilih Gender</option>
+                <option value="" disabled>Pilih gender</option>
                 <option value="F">Perempuan</option>
                 <option value="M">Laki-laki</option>
               </select>
@@ -124,7 +135,7 @@ function RegisterPage() {
               <p className="label-form" htmlFor="city">City</p>
               <select className="input-text" id="city" type="text" name="cityId" value={register.city}
                 onChange={handleInput} required>
-                <option defaultValue="" selected disabled>Pilih Kota</option>
+                <option defaultValue="" selected disabled>Pilih kota</option>
                 {city.map(v => (
                   <option key={v.id} value={v.id}>{v.name}</option>
                 ))}
@@ -184,7 +195,9 @@ function RegisterPage() {
 
         <ButtonPrimary type="submit" buttonText="Daftar Sekarang" onClick={handleSubmit} />
       </div>
-    </>
+
+      {toast && toastName === 'register' && <Toast message={'Gagal registrasi.'}></Toast>}
+    </div>
   );
 }
 

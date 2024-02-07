@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SidebarProfile from "../components/SidebarProfile";
 import CardClass from "../components/CardClass";
 import ButtonRecommendation from "../components/ButtonRecommendation";
@@ -9,6 +9,9 @@ import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { deleteClass, getClassUser } from "../redux/slices/courseSlice";
 import { useCookies } from "react-cookie";
 import Alert from "../components/Alert";
+import { getToast } from "../redux/slices/toastSlice";
+import Toast from "../components/Toast";
+import { setAlert } from "../redux/slices/alertSlice";
 
 function UserRecommendationPage() {
   const navigate = useNavigate();
@@ -16,6 +19,9 @@ function UserRecommendationPage() {
   const [cookies] = useCookies();
   const { course } = useSelector(state => state.course);
   const { alert, alertName } = useSelector(state => state.alert);
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { courseMessage } = useSelector(state => state.course);
+  const [id, setId] = useState();
 
   const alertObj = {
     status: false,
@@ -23,7 +29,16 @@ function UserRecommendationPage() {
     button: {
       primary: 'Hapus',
       primaryAction: () => {
-        // dispatch(deleteClass(data.id));
+        dispatch(deleteClass(id));
+
+        if (courseMessage) {
+          dispatch(getToast({ toast: true, toastName: 'deleteClass'}));
+
+          setTimeout(() => {
+            dispatch(getToast({ toast: false, toastName: 'deleteClass'}));
+          }, 3000);
+        };
+
         dispatch(setAlert({ alert: false, alertName: 'deleteClass' }));
       },
       secondary: 'Batal',
@@ -42,9 +57,9 @@ function UserRecommendationPage() {
         <SidebarProfile />
 
         <div className="green flex flex-col items-center mt-16">
-          {course.map((i) => (
-            <div key={i.id} className="mb-2">
-              <CardClass data={i} editBtn={true}></CardClass>
+          {course.map((v, i) => (
+            <div key={i} className="mb-2">
+              <CardClass data={v} editBtn={true} setId={setId}></CardClass>
             </div>
           ))}
 
@@ -53,6 +68,7 @@ function UserRecommendationPage() {
       </div>
 
       {alert && alertName === 'deleteClass' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
+      {toast && toastName === 'deleteClass' && <Toast message={courseMessage}></Toast>}
     </div>
   );
 }
