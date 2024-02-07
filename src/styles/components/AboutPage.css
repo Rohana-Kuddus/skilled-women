@@ -1,0 +1,38 @@
+@import url(/src/index.css);
+
+
+.about-hero {
+  @apply text-center p-10;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.about-hero-h1 {
+  @apply heading1 mb-4;
+}
+
+.apa-itu {
+  @apply mt-12 mx-12 md:mx-8 lg:mx-32 flex flex-col md:flex-row items-center;
+}
+
+.apa-itu-img {
+  @apply rounded-full w-full h-full object-cover md:w-1/2 lg:w-1/3 mb-4 md:mb-0;
+}
+
+.apa-itu-konten {
+  @apply green text-justify md:w-1/2 lg:w-2/3;
+}
+
+/* Kenalan Anggota */
+
+.kenalan {
+  @apply green text-center mt-4;
+}
+
+.daftar-anggota {
+  @apply flex flex-wrap justify-center gap-8 p-8 mb-12;
+}
+
+.img-anggota {
+  @apply w-full h-full object-cover rounded-full;
+}

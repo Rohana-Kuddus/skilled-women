@@ -1,0 +1,207 @@
+@import url(/src/index.css);
+
+/* {Hero section} */
+
+.hero {
+  @apply bg-[#4F6C6A] p-28 grid grid-cols-1 md:grid-cols-2 items-center justify-between;
+}
+
+.div-1 {
+  @apply md:ml-10;
+}
+
+.div-2 {
+  @apply mb-4;
+}
+
+.div-h1 {
+  @apply heading1 text-white;
+}
+
+.div-paragraph {
+  @apply paragraph-regular text-white
+}
+
+.div-3 {
+  @apply items-center mt-11
+}
+
+.div-button {
+  background-color: var(--white-color);
+  color: var(--primary-color);
+  @apply paragraph-regular inline-flex p-2.5 justify-center items-center gap-1.5 rounded-md border-none cursor-pointer;
+}
+
+.div-arrow {
+  color: var(--primary-color);
+}
+
+.div-imgHero {
+  @apply w-full md:ml-72 md:mt-4;
+}
+
+/* {Fitur section} */
+
+.fitur {
+  @apply p-12 flex flex-wrap justify-center items-center;
+}
+
+.fitur-h1 {
+  @apply heading1 text-[#4F6C6A] mb-14;
+}
+
+.fitur-list {
+  @apply grid grid-cols-2 grid-rows-2 gap-8 mx-4 sm:mx-8 md:mx-16 lg:mx-32;
+}
+
+/* fitur-roadmap */
+
+.fitur-roadmap {
+  @apply px-6 pt-6;
+}
+
+.fitur-roadmap-img {
+  @apply mb-3;
+}
+
+.fitur-roadmap-h3 {
+  @apply heading3 text-[#4F6C6A] font-bold;
+}
+
+.fitur-roadmap-p {
+  @apply paragraph-regular text-[#4F6C6A];
+}
+
+/* fitur-info */
+
+.fitur-info {
+  @apply px-6 pt-6;
+}
+
+.fitur-info-img {
+  @apply mb-3;
+}
+
+.fitur-info-h3 {
+  @apply heading3 text-[#4F6C6A] font-bold;
+}
+
+.fitur-info-p {
+  @apply paragraph-regular text-[#4F6C6A];
+}
+
+/* fitur-rekomendasi kursus */
+
+.fitur-rekomendasi {
+  @apply px-6 pt-6;
+}
+
+.fitur-rekomendasi-img {
+  @apply mb-3;
+}
+
+.fitur-rekomendasi-h3 {
+  @apply heading3 text-[#4F6C6A] font-bold;
+}
+
+.fitur-rekomendasi-p {
+  @apply paragraph-regular text-[#4F6C6A];
+}
+
+/* fitur daftar pekerjaan */
+
+.fitur-daftar {
+  @apply px-6 pt-6;
+}
+
+.fitur-daftar-img {
+  @apply mb-3;
+}
+
+.fitur-daftar-h3 {
+  @apply heading3 text-[#4F6C6A] font-bold;
+}
+
+.fitur-daftar-p {
+  @apply paragraph-regular text-[#4F6C6A];
+}
+
+/* {Benefit section} */
+
+.benefit {
+  @apply gap-20 bg-[#4F6C6A] pt-20 pb-24 py-14 flex flex-wrap justify-center;
+}
+
+/* Benefit 1 */
+
+.benefit-h1 {
+  @apply text-center heading1 text-white;
+}
+
+.benefit-1 {
+  @apply mx-12 gap-24 grid grid-cols-1 md:grid-cols-2 justify-center items-center px-4 sm:px-8 lg:px-16 xl:px-24;
+}
+
+.benefit-1-img {
+  @apply md:w-1/2 lg:w-full md:max-w-sm lg:max-w-full;
+}
+
+.benefit-1-konten {
+  @apply mt-12 px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-wrap gap-4 text-white text-justify items-center;
+}
+
+.benefit-1-h2 {
+  @apply heading2;
+}
+
+.benefit-1-p {
+  @apply paragraph-regular;
+}
+
+/* Benefit 2 */
+
+.benefit-2 {
+  @apply mx-12 gap-52 grid grid-cols-1 md:grid-cols-2 justify-center items-center sm:px-8 lg:px-16 xl:px-24;
+}
+
+.benefit-2-konten {
+  @apply mt-12 px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-wrap gap-4 text-white;
+}
+
+.benefit-2-h2 {
+  @apply heading2;
+}
+
+.benefit-2-p {
+  @apply paragraph-regular;
+}
+
+.benefit-2-img {
+  @apply md:w-1/2 lg:w-full md:max-w-sm lg:max-w-full;
+}
+
+/* {Roadmap section} */
+
+.roadmap {
+  @apply pt-12 mb-12 sm:ml-8 md:ml-16 lg:ml-32 ml-4 gap-8;
+}
+
+.roadmap-h1 {
+  @apply heading1 text-[#4F6C6A] text-center;
+}
+
+.roadmap-list {
+  @apply grid grid-cols-2 justify-between px-6 p-16 gap-12;
+}
+
+.roadmap-konten {
+  @apply px-6 pt-6;
+}
+
+.roadmap-text {
+  @apply text-[#4F6C6A];
+}
+
+.roadmap-h2-p {
+  @apply heading2 mr-12;
+}

@@ -31,7 +31,7 @@ function JobDetailPage() {
       {/* <Hero data={job}></Hero> */}
 
       {/* tab */}
-      <div>
+      <div className=" flex flex-row justify-between items-center p-20">
         <h3 className="heading3 green" onClick={() => setIsActive('intro')}>Pengenalan</h3>
         <h3 className="heading3 green" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
 
