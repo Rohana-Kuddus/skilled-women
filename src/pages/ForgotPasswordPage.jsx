@@ -13,7 +13,7 @@ function ForgotPasswordPage() {
     dispatch(setFooterAnchor("", ""));
   }, []);
   return (
-    <div className="text-center mt-12">
+    <div className="mt-12">
       {!nextPage ? <InputEmail setNextPage={() => setNextPage(true)}></InputEmail> : <Confirmation></Confirmation>}
     </div>
   );

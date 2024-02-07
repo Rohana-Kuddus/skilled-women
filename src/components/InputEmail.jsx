@@ -7,25 +7,28 @@ function InputEmail({ setNextPage }) {
   return ( 
     <div>
        <form>
-        <div>
+        <div className="text-center">
           <p className="heading1 black"> Lupa Password?</p>
-          <p className="paragraph-regular black">
+          <p className="paragraph-regular black mb-14">
             Masukkan email yang telah kamu daftarkan untuk merubah password kamu
           </p>
         </div>
 
-        <div className="">
+        <div className="grid place-content-center">
+          <p className="green mb-2">Email: </p>
           <input 
-          className="input-text"
+          className="input-text mb-2"
           type="text"
           name="email"
           placeholder="Email"
           />
+        </div>
 
+        <div className="text-center">
           <ButtonPrimary buttonText={"Kirim email"} onClick={setNextPage}></ButtonPrimary>
         </div>
 
-        <p>
+        <p className="text-center green mt-8">
           Kembali ke laman <span className="underline" onClick={()=>navigate('/login')}>Log in</span> 
         </p>
       </form>
