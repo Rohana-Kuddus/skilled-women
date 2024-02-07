@@ -27,7 +27,7 @@ function RegisterPage() {
   });
 
   // set text and link for footer
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
