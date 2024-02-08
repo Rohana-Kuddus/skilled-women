@@ -29,7 +29,7 @@ export const getCity = () => async (dispatch) => {
     return dispatch(setCity({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setCity({ data: [], message: err.response.data.message }));
+    return dispatch(setCity({ data: [], message: err.response.data.message || err.message }));
   };
 };
 

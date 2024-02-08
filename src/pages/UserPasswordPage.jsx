@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { editUserPassword } from "../redux/slices/userSlice";
+import { editUserPassword, getUserProfile } from "../redux/slices/userSlice";
 import { useCookies } from "react-cookie";
 import { getToast } from "../redux/slices/toastSlice";
 import Toast from "../components/Toast";
@@ -24,7 +24,8 @@ function UserPasswordPage() {
   });
   const [error, setError] = useState({
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    validatePassword: ''
   });
   const [passwordType, setPasswordType] = useState({
     password: 'password',
@@ -43,6 +44,13 @@ function UserPasswordPage() {
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
   }, []);
+
+  useEffect(() => {
+    console.log(userMessage);
+    if (userMessage === 'Update User Password Success') {
+      dispatch(setAlert({ alert: true, alertName: 'password' }));
+    }
+  }, [userMessage]);
 
   // handler change visibiity
   const visibilityHandler = (e) => {
@@ -82,7 +90,7 @@ function UserPasswordPage() {
     const { name, value } = e.target;
 
     setError(prev => {
-      const stateObj = { ...prev, [name]: '' };
+      const stateObj = { ...prev, [name]: '', validatePassword: '' };
 
       switch (name) {
         case 'password':
@@ -107,6 +115,10 @@ function UserPasswordPage() {
           break;
       };
 
+      if (checkCapital === '' || checkNumber === '' || checkCharacter === '') {
+        stateObj.validatePassword = 'Password must meet the requirements.';
+      };
+
       return stateObj;
     });
   };
@@ -117,8 +129,7 @@ function UserPasswordPage() {
   const checkCharacter = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(input.password) ? 'line-through' : '';
 
   const buttonHandler = () => {
-    if (error.password === '' && error.confirmPassword === '' && checkCapital !== ''
-      && checkNumber !== '' && checkCharacter !== '') {
+    if (Object.values(error).every(v => v === '')) {
       dispatch(editUserPassword(cookies.token, { password: input.password }));
 
       if (!userMessage.includes('Success')) {
@@ -127,9 +138,7 @@ function UserPasswordPage() {
         setTimeout(() => {
           dispatch(getToast({ toast: false, toastName: 'password' }));
         }, 3000);
-      } else {
-        dispatch(setAlert({ alert: true, alertName: 'password' }));
-      }
+      };
     };
   };
 
@@ -170,6 +179,7 @@ function UserPasswordPage() {
             <li className={`paragraph-small dark ${checkNumber}`}>1 atau lebih angka</li>
             <li className={`paragraph-small dark ${checkCharacter}`}>1 atau lebih karakter khusus</li>
           </ul>
+          {error.validatePassword && <p className="paragraph-regular text-[#FE0101]">{error.validatePassword}</p>}
         </div>
       </div>
 

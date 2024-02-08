@@ -14,6 +14,7 @@ import { editUserProfile, getUserProfile } from "../redux/slices/userSlice";
 import { useCookies } from "react-cookie";
 import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
+import Loading from "../components/Loading";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
@@ -22,10 +23,11 @@ function UserProfilePage() {
   const { city } = useSelector(state => state.city);
   const { user, userMessage } = useSelector(state => state.user);
   const [cookies] = useCookies();
-  
+
   // dropdown
   const [isOpen, setIsOpen] = useState("");
   const [searchCity, setSearchCity] = useState("");
+  const [cityName, setCityName] = useState("");
   const dropdownRef = useRef();
   const searchRef = useRef();
 
@@ -33,7 +35,13 @@ function UserProfilePage() {
     dispatch(setFooterAnchor("", ""));
     dispatch(getCity());
     dispatch(getUserProfile(cookies.token));
-  }, [user]);
+  }, []);
+
+  useEffect(() => {
+    if (userMessage == 'Update User Profile Success') {
+      dispatch(setAlert({ alert: true, alertName: 'profile' }));
+    };
+  }, [userMessage]);
 
   useEffect(() => {
     if (isOpen !== "" && dropdownRef.current) {
@@ -46,7 +54,7 @@ function UserProfilePage() {
     email: user.email,
     gender: user.gender,
     cityId: user.city,
-    image: user.image ? user.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'
+    image: user.image
   });
   const [error, setError] = useState({
     username: '',
@@ -65,7 +73,6 @@ function UserProfilePage() {
     }));
   };
 
-  // belum ada form validation
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -113,10 +120,23 @@ function UserProfilePage() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    
+
     const check = Object.keys(error).length !== 0;
     if (check) {
-      dispatch(editUserProfile(cookies.token, input));
+      const payload = {
+        username: input.username,
+        email: input.email,
+        gender: input.gender === 'Perempuan' ? 'F' : 'M',
+        cityId: input.cityId,
+        image: input.image
+      };
+
+      if (typeof input.cityId !== 'number') {
+        const cityInput = city.find(v => v.name === user.city).id;
+        payload.cityId = cityInput;
+      };
+
+      dispatch(editUserProfile(cookies.token, payload));
 
       if (!userMessage.includes('Success')) {
         dispatch(getToast({ toast: true, toastName: 'profile' }));
@@ -124,9 +144,7 @@ function UserProfilePage() {
         setTimeout(() => {
           dispatch(getToast({ toast: false, toastName: 'profile' }));
         }, 3000);
-      } else {
-        dispatch(setAlert({ alert: true, alertName: 'profile' }));
-      }
+      };
     };
   };
 
@@ -148,205 +166,206 @@ function UserProfilePage() {
 
   return (
     <div>
-      <div className="flex flex-row justify-between">
-        <div>
-          <SidebarProfile />
-        </div>
-        <div
-          className="mr-24 mt-12"
-          style={{ fontFamily: "var(--paragraph-font)" }}
-        >
-          <div className="flex flex-col justify-start">
-            {/* profile photo */}
-            <div className="main flex flex-col">
-              <div className="flex flex-col items-center">
-                <img
-                  src={input.image}
-                  className="rounded-full w-20 m-6"
-                />
-                {/* edit button */}
-                <div className="flex flex-row mb-12 gap-1 border-2 rounded-2xl px-4 align-middle justify-between">
-                  <input
-                    type="file"
-                    style={{ display: "none" }}
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    ref={fileInputRef}
+      {Object.keys(user).length === 0 ? <Loading></Loading> :
+        <div className="flex flex-row justify-between">
+          <SidebarProfile></SidebarProfile>
+
+          <div
+            className="mr-24 mt-12"
+            style={{ fontFamily: "var(--paragraph-font)" }}
+          >
+            <div className="flex flex-col justify-start">
+              {/* profile photo */}
+              <div className="main flex flex-col">
+                <div className="flex flex-col items-center">
+                  <img
+                    src={input.image ? input.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'}
+                    className="rounded-full w-20 m-6"
                   />
-                  <button onClick={triggerFileInputClick}>Edit</button>
-                  <Edit2LineIcon />
+                  {/* edit button */}
+                  <div className="flex flex-row mb-12 gap-1 border-2 rounded-2xl px-4 align-middle justify-between">
+                    <input
+                      type="file"
+                      style={{ display: "none" }}
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      ref={fileInputRef}
+                    />
+                    <button onClick={triggerFileInputClick}>Edit</button>
+                    <Edit2LineIcon />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* user information section */}
-            <div>
-              <form className="flex flex-row">
-                {/* form column 1 */}
-                <div className="mr-6">
-                  {/* username */}
+              {/* user information section */}
+              <div>
+                <form className="flex flex-row">
+                  {/* form column 1 */}
+                  <div className="mr-6">
+                    {/* username */}
+                    <div className="flex flex-col">
+                      <label htmlFor="username">Username</label>
+                      <input
+                        type="text"
+                        name="username"
+                        value={input.username}
+                        onChange={inputHandler}
+                        onBlur={errorHandler}
+                        className="py-2 pl-4 pr-16 bg-gray-200 rounded-md"
+                      />
+                    </div>
+                    {error.username && <p className="paragraph-regular text-[#FE0101]">{error.username}</p>}
+
+                    <div className="flex flex-col">
+                      {/* jenis kelamin */}
+                      <label htmlFor="gender">Jenis Kelamin</label>
+                      <div className="relative inline-block">
+                        <div>
+                          <button
+                            type="button"
+                            name="gender"
+                            onClick={() => toggleDropdown("gender")}
+                            className="inline-flex justify-center w-full rounded-md py-1.5 bg-gray-200 hover:bg-gray-100"
+                            aria-haspopup="true"
+                            aria-expanded="true"
+                          >
+                            <div className="flex items-center gap-24">
+                              <span className="flex-grow">{input.gender}</span>
+                              <ArrowDownSLineIcon className="h-8 transition-all duration-500 group-focus:-rotate-180" />
+                            </div>
+                          </button>
+                        </div>
+                        {isOpen === "gender" ? (
+                          <div className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white">
+                            <div
+                              className="py-1"
+                              role="menu"
+                              aria-orientation="vertical"
+                              aria-labelledby="options-menu"
+                            >
+                              <a
+                                href="#"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  inputHandler({
+                                    target: {
+                                      name: "gender",
+                                      value: "Perempuan",
+                                    },
+                                  });
+                                  toggleDropdown();
+                                }}
+                              >
+                                Perempuan
+                              </a>
+                              <a
+                                href="#"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  inputHandler({
+                                    target: {
+                                      name: "gender",
+                                      value: "Laki-Laki",
+                                    },
+                                  });
+                                  toggleDropdown();
+                                }}
+                              >
+                                Laki-Laki
+                              </a>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* form column 2 */}
                   <div className="flex flex-col">
-                    <label htmlFor="username">Username</label>
+                    {/* email */}
+                    <label htmlFor="email">Email</label>
                     <input
-                      type="text"
-                      name="username"
-                      value={input.username}
+                      type="email"
+                      name="email"
+                      value={input.email}
                       onChange={inputHandler}
                       onBlur={errorHandler}
                       className="py-2 pl-4 pr-16 bg-gray-200 rounded-md"
                     />
-                  </div>
-                  {error.username && <p className="paragraph-regular text-[#FE0101]">{error.username}</p>}
+                    {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
 
-                  <div className="flex flex-col">
-                    {/* jenis kelamin */}
-                    <label htmlFor="gender">Jenis Kelamin</label>
+                    {/* Kota */}
+                    <label htmlFor="kota">Kota</label>
                     <div className="relative inline-block">
                       <div>
                         <button
                           type="button"
-                          name="gender"
-                          onClick={() => toggleDropdown("gender")}
+                          name="city"
+                          onClick={() => toggleDropdown("city")}
                           className="inline-flex justify-center w-full rounded-md py-1.5 bg-gray-200 hover:bg-gray-100"
                           aria-haspopup="true"
                           aria-expanded="true"
                         >
-                          <div className="flex items-center gap-24">
-                            <span className="flex-grow">{input.gender}</span>
+                          <div className="flex items-center gap-32">
+                            <span className="flex-grow">{typeof input.cityId === 'number' ? cityName : input.cityId}</span>
                             <ArrowDownSLineIcon className="h-8 transition-all duration-500 group-focus:-rotate-180" />
                           </div>
                         </button>
                       </div>
-                      {isOpen === "gender" ? (
-                        <div className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white">
+                      {isOpen === "city" ? (
+                        <div
+                          className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white"
+                          ref={dropdownRef}
+                        >
                           <div
                             className="py-1"
                             role="menu"
                             aria-orientation="vertical"
                             aria-labelledby="options-menu"
                           >
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                              role="menuitem"
-                              onClick={(e) => {
-                                e.preventDefault();
+                            {/* Search input */}
+                            <input
+                              ref={searchRef}
+                              className="block w-full px-4 py-2 text-gray-800 border rounded-md border-gray-300 focus:outline-none"
+                              type="text"
+                              placeholder="Search items"
+                              autoComplete="off"
+                              onChange={handleSearch}
+                            />
+                            {city.map(v => (
+                              <a href="#" role="menuitem" className="option" key={v.id} onClick={(e) => {
                                 inputHandler({
                                   target: {
-                                    name: "gender",
-                                    value: "Laki-Laki",
-                                  },
+                                    name: "cityId",
+                                    value: v.id
+                                  }
                                 });
+                                setCityName(v.name);
                                 toggleDropdown();
-                              }}
-                            >
-                              Laki-Laki
-                            </a>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                              role="menuitem"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                inputHandler({
-                                  target: {
-                                    name: "gender",
-                                    value: "Perempuan",
-                                  },
-                                });
-                                toggleDropdown();
-                              }}
-                            >
-                              Perempuan
-                            </a>
+                              }}>{v.name}</a>
+                            ))}
                           </div>
                         </div>
                       ) : null}
                     </div>
                   </div>
-                </div>
-                
-                {/* form column 2 */}
-                <div className="flex flex-col">
-                  {/* email */}
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={input.email}
-                    onChange={inputHandler}
-                    onBlur={errorHandler}
-                    className="py-2 pl-4 pr-16 bg-gray-200 rounded-md"
-                  />
-                  {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
 
-                  {/* Kota */}
-                  <label htmlFor="kota">Kota</label>
-                  <div className="relative inline-block">
-                    <div>
-                      <button
-                        type="button"
-                        name="city"
-                        onClick={() => toggleDropdown("city")}
-                        className="inline-flex justify-center w-full rounded-md py-1.5 bg-gray-200 hover:bg-gray-100"
-                        aria-haspopup="true"
-                        aria-expanded="true"
-                      >
-                        <div className="flex items-center gap-32">
-                          <span className="flex-grow">{input.cityId}</span>
-                          <ArrowDownSLineIcon className="h-8 transition-all duration-500 group-focus:-rotate-180" />
-                        </div>
-                      </button>
-                    </div>
-                    {isOpen === "city" ? (
-                      <div
-                        className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white"
-                        ref={dropdownRef}
-                      >
-                        <div
-                          className="py-1"
-                          role="menu"
-                          aria-orientation="vertical"
-                          aria-labelledby="options-menu"
-                        >
-                          {/* Search input */}
-                          <input
-                            ref={searchRef}
-                            className="block w-full px-4 py-2 text-gray-800 border rounded-md border-gray-300 focus:outline-none"
-                            type="text"
-                            placeholder="Search items"
-                            autoComplete="off"
-                            onChange={handleSearch}
-                          />
-                          {city.map(v => (
-                            <a href="#" role="menuitem" className="option" key={v.id} onClick={(e) => {
-                              e.preventDefault();
-                              inputHandler({
-                                target: {
-                                  name: "cityId",
-                                  value: v.id
-                                }
-                              });
-                              toggleDropdown();
-                            }}>{v.name}</a>
-                          ))}
-                        </div>
-                      </div>
-                    ) : null}
+                  {/* button */}
+                  <div>
+                    <ButtonPrimary buttonText="Simpan Profile" onClick={submitHandler} submit={true}></ButtonPrimary>
                   </div>
-                </div>
-
-                {/* button */}
-                <div>
-                  <ButtonPrimary buttonText="Simpan Profile" onClick={submitHandler} submit={true}></ButtonPrimary>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      }
 
-      {alert && alertName === 'profile' && <Alert status={alertObj.status} text={alertObj.text} 
+      {alert && alertName === 'profile' && <Alert status={alertObj.status} text={alertObj.text}
         button={alertObj.button}></Alert>}
       {toast && toastName === 'profile' && <Toast message={userMessage}></Toast>}
     </div>

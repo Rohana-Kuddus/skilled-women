@@ -30,7 +30,7 @@ export const getRoadmap = (jobId) => async (dispatch) => {
     return dispatch(setRoadmap({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setRoadmap({ data: [], message: err.response.data.message }));
+    return dispatch(setRoadmap({ data: [], message: err.response.data.message || err.message }));
   };
 };
 

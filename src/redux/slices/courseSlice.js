@@ -39,7 +39,7 @@ export const getClassRoadmap = (jobId, roadmapId) => async (dispatch) => {
     return dispatch(setCourse({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setCourse({ data: [], message: err.response.data.message }));
+    return dispatch(setCourse({ data: [], message: err.response.data.message || err.message }));
   };
 };
 
@@ -58,7 +58,7 @@ export const getClassUser = (token) => async (dispatch) => {
     return dispatch(setCourse({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setCourse({ data: [], message: err.response.data.message }));
+    return dispatch(setCourse({ data: [], message: err.response.data.message || err.message }));
   };
 };
 
@@ -77,7 +77,7 @@ export const getClass = (token, classId) => async (dispatch) => {
     return dispatch(setCourseDetail({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setCourseDetail({ data: {}, message: err.response.data.message }));
+    return dispatch(setCourseDetail({ data: {}, message: err.response.data.message || err.message }));
   };
 };
 
@@ -98,7 +98,7 @@ export const submitClass = (payload) => async (dispatch) => {
     return dispatch(setCourseMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setCourseMessage(err.response.data.message));
+    return dispatch(setCourseMessage(err.response.data.message || err.message));
   };
 };
 
@@ -119,7 +119,7 @@ export const editClass = (payload) => async (dispatch) => {
     return dispatch(setCourseMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setCourseMessage(err.response.data.message));
+    return dispatch(setCourseMessage(err.response.data.message || err.message));
   };
 };
 
@@ -142,7 +142,7 @@ export const voteClass = (payload) => async (dispatch) => {
     return dispatch(setCourseMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setCourseMessage(err.response.data.message));
+    return dispatch(setCourseMessage(err.response.data.message || err.message));
   };
 };
 
@@ -152,7 +152,7 @@ export const deleteClass = (payload) => async (dispatch) => {
     const { token, classId } = payload;
 
     const { data: { message } } = await axios({
-      method: 'post',
+      method: 'delete',
       url: `https://skilled-women-be-production.up.railway.app/classes/${classId}`,
       headers: {
         'Authorization': token
@@ -162,7 +162,7 @@ export const deleteClass = (payload) => async (dispatch) => {
     return dispatch(setCourseMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setCourseMessage(err.response.data.message));
+    return dispatch(setCourseMessage(err.response.data.message || err.message));
   };
 };
 

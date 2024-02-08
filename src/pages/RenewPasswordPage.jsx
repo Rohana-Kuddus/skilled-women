@@ -48,6 +48,13 @@ function RenewPasswordPage() {
     dispatch(setFooterAnchor("", ""));
   }, []);
 
+  useEffect(() => {
+    console.log(authMessage);
+    if (authMessage == 'Reset Password Success') {
+      dispatch(setAlert({ alert: true, alertName: 'password' }));
+    };
+  }, [authMessage]);
+
   // handler change visibiity
   const visibilityHandler = (e) => {
     const name = e.currentTarget.getAttribute('name');
@@ -146,9 +153,7 @@ function RenewPasswordPage() {
         setTimeout(() => {
           dispatch(getToast({ toast: false, toastName: 'password' }));
         }, 3000);
-      } else {
-        dispatch(setAlert({ alert: true, alertName: 'password' }));
-      }
+      };
     };
   };
 

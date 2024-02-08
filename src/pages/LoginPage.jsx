@@ -14,7 +14,6 @@ import { useCookies } from "react-cookie";
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cookies] = useCookies();
   const { toast, toastName } = useSelector(state => state.toast);
   const { authMessage } = useSelector(state => state.auth);
   const [passwordType, setPasswordType] = useState('password');
@@ -30,6 +29,12 @@ function LoginPage() {
   useEffect(() => {
     dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'));
   }, []);
+
+  useEffect(() => {
+    if (authMessage === 'Login Success') {
+      navigate('/');
+    };
+  }, [authMessage]);
 
   const handleInput = (event) => {
     setUser({
@@ -79,11 +84,6 @@ function LoginPage() {
         }, 3000);
       };
     };
-  };
-
-  const checkCookies = Object.keys(cookies).length !== 0;
-  if (checkCookies) {
-    navigate('/');
   };
 
   return (

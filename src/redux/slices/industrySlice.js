@@ -29,7 +29,7 @@ export const getIndustry = () => async (dispatch) => {
     return dispatch(setIndustry({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setIndustry({ data: [], message: err.response.data.message }));
+    return dispatch(setIndustry({ data: [], message: err.response.data.message || err.message }));
   };
 };
 

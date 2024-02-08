@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "./ButtonPrimary";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUser } from "../redux/slices/authSlice";
 import { getToast } from "../redux/slices/toastSlice";
@@ -15,19 +15,22 @@ function InputEmail() {
   const { authMessage } = useSelector(state => state.auth);
   const { toast, toastName } = useSelector(state => state.toast);
 
+  useEffect(() => {
+    if (authMessage === 'Check User Success') {
+      navigate('/password/reset', { state: { email: input } });
+    };
+  }, [authMessage]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     
     dispatch(checkUser({ email: input })); // check user exists
-
     if (!authMessage.includes('Success')) {
       dispatch(getToast({ toast: true, toastName: 'user' }));
 
       setTimeout(() => {
         dispatch(getToast({ toast: false, toastName: 'user' }));
       }, 3000);
-    } else {
-      navigate('/password/reset', { state: { email: input } });
     };
   };
 

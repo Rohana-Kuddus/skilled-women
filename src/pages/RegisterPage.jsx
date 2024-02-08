@@ -32,6 +32,12 @@ function RegisterPage() {
     dispatch(getCity());
   }, [city]);
 
+  useEffect(() => {
+    if (authMessage === 'User Registration Success') {      
+      navigate('/login');
+    };
+  }, [authMessage]);
+
   const validateData = () => {
     const errors = {};
 
@@ -82,8 +88,6 @@ function RegisterPage() {
         setTimeout(() => {
           dispatch(getToast({ toast: false, toastName: 'register'}));
         }, 3000);
-      } else {
-        navigate('/login');
       };
     };
   };

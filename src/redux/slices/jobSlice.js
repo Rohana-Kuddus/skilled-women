@@ -35,7 +35,7 @@ export const getJobList = (params = '') => async (dispatch) => {
     return dispatch(setJob({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setJob({ data: [], message: err.response.data.message }));
+    return dispatch(setJob({ data: [], message: err.response.data.message || err.message }));
   };
 };
 
@@ -51,7 +51,7 @@ export const getJobDetail = (jobId) => async (dispatch) => {
     return dispatch(setJobDetail({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setJobDetail({ data: {}, message: err.response.data.message }));
+    return dispatch(setJobDetail({ data: {}, message: err.response.data.message || err.message }));
   };
 };
 

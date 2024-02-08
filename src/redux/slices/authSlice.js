@@ -32,7 +32,7 @@ export const registerUser = (payload) => async (dispatch) => {
     return dispatch(setAuthMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setAuthMessage(err.response.data.message));
+    return dispatch(setAuthMessage(err.response.data.message || err.message));
   };
 };
 
@@ -48,7 +48,7 @@ export const loginUser = (payload) => async (dispatch) => {
     return dispatch(setToken({ token, message: 'Login Success' }));
   } catch (err) {
     console.log(err);
-    return dispatch(setAuthMessage(err.response.data.message));
+    return dispatch(setAuthMessage(err.response.data.message || err.message));
   };
 };
 
@@ -69,7 +69,7 @@ export const checkUser = (payload) => async (dispatch) => {
     return dispatch(setAuthMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setAuthMessage(err.response.data.message));
+    return dispatch(setAuthMessage(err.response.data.message || err.message));
   };
 };
 
@@ -85,7 +85,7 @@ export const resetPassword = (payload) => async (dispatch) => {
     return dispatch(setAuthMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setAuthMessage(err.response.data.message));
+    return dispatch(setAuthMessage(err.response.data.message || err.message));
   };
 };
 

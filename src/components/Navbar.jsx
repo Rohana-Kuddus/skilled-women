@@ -35,7 +35,7 @@ function Navbar() {
     if (Object.keys(cookies).length !== 0) {
       dispatch(getUserProfile(cookies.token));
     };
-  }, [user]);
+  }, [cookies]);
 
   const handleToggle = () => {
     setOpen(!isOpen);

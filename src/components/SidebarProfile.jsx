@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../redux/slices/alertSlice"
@@ -7,11 +7,13 @@ import Alert from "./Alert";
 import "../styles/components/SidebarProfile.css";
 import "../index.css";
 import { logoutUser } from "../redux/slices/authSlice";
+import PropTypes from "prop-types";
 
-function SidebarProfile({ id }) {
-  const [isOpen, setOpen] = useState(window.innerWidth >= 768);
+function SidebarProfile() {
   const dispatch = useDispatch();
   const { alert, alertName } = useSelector(state => state.alert);
+  const [isOpen, setOpen] = useState(window.innerWidth >= 768);
+  const { user } = useSelector(state => state.user);
 
   // adjust open and close sidebar based on screen size
   const resizeSidebar = () => {
@@ -84,13 +86,13 @@ function SidebarProfile({ id }) {
             >
               <div className="mx-2 mb-60 ">
                 <div className="my-1 p-1 w-full text-center hover:bg-gray-200 active:bg-gray-200 rounded-md">
-                  <Link to={`/profiles/${id}`}>Profile Saya</Link>
+                  <Link to={`/profiles/${user.id}`}>Profile Saya</Link>
                 </div>
                 <div className="my-1 p-1 w-full text-center hover:bg-gray-200 active:bg-gray-200 rounded-md">
-                  <Link to={`/profiles/${id}/password`}>Ganti Kata Sandi</Link>
+                  <Link to={`/profiles/${user.id}/password`}>Ganti Kata Sandi</Link>
                 </div>
                 <div className="my-1 p-1 w-full text-center hover:bg-gray-200 active:bg-gray-200 rounded-md">
-                  <Link to={`/profiles/${id}/recommendations`}>
+                  <Link to={`/profiles/${user.id}/recommendations`}>
                     Rekomendasi Saya
                   </Link>
                 </div>
@@ -109,6 +111,10 @@ function SidebarProfile({ id }) {
       {alert && alertName === 'signout' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
     </div>
   );
+}
+
+SidebarProfile.propTypes = {
+  id: PropTypes.number
 }
 
 export default SidebarProfile;

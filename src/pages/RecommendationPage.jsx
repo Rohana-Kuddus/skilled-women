@@ -5,23 +5,33 @@ import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { useEffect, useState } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { editClass, getClass, submitClass } from "../redux/slices/courseSlice";
 import { useCookies } from "react-cookie";
 import { getJobList } from "../redux/slices/jobSlice";
 import { getRoadmap } from "../redux/slices/roadmapSlice";
 import { getToast } from "../redux/slices/toastSlice";
 import Toast from "../components/Toast";
-import Loading from "../components/Loading";
+import { getUserProfile } from "../redux/slices/userSlice";
+import CloseLineIcon from "remixicon-react/CloseLineIcon";
 
 function RecommendationPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { alert, alertName } = useSelector(state => state.alert);
   const { toast, toastName } = useSelector(state => state.toast);
   const { courseDetail, courseMessage } = useSelector(state => state.course);
   const { job } = useSelector(state => state.job);
   const { roadmap } = useSelector(state => state.roadmap);
+  const { user } = useSelector(state => state.user);
   const [cookies] = useCookies();
+  const [hidden, setHidden] = useState('hidden');
+  
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+    dispatch(getJobList());
+    dispatch(getUserProfile(cookies.token));
+  }, []);
 
   // check edit page or add new course
   const location = useLocation();
@@ -30,15 +40,23 @@ function RecommendationPage() {
 
     useEffect(() => {
       dispatch(getClass(cookies.token, classId));
-    }, []);
+    }, [courseDetail]);
   };
 
   useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-    dispatch(getJobList());
-  }, []);
+    if (courseMessage === 'Update Class Success' || courseMessage === 'Create Class Success') {
+      dispatch(setAlert({ alert: true, alertName: 'recommendation' }));
+    };
+  }, [courseMessage]);
 
   const checkCourse = Object.keys(courseDetail).length !== 0;
+
+  useEffect(() => {
+    if (checkCourse) {
+      const jobId = job.find(v => v.title === courseDetail.job).id;
+      dispatch(getRoadmap(jobId));
+    };
+  }, [checkCourse]);
 
   // input states
   const [search, setSearch] = useState(checkCourse ? courseDetail.job : '');
@@ -51,10 +69,9 @@ function RecommendationPage() {
     paid: checkCourse ? courseDetail.paid : true,
     description: checkCourse ? courseDetail.description : ''
   });
-  const [hidden, setHidden] = useState('');
   const [payment, setPayment] = useState({
     status: checkCourse ? courseDetail.paid === true ? 'paid' : 'free' : 'paid',
-    paidChecked: checkCourse ? courseDetail.paid === true ?  true : false : true,
+    paidChecked: checkCourse ? courseDetail.paid === true ? true : false : true,
     freeChecked: checkCourse ? courseDetail.paid === true ? false : true : false
   });
   const [error, setError] = useState({
@@ -70,7 +87,10 @@ function RecommendationPage() {
     text: 'Rekomendasi berhasil disimpan',
     button: {
       primary: 'Tutup',
-      primaryAction: () => dispatch(setAlert({ alert: false, alertName: 'recommendation' }))
+      primaryAction: () => {
+        navigate(`/profiles/${user.id}/recommendations`);
+        dispatch(setAlert({ alert: false, alertName: 'recommendation' }));
+      }
     }
   };
 
@@ -86,14 +106,15 @@ function RecommendationPage() {
 
     for (let i = 0; i < options.length; i++) {
       const id = parseInt(options[i].value.replace(/\D+/g, ''));
-      const name = options[i].value.replace(/[0-9]/g, '');
+      const text = options[i].value.replace(/[0-9]/g, '');
+      const name = text.replace(/^ +/gm, '');
 
-      const selected = select.find(v => v == name);
-
+      const selected = select.find(v => v === name);
       if (options[i].selected && !selected) {
         const arr = [...select, name];
         setSelect(arr);
-        input.roadmapId.push(id);
+        input.roadmapId = [...input.roadmapId, id];
+        // input.roadmapId.push(id);
       };
     };
   };
@@ -122,6 +143,12 @@ function RecommendationPage() {
     inputHandler(e);
   };
 
+  const removeHandler = (v) => {
+    const newArr = select.filter(val => val !== v);
+    setSelect([...newArr]);
+    input.roadmapId = newArr;
+  };
+
   const inputHandler = (e) => {
     let { name, value } = e.target;
 
@@ -148,8 +175,29 @@ function RecommendationPage() {
 
       if (location.state !== null) {
         const { classId } = location.state;
+        const roadmapId = [];
+
+        const arrStr = roadmap.filter(v => input.roadmapId.includes(v.name));
+        if (arrStr.length !== 0) {
+          const checkArr = input.roadmapId.every(i => typeof i === "string");
+          if (!checkArr) {
+            for (let i = 0; i < input.roadmapId.length; i++) {
+              if (typeof input.roadmapId[i] === 'string') {
+                console.log(input.roadmapId[i]);
+                input.roadmapId[i] = arrStr.find(val => val.name === input.roadmapId[i]).id;
+              }
+            }
+          } else {
+            input.roadmapId.map(v => {
+              const id = arrStr.find(val => val.name === v).id;
+              roadmapId.push(id);
+            });
+            payload.data.roadmapId = roadmapId;
+          };
+        };
 
         payload.classId = classId;
+
         dispatch(editClass(payload));
       } else {
         dispatch(submitClass(payload));
@@ -161,9 +209,7 @@ function RecommendationPage() {
         setTimeout(() => {
           dispatch(getToast({ toast: false, toastName: 'addClass' }));
         }, 3000);
-      } else {
-        dispatch(setAlert({ alert: true, alertName: 'recommendation' }));
-      }
+      };
     };
   };
 
@@ -217,7 +263,10 @@ function RecommendationPage() {
             ))}
           </select>
           {select.map((v, i) => (
-            <p key={i} className="paragraph-regular dark">{v}</p>
+            <div key={i}>
+              <p className="paragraph-regular dark">{v}</p>
+              <span onClick={() => removeHandler(v)}><CloseLineIcon className="hover:cursor-pointer"></CloseLineIcon></span>
+            </div>
           ))}
           {error.roadmap && <p className="paragraph-regular text-[#FE0101]">{error.roadmap}</p>}
 

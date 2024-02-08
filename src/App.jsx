@@ -36,12 +36,13 @@ function App() {
       removeCookie('token');
     };
   }, [token]);
-
+  
   return (
     <>
       <CookiesProvider>
         <BrowserRouter>
           <Navbar></Navbar>
+          
           <Routes>
             <Route path='/' element={<LandingPage></LandingPage>}></Route>
             <Route path='/about' element={<AboutPage></AboutPage>}></Route>

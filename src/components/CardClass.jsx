@@ -10,10 +10,9 @@ import { setAlert } from "../redux/slices/alertSlice"
 import { useState } from "react"
 import PropTypes from "prop-types"
 import "../styles/components/CardClass.css"
-import { voteClass } from "../redux/slices/courseSlice"
 import { useCookies } from "react-cookie"
 
-function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth = "w-32", imgHeight ="h-auto", setId }) {
+function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth = "w-32", imgHeight ="h-auto", setId, setVote }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cookies] = useCookies();
@@ -21,44 +20,36 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgWidth 
   
   const checkToken = Object.keys(cookies).length !== 0; // check if user loggedin
 
-  // vote payload
-  const payload = {
-    token: cookies.token,
-    classId: data.id
-  };
-
   const likeHandler = () => {
     if (active === 'none') {
-      payload.vote = true;
-      dispatch(voteClass(payload));
+      setVote({ id: data.id, vote: true });
       return setActive('like');
     };
 
     if (active === 'like') {
+      setVote({ id: data.id, vote: false });
       return setActive('none');
     };
 
     if (active === 'dislike') {
-      payload.vote = true;
-      dispatch(voteClass(payload));
+      setVote({ id: data.id, vote: true });
       return setActive('like');
     };
   };
 
   const dislikeHandler = () => {
-    if (active === 'none') {
-      payload.vote = false;
-      dispatch(voteClass(payload));
+    if (active === 'none' && data.rating !== 0) {
+      setVote({ id: data.id, vote: false });
       return setActive('dislike');
     };
 
     if (active === 'dislike') {
+      setVote({ id: data.id, vote: true });
       return setActive('none');
     };
 
     if (active === 'like') {
-      payload.vote = false;
-      dispatch(voteClass(payload));
+      setVote({ id: data.id, vote: false });
       return setActive('dislike');
     };
   };
@@ -116,7 +107,8 @@ CardClass.propTypes = {
   imgWidth: PropTypes.string,
   imgHeight: PropTypes.string,
   imgScale: PropTypes.string,
-  setId: PropTypes.func
+  setId: PropTypes.func,
+  setVote: PropTypes.func
 }
 
 export default CardClass;

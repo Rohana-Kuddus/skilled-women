@@ -35,7 +35,7 @@ export const getUserProfile = (token) => async (dispatch) => {
     return dispatch(setUser({ data, message }));
   } catch (err) {
     console.log(err);
-    return dispatch(setUser({ data: {}, message: err.response.data.message }));
+    return dispatch(setUser({ data: {}, message: err.response.data.message || err.message }));
   };
 };
 
@@ -54,7 +54,7 @@ export const editUserProfile = (token, payload) => async (dispatch) => {
     return dispatch(setUserMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setUserMessage(err.response.data.message));
+    return dispatch(setUserMessage(err.response.data.message || err.message));
   };
 }; 
 
@@ -73,7 +73,7 @@ export const editUserPassword = (token, payload) => async (dispatch) => {
     return dispatch(setUserMessage(message));
   } catch (err) {
     console.log(err);
-    return dispatch(setUserMessage(err.response.data.message));
+    return dispatch(setUserMessage(err.response.data.message || err.message));
   };
 };
 

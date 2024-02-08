@@ -4,24 +4,47 @@ import { useNavigate } from "react-router"
 import CardClass from "./CardClass"
 import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
-import { getClassRoadmap } from "../redux/slices/courseSlice"
+import { useEffect, useState } from "react"
+import { getClassRoadmap, voteClass } from "../redux/slices/courseSlice"
 import { useParams } from "react-router-dom"
 import { useCookies } from "react-cookie"
 import { setAlert } from "../redux/slices/alertSlice"
 import Alert from "./Alert"
+import { getToast } from "../redux/slices/toastSlice"
+import Toast from "./Toast"
 
 function SidebarClass({ data, setIsOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const params = useParams();
   const [cookies] = useCookies();
   const { alert, alertName } = useSelector(state => state.alert);
-  const { course } = useSelector(state => state.course);
-  const params = useParams();
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { course, courseMessage } = useSelector(state => state.course);
+  const [vote, setVote] = useState({});
 
   useEffect(() => {
     dispatch(getClassRoadmap(params.id, data.id));
-  }, []);
+  }, [course]);
+
+  useEffect(() => {
+    if (Object.keys(vote).length !== 0) {
+      const payload = {
+        token: cookies.token,
+        classId: vote.id,
+        vote: vote.vote
+      };
+      dispatch(voteClass(payload));
+
+      if (!courseMessage.includes('Get')) {
+        dispatch(getToast({ toast: true, toastName: 'voteClass'}));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'voteClass'}));
+        }, 3000);
+      };
+    };
+  }, [vote]);
 
   const alertObj = {
     status: false,
@@ -57,7 +80,7 @@ function SidebarClass({ data, setIsOpen }) {
         <div>
           {course.map(v => (
             <div key={v.id}>
-              <CardClass data={v} editBtn={false}></CardClass>
+              <CardClass data={v} editBtn={false} setVote={setVote}></CardClass>
             </div>
           ))}
         </div>
@@ -65,6 +88,7 @@ function SidebarClass({ data, setIsOpen }) {
 
       {alert && alertName === 'class'  && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button} 
         closeBtn={true} name={'class'}></Alert>}
+      {toast && toastName === 'voteClass' && <Toast message={courseMessage}></Toast>}
     </div>
   );
 }
