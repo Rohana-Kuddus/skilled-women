@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types"
 import "../index.css";
 
-function ButtonSecondary({ name, action, padding = "px-2", height = "h-2" }) {
+function ButtonSecondary({ name, action, padding = "px-4" }) {
   return (
     <>
-      <button className={`paragraph-regular dark ${padding} ${height} rounded-lg hover:bg-gray-100 w-max`}
+      <button className={`paragraph-regular dark ${padding} py-2 rounded-lg hover:bg-gray-100 w-max`}
       style={{
         borderColor: "var(--primary-color)",
         borderWidth: "1px",

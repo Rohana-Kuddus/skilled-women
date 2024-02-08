@@ -34,7 +34,7 @@ function FaqPage() {
 
   return (
     <>
-      <div class="flex flex-col align-center">
+      <div className="flex flex-col align-center">
         {/* HERO */}
         <div className="faqHero" style={{ backgroundColor: "var(--primary-color)" }}>
           <h1 className="text-center text-4xl font-bold my-6" style={{ fontFamily: "var(--heading-font)" }}>
@@ -45,9 +45,10 @@ function FaqPage() {
             ketahui jawabannya mengenai Skilled Women
           </p>
         </div>
+
         {/* QUESTION & ANSWER SECTIONS */}
         <div className="faqSection">
-          <div className="faqDropdown group" tabindex="1">
+          <div className="faqDropdown group" tabIndex="1">
             <div className="faqDropdownSection">
               <span className="heading3"> Apa itu Skilled Women? </span>
               <ArrowRightSLineIcon
@@ -67,7 +68,7 @@ function FaqPage() {
             </div>
           </div>
 
-          <div className="faqDropdown group" tabindex="2">
+          <div className="faqDropdown group" tabIndex="2">
             <div className="faqDropdownSection">
               <span className="heading3">
                 Apa saja fitur yang dimiliki Skilled Women?
@@ -90,7 +91,7 @@ function FaqPage() {
             </div>
           </div>
 
-          <div className="faqDropdown group" tabindex="3">
+          <div className="faqDropdown group" tabIndex="3">
             <div className="faqDropdownSection">
               <span className="heading3">
                 Bagaimana saya bisa mengakses kelas dari pekerjaan yang dipilih?

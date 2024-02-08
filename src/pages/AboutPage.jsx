@@ -5,8 +5,8 @@ import { setFooterAnchor } from "../redux/slices/footerSlice";
 import "../styles/components/AboutPage.css";
 
 function AboutPage() {
-  // reset footer's text + link
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
   }, []);
@@ -15,10 +15,7 @@ function AboutPage() {
     { name: "Khalisa Syahba", image: "" },
     { name: "Nur Inayah", image: "" },
     { name: "Rizqi 'Amaliyyah", image: "" },
-    {
-      name: "Gloriaza Yemima Lawrance Odyardy",
-      image: "",
-    },
+    { name: "Gloriaza Yemima Lawrance Odyardy", image: "" }
   ];
 
   return (
@@ -30,7 +27,6 @@ function AboutPage() {
             Tentang <br /> Skilled Women
           </h1>
         </div>
-        <br />
         <div className="paragraph-regular">
           <p>
             Panduan langkah demi langkah untuk mempelajari berbagai keterampilan
@@ -41,7 +37,6 @@ function AboutPage() {
       </div>
 
       {/* Apa itu skilled women? */}
-
       <div className="apa-itu">
         <div className="apa-itu-img">
           <img src="https://imgur.com/sdIleH7.png" alt="about-logo" />
@@ -64,7 +59,6 @@ function AboutPage() {
       </div>
 
       {/* Kenalan anggota */}
-
       <div className="kenalan">
         <div>
           <h2 className="heading2 mb-4">Kenalan dengan Anggota Tim Kami</h2>

@@ -1,4 +1,5 @@
 import "../styles/components/Arrow.css"
+import PropTypes from "prop-types"
 
 function Arrow({ flip }) {
   return (
@@ -8,6 +9,10 @@ function Arrow({ flip }) {
       <div className="arrow down"></div>
     </div>
   );
+}
+
+Arrow.propTypes = {
+  flip: PropTypes.bool
 }
 
 export default Arrow;
