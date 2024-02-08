@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react"
-import Hero from "../components/Hero"
-import Introduction from "../components/Introduction"
-import Roadmap from "../components/Roadmap"
+import { useEffect, useState } from "react";
+import Hero from "../components/Hero";
+import Introduction from "../components/Introduction";
+import Roadmap from "../components/Roadmap";
 import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { getJobDetail } from "../redux/slices/jobSlice";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
+import "../styles/pages/JobDetailPage.css";
 
 function JobDetailPage() {
   const dispatch = useDispatch();
@@ -26,9 +27,9 @@ function JobDetailPage() {
           {<Hero data={jobDetail}></Hero>}
 
           {/* tab */}
-          <div>
-            <h3 className="heading3 green hover:cursor-pointer" onClick={() => setIsActive('intro')}>Pengenalan</h3>
-            <h3 className="heading3 green hover:cursor-pointer" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
+          <div className="tabSection">
+            <h3 className="tab" onClick={() => setIsActive('intro')}>Pengenalan</h3>
+            <h3 className="tab" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
           </div>
 
           {isActive === 'intro' && <Introduction data={jobDetail} setIsActive={setIsActive}></Introduction>}

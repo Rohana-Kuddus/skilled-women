@@ -6,21 +6,30 @@ import ButtonPrimary from "./ButtonPrimary"
 import ButtonSecondary from "./ButtonSecondary"
 import { useDispatch } from "react-redux"
 import { setAlert } from "../redux/slices/alertSlice"
+import "../index.css"
+import "../styles/components/Alert.css"
 
 function Alert({ status, text, button, closeBtn, name }) {
   const dispatch = useDispatch();
 
   return (
-    <div>
-      {closeBtn ? <CloseLineIcon className="hover:cursor-pointer" color="#4F6C6A" onClick={() => dispatch(setAlert({ alert: false, alertName: name }))}></CloseLineIcon> : ''}
+    <div className="close-Btn-div">
+      <div className="pop-up-inner">
+        {closeBtn && (
+          <CloseLineIcon
+            color="#4F6C6A"
+            onClick={() => dispatch(setAlert({ alert: false, alertName: name }))}
+            className="closeBtn"
+          ></CloseLineIcon>
+        )}
 
-      <div>
-        {status ? <CheckLineIcon color="#73B234"></CheckLineIcon> : <ErrorWarningLineIcon color="#E8A530"></ErrorWarningLineIcon>}
-        <p className="paragraph-regular green" dangerouslySetInnerHTML={{ __html: text }}></p>
+        {status ? <CheckLineIcon color="#73B234" className="status-icon"></CheckLineIcon>
+          : <ErrorWarningLineIcon color="#E8A530" className="status-icon"></ErrorWarningLineIcon>}
+        <h3 className="h3" dangerouslySetInnerHTML={{ __html: text }}></h3>
 
-        <div>
-          {button.primary ? <ButtonPrimary buttonText={button.primary} onClick={button.primaryAction}></ButtonPrimary> : ''}
-          {button.secondary ? <ButtonSecondary name={button.secondary} action={button.secondaryAction}></ButtonSecondary> : ''}
+        <div className="button-alert">
+          {button.secondary && <ButtonSecondary name={button.secondary} action={button.secondaryAction}></ButtonSecondary>}
+          {button.primary && <ButtonPrimary buttonText={button.primary} onClick={button.primaryAction}></ButtonPrimary>}
         </div>
       </div>
     </div>

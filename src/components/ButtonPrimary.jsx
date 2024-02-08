@@ -6,9 +6,9 @@ const ButtonPrimary = ({ onClick, buttonText, padding = "px-4", submit = false, 
       <button
         type={!submit ? 'button' : 'submit'}
         onClick={onClick}
-        className={`center rounded-lg bg-[#4F6C6A] py-2 ${padding} ${margin} paragraph-regular white 
+        className={`center my-3 rounded-md bg-[#4F6C6A] py-2 ${padding} ${margin} paragraph-regular white 
         transition-all hover:opacity-95 focus:opacity-95 active:opacity-85 
-        disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none`}
+        disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none w-max`}
       >
         {buttonText}
       </button>

@@ -10,6 +10,7 @@ import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
 import { loginUser } from "../redux/slices/authSlice";
 import { useCookies } from "react-cookie";
+import "../styles/components/LoginPage.css";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -88,22 +89,22 @@ function LoginPage() {
 
   return (
     <div>
-      <div className="text-center">
-        <h1 className="heading1 dark">Log In</h1>
-        <p className="dark paragraph-regular">
+      <div className="login">
+        <h1 className="login-h1">Log In</h1>
+        <p className="login-p">
           Senang melihat kamu kembali! <br /> Masukkan data sesuai dengan yang
           telah kamu daftarkan.
         </p>
       </div>
 
-      <div className="flex flex-row justify-center">
+      <div className="login-konten">
         <div>
-          <img src="https://imgur.com/dEyAXJg.png" alt="login"></img>
+          <img src="https://imgur.com/Z8jSaVB.png" alt="login"></img>
         </div>
 
-        <div className="">
-          <div>
-            <p className="label-form">Email</p>
+        <div className="login-form">
+          <div className="mb-4">
+            <label className="label">Email</label>
             <input
               className="input-text"
               type="email"
@@ -114,8 +115,10 @@ function LoginPage() {
               onBlur={validateInput}
             ></input>
             {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
+          </div>
 
-            <p className="label-form">Password</p>
+          <div className="mb-4">
+            <label className="label">Password</label>
             <input
               className="input-text"
               type={passwordType}
@@ -133,12 +136,12 @@ function LoginPage() {
             {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
           </div>
 
-          <div className="text-center">
-            <p className="paragraph-regular green font-bold hover:cursor-pointer" onClick={() => navigate("/password/email")}>Forgot Password?</p>
+          <div className="button-div">
+            <p className="forgot-password" onClick={() => navigate("/password/email")}>Forgot Password?</p>
             <ButtonPrimary buttonText="Log in" onClick={login} />
-            <p className="paragraph-regular green font-bold">
+            <p className="button-p">
               Belum punya akun?&ensp;
-              <span className="underline cursor-pointer" onClick={() => navigate("/register")}>Daftar sekarang</span>
+              <span className="button-span" onClick={() => navigate("/register")}>Daftar sekarang</span>
             </p>
           </div>
         </div>

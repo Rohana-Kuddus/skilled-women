@@ -1,0 +1,13 @@
+@import url(/src/index.css);
+
+.mulai {
+  @apply text-center mt-12;
+}
+
+.register {
+  @apply flex flex-col md:flex-row items-center justify-center gap-20 mt-12;
+}
+
+.register-form {
+  @apply flex flex-col md:flex-row gap-6;
+}

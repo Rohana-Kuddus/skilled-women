@@ -23,7 +23,7 @@ function InputEmail() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    
+
     dispatch(checkUser({ email: input })); // check user exists
     if (!authMessage.includes('Success')) {
       dispatch(getToast({ toast: true, toastName: 'user' }));
@@ -34,9 +34,9 @@ function InputEmail() {
     };
   };
 
-  return ( 
+  return (
     <div>
-       <form>
+      <form className="flex flex-col justify-center items-center text-center gap-12 m-6 md:my-20">
         <div>
           <h1 className="heading1 black">Lupa Password?</h1>
           <p className="paragraph-regular black">
@@ -44,24 +44,29 @@ function InputEmail() {
           </p>
         </div>
 
-        <div className="">
-          <input 
-          className="input-text"
-          type="text"
-          name="email"
-          placeholder="Email"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onBlur={() => !input ? setError('Email harus diisi') : setError('')}
-          autoFocus
+        <div className="flex flex-col">
+          <label htmlFor="Email" className="label-form text-left">
+            Email
+          </label>
+          <input
+            className="input-text mb-2 max-w-64 md:max-w-80 lg:max-w-96"
+            type="text"
+            name="email"
+            placeholder="janedoe@email.com"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onBlur={() => !input ? setError('Email harus diisi') : setError('')}
+            autoFocus
           />
           {error && <p className="paragraph-regular text-[#FE0101]">{error}</p>}
 
           <ButtonPrimary buttonText={"Kirim email"} onClick={submitHandler} submit={true}></ButtonPrimary>
         </div>
 
-        <p>
-          Kembali ke laman <span className="underline hover:cursor-pointer" onClick={() => navigate('/login')}>Log in</span> 
+        <p> Kembali ke laman{" "}
+          <span className="underline hover:cursor-pointer" onClick={() => navigate("/login")}>
+            Log in
+          </span>
         </p>
       </form>
 

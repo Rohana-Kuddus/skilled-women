@@ -1,0 +1,43 @@
+@import url(/src/index.css);
+
+.login {
+  @apply text-center mt-12;
+}
+
+.login-konten {
+ @apply flex flex-col md:flex-row items-center justify-center md:justify-evenly;
+}
+
+.login-h1 {
+  @apply heading1 text-[#1E292B] mb-4;
+}
+
+.login-p {
+  @apply dark paragraph-regular;
+}
+
+.login-form {
+  @apply mt-4 md:mt-0;
+}
+
+.label {
+  @apply block label-form mb-2;
+}
+
+/* Button */
+
+.forgot-password {
+  @apply text-[#4F6C6A] text-sm mt-4 cursor-pointer;
+}
+
+.button-div {
+  @apply text-center;
+}
+
+.button-p {
+  @apply text-[#4F6C6A] text-sm;
+}
+
+.button-span {
+  @apply underline cursor-pointer;
+}

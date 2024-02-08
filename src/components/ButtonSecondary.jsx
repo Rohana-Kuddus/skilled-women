@@ -5,10 +5,15 @@ import "../index.css";
 function ButtonSecondary({ name, action, padding = "px-4" }) {
   return (
     <>
-      <button className={`paragraph-regular dark ${padding} py-2 rounded-lg hover:bg-gray-100 border
-       border-[#4F6C6A]`} onClick={action}>
-        {name}
-      </button>
+      <button className={`paragraph-regular dark ${padding} py-2 rounded-lg hover:bg-gray-100 w-max`}
+      style={{
+        borderColor: "var(--primary-color)",
+        borderWidth: "1px",
+      }}
+      onClick={action}
+    >
+      {name}
+    </button>
     </>
   );
 }

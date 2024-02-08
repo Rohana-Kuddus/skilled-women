@@ -10,6 +10,7 @@ import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import { registerUser } from "../redux/slices/authSlice";
 import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
+import "../styles/components/RegisterPage.css"; 
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -94,7 +95,7 @@ function RegisterPage() {
 
   return (
     <div>
-      <div className="text-center">
+      <div className="mulai">
         <h1 className="heading1">Get Started</h1>
         <p className="paragraf-reguler">
           Hey, Selamat datang! <br /> Masukkan detail data sesuai form dan buat
@@ -102,15 +103,17 @@ function RegisterPage() {
         </p>
       </div>
 
-      <div className="flex flex-row justify-center gap-24">
-        <div>
-          <img src="https://imgur.com/dEyAXJg.png"></img>
-        </div>
+      <div className="justify-center">
+        <div className="register">
+          <div>
+            <img src="https://imgur.com/Ow0Trpe.png"></img>
+          </div>
 
-        <form >
-          <div className="flex justify-center gap-6">
+          <form className="register-form">
             <div>
-              <p className="label-form" htmlFor="username">Username</p>
+              <p className="label-form" htmlFor="username">
+                Username
+              </p>
               <input
                 className="input-text"
                 type="text"
@@ -122,10 +125,12 @@ function RegisterPage() {
                 required
               />
               {validationsErrors.username && (
-                <p style={{ color: "red" }}>{validationsErrors.username}</p>
+                <p className="text-[#ff0000]">{validationsErrors.username}</p>
               )}
 
-              <p className="label-form " htmlFor="gender">Gender</p>
+              <p className="label-form " htmlFor="gender">
+                Gender
+              </p>
               <select
                 className="input-text "
                 id="gender"
@@ -139,7 +144,7 @@ function RegisterPage() {
                 <option value="M">Laki-laki</option>
               </select>
               {validationsErrors.gender && (
-                <p style={{ color: "red" }}>{validationsErrors.gender}</p>
+                <p className="text-[#ff0000]">{validationsErrors.gender}</p>
               )}
 
               <p className="label-form" htmlFor="city">City</p>
@@ -151,12 +156,14 @@ function RegisterPage() {
                 ))}
               </select>
               {validationsErrors.city && (
-                <p style={{ color: "red" }}>{validationsErrors.city}</p>
+                <p className="text-[#ff0000]">{validationsErrors.city}</p>
               )}
             </div>
 
             <div>
-              <p className="label-form " htmlFor="email">Email</p>
+              <p className="label-form " htmlFor="email">
+                Email
+              </p>
               <input
                 className="input-text"
                 type="email"
@@ -168,10 +175,12 @@ function RegisterPage() {
                 required
               ></input>
               {validationsErrors.email && (
-                <p style={{ color: "red" }}>{validationsErrors.email}</p>
+                <p className="text-[#ff0000]">{validationsErrors.email}</p>
               )}
 
-              <p className="label-form" htmlFor="password">Password</p>
+              <p className="label-form" htmlFor="password">
+                Password
+              </p>
               <input
                 className="input-text"
                 type={passwordType}
@@ -188,12 +197,11 @@ function RegisterPage() {
                   : <EyeLineIcon className="green"></EyeLineIcon>}
               </span>
               {validationsErrors.password && (
-                <p style={{ color: "red" }}>{validationsErrors.password}</p>
+                <p className="text-[#ff0000]">{validationsErrors.password}</p>
               )}
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
 
       <div className="text-center">
         <p className="label-form ">
@@ -203,7 +211,12 @@ function RegisterPage() {
           </span>
         </p>
 
-        <ButtonPrimary type="submit" buttonText="Daftar Sekarang" onClick={handleSubmit} />
+          <ButtonPrimary
+            type="submit"
+            buttonText="Daftar Sekarang"
+            onClick={handleSubmit}
+          />
+        </div>
       </div>
 
       {toast && toastName === 'register' && <Toast message={authMessage}></Toast>}

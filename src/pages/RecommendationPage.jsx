@@ -14,6 +14,7 @@ import { getToast } from "../redux/slices/toastSlice";
 import Toast from "../components/Toast";
 import { getUserProfile } from "../redux/slices/userSlice";
 import CloseLineIcon from "remixicon-react/CloseLineIcon";
+import "../styles/components/RecommendationPage.css";
 
 function RecommendationPage() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function RecommendationPage() {
   const { user } = useSelector(state => state.user);
   const [cookies] = useCookies();
   const [hidden, setHidden] = useState('hidden');
-  
+
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
     dispatch(getJobList());
@@ -230,17 +231,17 @@ function RecommendationPage() {
   };
 
   return (
-    <div>
-      <div>
-        <h1 className="heading1 green">Berikan Rekomendasi Kelas</h1>
-        <p className="paragraph-regular dark">
-          Yuk bantu sesama perempuan untuk mendapat edukasi terbaik yang ada!
+    <div className="text-center">
+      <div className="m-12">
+        <h1 className="heading1 green ">Berikan Rekomendasi Kelas</h1>
+        <p className="rekomendasi-p">
+          Yuk bantu sesama perempuan untuk mendapat edukasi terbaik yang ada!<br />
           isi form dengan data yang lengkap dan lihat kelas mu di list kelas.
         </p>
       </div>
 
       <div>
-        <form>
+        <form className="form">
           <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
           <input type="text" name="job" className="input-text" autoFocus value={search} onChange={searchHandler} onBlur={errorHandler} />
           <ul className={`${hidden}`} onClick={() => setHidden('hidden')}>

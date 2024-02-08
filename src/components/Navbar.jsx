@@ -81,7 +81,7 @@ function Navbar() {
               <p className="paragraph-regular dark mx-4 hover:cursor-pointer" onClick={() => navigate('/faq')}>FAQ</p >
 
               {Object.keys(cookies).length !== 0 ?
-                <div className="flex">
+                <div className="flex items-center">
                   <img
                     src={user.image ? user.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'} 
                     alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4 hover:cursor-pointer" onClick={() => navigate(`/profiles/${user.id}`)} />
