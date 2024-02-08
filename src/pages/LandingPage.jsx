@@ -81,7 +81,7 @@ function LandingPage() {
     <>
       {/* Hero section */}
 
-      <div className="hero">
+      <div className="hero m-0">
         <div className="div-1">
           <div className="div-2">
             <h1 className="div-h1">
