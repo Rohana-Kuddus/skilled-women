@@ -231,8 +231,8 @@ function RecommendationPage() {
   };
 
   return (
-    <div className="text-center">
-      <div className="m-12">
+    <div className="">
+      <div className="form-heading">
         <h1 className="heading1 green ">Berikan Rekomendasi Kelas</h1>
         <p className="rekomendasi-p">
           Yuk bantu sesama perempuan untuk mendapat edukasi terbaik yang ada!<br />
@@ -242,60 +242,76 @@ function RecommendationPage() {
 
       <div>
         <form className="form">
-          <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
-          <input type="text" name="job" className="input-text" autoFocus value={search} onChange={(e) => setSearch(e.target.value)} onBlur={errorHandler} />
-          <ul>
-            {search !== '' && searchedJob.map(v => (
-              <li key={v.id} value={v.id} onClick={(e) => {
-                setInput(prev => ({ ...prev, job: v.id }));
-                setSearch(v.title);
-                e.target.setAttribute('class', 'hidden');
-                // akan ditambah hit api untuk ambil roadmap berdasar pekerjaan
-              }}>{v.title}</li>
+          <div>
+            <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
+            <input type="text" name="job" placeholder="masukkan nama pekerjaan" className="input-text block mt-1" autoFocus value={search} onChange={(e) => setSearch(e.target.value)} onBlur={errorHandler} />
+            <ul>
+              {search !== '' && searchedJob.map(v => (
+                <li className="search-option" key={v.id} value={v.id} onClick={(e) => {
+                  setInput(prev => ({ ...prev, job: v.id }));
+                  setSearch(v.title);
+                  e.target.setAttribute('class', 'hidden');
+                  // akan ditambah hit api untuk ambil roadmap berdasar pekerjaan
+                }}>{v.title}</li>
+              ))}
+            </ul>
+            <span className="search-icon"><SearchLineIcon className="green"></SearchLineIcon></span>
+            {error.job && <p className="paragraph-regular text-[#FE0101]">{error.job}</p>}
+          </div>
+          
+          <div>
+            <label htmlFor="roadmap" className="label-form">Pilih roadmap pekerjaan</label>
+            <select name="roadmap" className="form-select" onChange={selectHandler} onBlur={errorHandler}>
+              <option className="option" defaultValue={-1}>Pilih roadmap</option>
+              {roadmap.map((v, i) => (
+                <option key={i} value={i}>{v.name}</option>
+              ))}
+            </select>
+            {select.map((v, i) => (
+              <p key={i} className="paragraph-regular dark">
+                {v}
+                {/* {roadmap[id].name} */}
+              </p>
             ))}
-          </ul>
-          <span><SearchLineIcon className="green"></SearchLineIcon></span>
-          {error.job && <p className="paragraph-regular text-[#FE0101]">{error.job}</p>}
+            {error.roadmap && <p className="paragraph-regular text-[#FE0101]">{error.roadmap}</p>}
+          </div>
 
-          <label htmlFor="roadmap" className="label-form">Pilih roadmap pekerjaan</label>
-          <select name="roadmap" onChange={selectHandler} onBlur={errorHandler}>
-            <option defaultValue={-1}>Pilih roadmap</option>
-            {roadmap.map((v, i) => (
-              <option key={i} value={i}>{v.name}</option>
-            ))}
-          </select>
-          {select.map((v, i) => (
-            <p key={i} className="paragraph-regular dark">
-              {v}
-              {/* {roadmap[id].name} */}
-            </p>
-          ))}
-          {error.roadmap && <p className="paragraph-regular text-[#FE0101]">{error.roadmap}</p>}
+          <div>
+            <label htmlFor="name" className="label-form">Nama kelas</label>
+            <input type="text" name="name" placeholder="masukkan nama kelas" value={input.name} className="input-text mt-1" onChange={inputHandler} onBlur={errorHandler} />
+            {error.name && <p className="paragraph-regular text-[#FE0101]">{error.name}</p>}
+          </div>
 
-          <label htmlFor="name" className="label-form">Nama kelas</label>
-          <input type="text" name="name" value={input.name} className="input-text" onChange={inputHandler} onBlur={errorHandler} />
-          {error.name && <p className="paragraph-regular text-[#FE0101]">{error.name}</p>}
-
-          <label htmlFor="link" className="label-form">Link kelas</label>
-          <input type="text" name="link" value={input.link} className="input-text" onChange={inputHandler} onBlur={errorHandler} />
-          {error.link && <p className="paragraph-regular text-[#FE0101]">{error.link}</p>}
+          <div>
+            <label htmlFor="link" className="label-form">Link kelas</label>
+            <input type="text" name="link" placeholder="link kelas" value={input.link} className="input-text mt-1" onChange={inputHandler} onBlur={errorHandler} />
+            {error.link && <p className="paragraph-regular text-[#FE0101]">{error.link}</p>}
+          </div>
 
           <div>
             <label htmlFor="status" className="label-form">Status pembayaran</label>
-
-            <input type="radio" name="paidChecked" value={'paid'} checked={payment.paidChecked} onChange={radioHandler} />
-            <label className="paragraph-regular dark">Berbayar</label>
-
-            <input type="radio" name="freeChecked" value={'free'} checked={payment.freeChecked} onChange={radioHandler} />
-            <label className="paragraph-regular dark">Gratis</label>
+            <ul className="grid w-96 md:grid-cols-2">
+              <li>
+                <input className="hidden peer" type="radio" id="radio-paid" name="paidChecked" value={'paid'} checked={payment.paidChecked} onChange={radioHandler} />
+                <label for="radio-paid" className="radio-option rounded-l-md">Berbayar</label>
+              </li>
+              <li>
+                <input className="hidden peer" type="radio" id="radio-free" name="freeChecked" value={'free'} checked={payment.freeChecked} onChange={radioHandler} />
+                <label for="radio-free" className="radio-option rounded-r-md">Gratis</label>
+              </li>
+            </ul>
           </div>
 
-          <label htmlFor="description" className="label-form">Deskripsi kelas</label>
-          <textarea name="description" value={input.description} cols="30" rows="10"
-            className="pl-4 rounded-lg bg-[#EDEDED]" onChange={inputHandler} onBlur={errorHandler}></textarea>
-          {error.description && <p className="paragraph-regular text-[#FE0101]">{error.description}</p>}
+          <div>
+            <label htmlFor="description" className="label-form">Deskripsi kelas</label>
+            <textarea name="description" placeholder="deskripsi singkat kelas" value={input.description} cols="30" rows="10"
+              className="pl-4 pt-2 rounded-lg bg-[#EDEDED] w-96 mt-1" onChange={inputHandler} onBlur={errorHandler}></textarea>
+            {error.description && <p className="paragraph-regular text-[#FE0101]">{error.description}</p>}
+          </div>
 
-          <ButtonPrimary buttonText="Simpan" onClick={submitHandler} submit={true}></ButtonPrimary>
+          <div className="mt-7">
+            <ButtonPrimary buttonText="Simpan" onClick={submitHandler} submit={true} padding="px-40"></ButtonPrimary>
+          </div>
         </form>
 
       </div>
