@@ -29,7 +29,7 @@ function InputEmail({ setNextPage }) {
         </div>
 
         <p className="text-center green mt-8">
-          Kembali ke laman <span className="underline" onClick={()=>navigate('/login')}>Log in</span> 
+          Kembali ke laman <span className="underline hover:cursor-pointer" onClick={()=>navigate('/login')}>Log in</span> 
         </p>
       </form>
     </div>
