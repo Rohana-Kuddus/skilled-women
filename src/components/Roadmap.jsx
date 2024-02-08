@@ -1,10 +1,11 @@
 import ButtonRecommendation from "./ButtonRecommendation";
 import StepRoadmap from "./StepRoadmap";
+import "../styles/components/Roadmap.css"
 
 function Roadmap({ data }) {
   return (
     <div>
-      <div className="bg-[#4F6C6A]">
+      <div className="bg-[hsl(176,16%,37%)] my-12">
         <h2 className="heading2 white">Roadmap</h2>
         <p className="paragraph-regular white">{data.roadmapSummary}</p>
       </div>

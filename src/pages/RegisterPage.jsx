@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../index.css";
-import ButtonPrimary from "../components/ButtonPrimary";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { getCity } from "../redux/slices/citySlice";
-import "../styles/components/RegisterPage.css"; 
+import ButtonPrimary from "../components/ButtonPrimary";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
+import "../styles/pages/RegisterPage.css"; 
+import "../index.css";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -25,9 +25,6 @@ function RegisterPage() {
     password: "",
     city: "",
   });
-
-  // set text and link for footer
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
@@ -100,18 +97,16 @@ function RegisterPage() {
 
   return (
     <>
-      <div className="mulai">
+      <div className="start">
         <h1 className="heading1">Get Started</h1>
-        <p className="paragraf-reguler">
-          Hey, Selamat datang! <br /> Masukkan detail data sesuai form dan buat
-          akunmu segera!
-        </p>
+        <p className="paragraf-reguler">Hey, Selamat datang!</p>
+        <p className="paragraf-reguler">Masukkan detail data sesuai form dan buatakunmu segera! </p> 
       </div>
 
       <div className="justify-center">
         <div className="register">
           <div>
-            <img src="https://imgur.com/Ow0Trpe.png"></img>
+            <img src="https://imgur.com/Ow0Trpe.png"/>
           </div>
 
           <form className="register-form">

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "../index.css";
-import ButtonPrimary from "../components/ButtonPrimary";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import ButtonPrimary from "../components/ButtonPrimary";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import "../styles/components/LoginPage.css";
+import "../styles/pages/LoginPage.css";
+import "../index.css";
 
 function LoginPage() {
   // akan ke page register jika tulisan "daftar sekarang" di klik

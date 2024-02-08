@@ -109,8 +109,6 @@ function UserProfilePage() {
   };
 
   // alert
-  const { status } = useSelector((state) => state.alert);
-
   const alert = {
     status: true,
     text: "Profile berhasil disimpan!",

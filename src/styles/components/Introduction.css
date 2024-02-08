@@ -1,0 +1,24 @@
+@import url(/src/index.css);
+
+.introContainer{
+    @apply flex flex-col md:flex-row justify-center gap-x-0 md:gap-x-12 m-8 place-items-center;
+}
+
+.introStatistic{
+    @apply grid grid-cols-2 w-72 md:w-auto gap-2 md:gap-6 text-center;
+}
+
+.introBenefit{
+    @apply flex flex-col items-center justify-center text-center;
+}
+.introBenefitContainer{
+    @apply grid grid-flow-col place-content-center place-items-center;
+}
+
+.figure{
+    @apply bg-[#F6DDD9] grid  md:grid-cols-2 place-content-around place-items-center p-8 rounded-2xl;
+    @layer grid-row;
+}
+.figureContainer{
+    @apply text-center md:text-left mt-6 md:my-auto md:place-self-start;
+}

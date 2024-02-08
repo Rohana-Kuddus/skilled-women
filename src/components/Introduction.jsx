@@ -1,18 +1,19 @@
 import CardBenefit from "./CardBenefit"
 import ButtonPrimary from "./ButtonPrimary"
 import PropTypes from "prop-types"
+import "../styles/components/Introduction.css"
 
 function Introduction({ data, setIsActive }) {
   return (
     <>
       {/* introduction */}
-      <div className="flex flex-col md:flex-row justify-center gap-x-0 md:gap-x-12 m-8 place-items-center">
+      <div className="introContainer">
         <div className="text-center md:text-left mb-8 md:mb-0">
           <h2 className="heading2 green">Siapa itu {data.title}?</h2>
           <p className="paragraph-regular dark">{data.description}</p>
         </div>
         {/* statistics */}
-        <div className="grid grid-cols-2 w-72 md:w-auto gap-2 md:gap-6 text-center">
+        <div className="introStatistic">
             <div className="p-4 border-2 rounded-3xl border-[#F6DDD9]">
               <h1 className="heading1 green">{data.percentage}</h1>
               <p className="paragraph-small green">{data.percentageScope === 'IND' ? 'di Indonesia' : 'di Dunia'}</p>
@@ -33,11 +34,11 @@ function Introduction({ data, setIsActive }) {
 
       </div>
 
-      <div className="flex flex-col items-center justify-center text-center">
+      <div className="introBenefit">
       {/* benefits */}
       <div className="m-8">
         <h2 className="heading2 green mb-8">Apa keunggulan {data.title}?</h2>
-        <div className="grid grid-flow-col place-content-center place-items-center">
+        <div className="introBenefitContainer">
           {data.benefits.map((v, i) => (
             <div key={i}>
               <CardBenefit icon={v.image} description={v.description}></CardBenefit>
@@ -58,9 +59,9 @@ function Introduction({ data, setIsActive }) {
       {/* figure */}
       <div className="m-8">
         <h2 className="heading2 green mb-12">Perempuan Inspiratif {data.title}</h2>
-        <div className="bg-[#F6DDD9] grid grid-row md:grid-cols-2 place-content-around place-items-center p-8 rounded-2xl">
+        <div className="figure">
           <img src={data.figure.image} alt={data.figure.name.toLowerCase().replace(/\s+/g, '-')} className="max-w-40 mx-auto rounded-2xl"/>
-          <div className="text-center md:text-left mt-6 md:my-auto md:place-self-start">
+          <div className="figureContainer">
             <h2 className="heading2 green">{data.figure.name}</h2>
             <h3 className="hedaing3 green">{data.figure.role}</h3>
             <p className="paragraph-regular dark">{data.figure.description}</p>
