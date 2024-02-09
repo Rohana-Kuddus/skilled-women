@@ -4,7 +4,7 @@
     @apply flex flex-row justify-evenly mx-2 lg:mx-auto gap-4 lg:gap-0;
 }
 .tab{
-    @apply bg-[--secondary-color] paragraph-regular green w-full py-4 text-center rounded-t-md border-b-2 border-[--primary-color] cursor-pointer hover:bg-gray-100;
+    @apply bg-white paragraph-regular green w-full py-4 text-center rounded-t-md border-b-2 border-[--primary-color] cursor-pointer hover:bg-gray-100 active:bg-[--secondary-color];
 }
 
 .container-job {
@@ -14,3 +14,8 @@
 .summary {
     @apply flex flex-col p-4 justify-around items-center gap-4 bg-[#4F6C6A] md:flex-row md:py-20 md:px-60 my-10;
 }
+
+.font-h4 {
+    font-family: var(--heading-font);
+    font-size: 1 rem;
+  }

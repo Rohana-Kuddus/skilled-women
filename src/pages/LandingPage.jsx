@@ -28,7 +28,7 @@ function LandingPage() {
     <>
       {/* Hero section */}
       <div className="hero m-0">
-        <div className="div-1">
+        <div className="div-1 flex-initial md:w-2/4">
           <div className="div-2">
             <h1 className="div-h1">
               Ingin mempelajari keterampilan baru tetapi tidak tahu harus mulai
@@ -50,7 +50,7 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="div-imgHero">
+        <div className="div-imgHer flex-initial w-96">
           <img src="https://imgur.com/wp3X00G.png" alt="img" />
         </div>
       </div>
@@ -181,7 +181,7 @@ function LandingPage() {
           <h1>Roadmap Pekerjaan di Skilled Women</h1>
         </div>
 
-        <div className="roadmap-list ">
+        <div className="roadmap-list sm:flex items-center">
           <div className="roadmap-konten">
             <div className="roadmap-text">
               <h2 className="roadmap-h2-p paragraph-reguler justify-text">
@@ -197,33 +197,34 @@ function LandingPage() {
             </div>
           </div>
 
-          <div className="roadmap-slider">
+          <div className="m-auto">
             <Swiper
-              modules={[Navigation, Pagination]}
-              spaceBetween={20}
-              // slidesPerView={3}
-              navigation
-              pagination={{ clickable: true }}
-              breakpoints={
-                {
-                  0: {
+                breakpoints={{
+                  340: {
                     slidesPerView: 1,
+                    spaceBetween: 15
                   },
-                  400:{
-                    slidesPerView:2,
-                  },
-                  639: {
+                  700: {
                     slidesPerView: 3,
+                    spaceBetween: 15
                   }
-                }
-              }
+                }}
+
+                pagination={{
+                  clickable: true
+                }}
+
+                navigation
+                modules={[Navigation, Pagination]}
+                className=" max-w-64 md:max-w-4xl lg:max-w-4xl"
             >
               {
                 job.map((val) => (
                   <SwiperSlide key={val.id}>
-                    <CardJob job={val}></CardJob>
+                    <div>
+                      <CardJob job={val}></CardJob>
+                    </div>
                   </SwiperSlide>
-
                 ))
               }
             </Swiper>

@@ -3,11 +3,11 @@
 /* {Hero section} */
 
 .hero {
-  @apply bg-[#4F6C6A] p-28 grid grid-cols-1 md:grid-cols-3 items-center justify-around;
+  @apply flex flex-col-reverse bg-[#4F6C6A] p-28  md:flex items-center justify-around;
 }
 
 .div-1 {
-  @apply md:ml-10 col-span-2;
+  @apply m-auto md:ml-10 col-span-2;
 }
 
 .div-2 {
@@ -37,7 +37,7 @@
 }
 
 .div-imgHero {
-  @apply md:w-full col-span-1  sm:w-8;
+  @apply w-3/4 md:w-full col-span-1  sm:w-8;
 }
 
 /* {Fitur section} */
@@ -47,7 +47,7 @@
 }
 
 .fitur-h1 {
-  @apply heading1 text-[#4F6C6A] mb-14;
+  @apply text-center heading1 text-[#4F6C6A] mb-14;
 }
 
 .fitur-list {
@@ -129,25 +129,25 @@
 /* {Benefit section} */
 
 .benefit {
-  @apply gap-20 bg-[#4F6C6A] pt-20 pb-24 py-14 flex flex-wrap justify-center;
+  @apply gap-16 bg-[#4F6C6A] pt-20 pb-24 py-14 flex flex-wrap justify-center;
 }
 
 /* Benefit 1 */
 
 .benefit-h1 {
-  @apply text-center heading1 text-white;
+  @apply text-center heading1 text-white m-auto;
 }
 
 .benefit-1 {
-  @apply mx-12 gap-24 grid grid-cols-1 md:grid-cols-2 justify-center items-center px-4 sm:px-8 lg:px-16 xl:px-24;
+  @apply mx-12 grid grid-cols-1 md:grid-cols-2 justify-center items-center px-4 sm:px-8 lg:px-16 xl:px-24;
 }
 
 .benefit-1-img {
-  @apply md:w-1/2 lg:w-full md:max-w-sm lg:max-w-full;
+  @apply w-3/4 m-auto md:w-3/4;
 }
 
 .benefit-1-konten {
-  @apply mt-12 px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-wrap gap-4 text-white items-center;
+  @apply mt-12 px-4 lg:px-12 xl:px-16 flex flex-wrap gap-4 text-white items-center;
 }
 
 .benefit-1-h2 {
@@ -161,7 +161,7 @@
 /* Benefit 2 */
 
 .benefit-2 {
-  @apply mx-12 gap-52 grid grid-cols-1 md:grid-cols-2 justify-center items-center sm:px-8 lg:px-16 xl:px-24;
+  @apply mx-12 px-4 flex flex-col-reverse md:flex md:flex-row md:gap-x-14 justify-center items-center sm:px-8 lg:px-16 xl:px-24;
 }
 
 .benefit-2-konten {
@@ -177,7 +177,7 @@
 }
 
 .benefit-2-img {
-  @apply md:w-1/2 lg:w-full md:max-w-sm lg:max-w-full;
+  @apply w-3/4 m-auto md:w-3/4 lg:w-full md:max-w-sm lg:max-w-full;
 }
 
 /* {Roadmap section} */
@@ -204,8 +204,4 @@
 
 .roadmap-h2-p {
   @apply heading2 mr-12;
-}
-
-.roadmap-slider {
-  @apply md:max-w-4xl
 }

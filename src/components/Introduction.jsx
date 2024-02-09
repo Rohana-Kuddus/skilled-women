@@ -12,22 +12,22 @@ function Introduction({ data, setIsActive }) {
           <p className="paragraph-regular dark">{data.description}</p>
         </div>
         {/* statistics */}
-        <div className="grid grid-cols-2 w-72 md:w-5/12 gap-2 md:gap-6 text-center">
+        <div className="grid grid-cols-2 w-96 md:w-5/12 gap-2 md:gap-6">
             <div className="p-4 border-2 rounded-3xl border-[#F6DDD9]">
-              <h1 className="heading1 green">{data.percentage}</h1>
-              <p className="paragraph-small green">{data.percentageScope === 'IND' ? 'di Indonesia' : 'di Dunia'}</p>
-              <h3 className="heading3 green">Persentase</h3>
-              <h3 className="heading3 green">Perempuan</h3>
-              <a href={data.percentageLink} className="paragraph-small dark" target="_blank">src:</a>
+              <h1 className="heading1 green text-center pl-6">{data.percentage}</h1>
+              <p className="paragraph-small green mb-4 text-center">{data.percentageScope === 'IND' ? 'di Indonesia' : 'di Dunia'}</p>
+              <p className="font-h4 green text-center">Persentase</p>
+              <p className="font-h4 green text-center">Perempuan</p>
+              <a href={data.percentageLink} className="paragraph-small dark grid justify-items-end pr-2" target="_blank">src:</a>
             </div>
-            <div className="p-4 border-2 rounded-3xl border-[#F6DDD9] bg-[#F6DDD9] max-w-60">
-              <img src={data.Industry.image} alt={data.Industry.name.toLowerCase().replace(/\s+/g, '-')} className="w-20 h-auto mx-auto mb-2"/>
-              <h3 className="heading3 green">Industri {data.Industry.name}</h3>
+            <div className="p-4 border-2 rounded-3xl border-[#F6DDD9] bg-[#F6DDD9] max-w-60 text-center pt-4">
+              <img src={data.Industry.image} alt={data.Industry.name.toLowerCase().replace(/\s+/g, '-')} className="w-20 h-auto mx-auto mt-4"/>
+              <h3 className="font-h4 green mt-4">Industri {data.Industry.name}</h3>
             </div>
             <div className="p-4 col-span-2 border-2 rounded-3xl border-[#F6DDD9]">
-              <h1 className="heading1 green">{data.income}</h1>
-              <h3 className="heading3 green">Estimasi Pendapatan</h3>
-              <a href={data.incomeLink} className="paragraph-small dark" target="_blank">src:</a>
+              <h1 className="heading1 green text-center">{data.income}</h1>
+              <h3 className="font-h4 green text-center">Estimasi Pendapatan</h3>
+              <a href={data.incomeLink} className="paragraph-small dark grid justify-items-end pr-2" target="_blank">src:</a>
             </div>
         </div>
 
@@ -37,7 +37,7 @@ function Introduction({ data, setIsActive }) {
       {/* benefits */}
       <div className="m-8">
         <h2 className="heading2 green mb-8">Apa keunggulan {data.title}?</h2>
-        <div className="grid grid-flow-col place-content-center place-items-center w-3/5 m-auto">
+        <div className="grid grid-flow-row gap-6 max-w-56 md:grid-flow-col place-content-center place-items-center w-3/5 m-auto">
           {data.benefits.map((v, i) => (
             <div key={i}>
               <CardBenefit icon={v.image} description={v.description}></CardBenefit>
@@ -57,9 +57,9 @@ function Introduction({ data, setIsActive }) {
 
       {/* figure */}
       <div className="m-8">
-        <h2 className="heading2 green mb-12">Perempuan Inspiratif {data.title}</h2>
-        <div className="bg-[#F6DDD9] grid grid-row md:flex justify-between gap-8 w-4/5 place-items-center p-8 rounded-2xl m-auto">
-          <img src={data.Figure.image} alt={data.Figure.name.toLowerCase().replace(/\s+/g, '-')} className="max-w-40 mx-auto rounded-2xl"/>
+        <h2 className="heading2 green mb-6">Perempuan Inspiratif {data.title}</h2>
+        <div className="bg-[#F6DDD9] grid grid-row md:flex justify-between md:gap-8 w-4/5 place-items-center p-8 rounded-2xl m-auto">
+          <img src={data.Figure.image} alt={data.Figure.name.toLowerCase().replace(/\s+/g, '-')} className=" max-h-48 md:max-w-40 mx-auto rounded-lg"/>
           <div className="text-center md:text-left mt-6 md:my-auto md:place-self-start">
             <h2 className="heading2 green">{data.Figure.name}</h2>
             <h3 className="hedaing3 green">{data.Figure.role}</h3>
@@ -68,7 +68,7 @@ function Introduction({ data, setIsActive }) {
         </div>
       </div>
 
-      <ButtonPrimary buttonText={'Ketahui Langkah-Langkahnya'} onClick={() => setIsActive('roadmap')} padding="p-6"></ButtonPrimary>
+      <ButtonPrimary buttonText={'Ketahui Langkah-Langkahnya'} onClick={() => setIsActive('roadmap')} padding="px-8 py-4"></ButtonPrimary>
       </div>
     </>
   );
