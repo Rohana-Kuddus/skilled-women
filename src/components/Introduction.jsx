@@ -1,13 +1,14 @@
 import CardBenefit from "./CardBenefit"
 import ButtonPrimary from "./ButtonPrimary"
 import PropTypes from "prop-types"
+import "../styles/components/Introduction.css"
 
 function Introduction({ data, setIsActive }) {
   return (
     <>
       {/* introduction */}
-      <div className="flex flex-col md:flex-row justify-center gap-x-0 md:gap-x-12 m-8 place-items-center">
-        <div className="text-center md:text-left md:flex-auto w-64 md:pr-20 mb-8 md:mb-0">
+      <div className="container-intro">
+        <div className="container1">
           <h2 className="heading2 green mb-4">Siapa itu {data.title}?</h2>
           <p className="paragraph-regular dark">{data.description}</p>
         </div>
@@ -59,11 +60,11 @@ function Introduction({ data, setIsActive }) {
       {/* figure */}
       <div className="m-8">
         <h2 className="heading2 green mb-6">Perempuan Inspiratif {data.title}</h2>
-        <div className="bg-[#F6DDD9] grid grid-row md:flex justify-between md:gap-8 w-4/5 place-items-center p-8 rounded-2xl m-auto">
-          <img src={data.Figure.image} alt={data.Figure.name.toLowerCase().replace(/\s+/g, '-')} className=" max-h-48 md:max-w-40 mx-auto rounded-lg"/>
-          <div className="text-center md:text-left mt-6 md:my-auto md:place-self-start">
-            <h2 className="heading2 green">{data.Figure.name}</h2>
-            <h3 className="hedaing3 green">{data.Figure.role}</h3>
+        <div className="container-figure">
+          <img src={data.Figure.image} alt={data.Figure.name.toLowerCase().replace(/\s+/g, '-')} className="max-h-48 md:max-w-40 mx-auto rounded-lg"/>
+          <div className="flex flex-col gap-1 text-left mt-6 md:my-auto md:place-self-start">
+            <h3 className="heading3 font-bold green">{data.Figure.name}</h3>
+            <p className="paragraph-regular green">{data.Figure.role}</p>
             <p className="paragraph-regular dark">{data.Figure.description}</p>
           </div>
         </div>
