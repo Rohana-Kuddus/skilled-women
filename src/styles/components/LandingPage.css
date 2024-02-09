@@ -37,7 +37,7 @@
 }
 
 .div-imgHero {
-  @apply md:w-full col-span-1  sm:w-8;
+  @apply w-3/4 md:w-full col-span-1  sm:w-8;
 }
 
 /* {Fitur section} */
@@ -177,7 +177,7 @@
 }
 
 .benefit-2-img {
-  @apply md:w-1/2 lg:w-full md:max-w-sm lg:max-w-full;
+  @apply w-3/4 m-auto md:w-3/4 lg:w-full md:max-w-sm lg:max-w-full;
 }
 
 /* {Roadmap section} */
@@ -204,8 +204,4 @@
 
 .roadmap-h2-p {
   @apply heading2 mr-12;
-}
-
-.roadmap-slider {
-  @apply md:max-w-4xl
 }

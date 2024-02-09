@@ -182,7 +182,7 @@ function LandingPage() {
           <h1>Roadmap Pekerjaan di Skilled Women</h1>
         </div>
 
-        <div className="roadmap-list ">
+        <div className="roadmap-list sm:flex items-center">
           <div className="roadmap-konten">
             <div className="roadmap-text">
               <h2 className="roadmap-h2-p paragraph-reguler justify-text">
@@ -198,33 +198,34 @@ function LandingPage() {
             </div>
           </div>
 
-          <div className="roadmap-slider">
+          <div className="m-auto">
             <Swiper
-              modules={[Navigation, Pagination]}
-              spaceBetween={20}
-              // slidesPerView={3}
-              navigation
-              pagination={{ clickable: true }}
-              breakpoints={
-                {
-                  0: {
+                breakpoints={{
+                  340: {
                     slidesPerView: 1,
+                    spaceBetween: 15
                   },
-                  400:{
-                    slidesPerView:2,
-                  },
-                  639: {
+                  700: {
                     slidesPerView: 3,
+                    spaceBetween: 15
                   }
-                }
-              }
+                }}
+
+                pagination={{
+                  clickable: true
+                }}
+
+                navigation
+                modules={[Navigation, Pagination]}
+                className=" max-w-64 md:max-w-4xl lg:max-w-4xl"
             >
               {
                 job.map((val) => (
                   <SwiperSlide key={val.id}>
-                    <CardJob job={val}></CardJob>
+                    <div>
+                      <CardJob job={val}></CardJob>
+                    </div>
                   </SwiperSlide>
-
                 ))
               }
             </Swiper>
