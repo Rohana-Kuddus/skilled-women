@@ -1,16 +1,8 @@
-.container-intro {
-  @apply flex flex-col md:flex-row justify-center gap-x-0 md:gap-x-12 m-8 place-items-center;
-}
-
-.container1 {
-  @apply text-center md:text-left md:flex-auto w-64 md:pr-20 mb-8 md:mb-0;
-}
-
 .container-figure {
-  @apply bg-[#F6DDD9] flex gap-6 w-4/5 p-8 rounded-2xl m-auto;
+  @apply bg-[#F6DDD9] flex items-center gap-6 w-4/5 p-8 rounded-2xl m-auto;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
   .container-figure {
     @apply flex-wrap
   }
