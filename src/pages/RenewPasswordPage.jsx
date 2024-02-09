@@ -50,7 +50,6 @@ function RenewPasswordPage() {
   }, []);
 
   useEffect(() => {
-    console.log(authMessage);
     if (authMessage == 'Reset Password Success') {
       dispatch(setAlert({ alert: true, alertName: 'password' }));
     };

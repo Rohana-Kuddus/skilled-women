@@ -184,7 +184,6 @@ function RecommendationPage() {
           if (!checkArr) {
             for (let i = 0; i < input.roadmapId.length; i++) {
               if (typeof input.roadmapId[i] === 'string') {
-                console.log(input.roadmapId[i]);
                 input.roadmapId[i] = arrStr.find(val => val.name === input.roadmapId[i]).id;
               }
             }
@@ -242,7 +241,7 @@ function RecommendationPage() {
 
       <div>
         <form className="form">
-          <div>
+          <div className="relative">
             <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
             <input type="text" name="job" placeholder="masukkan nama pekerjaan" className="input-text block mt-1" autoFocus value={search} onChange={searchHandler} onBlur={errorHandler} />
             <ul className={`${hidden}`} onClick={() => setHidden('hidden')}>
