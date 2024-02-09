@@ -184,7 +184,6 @@ function RecommendationPage() {
           if (!checkArr) {
             for (let i = 0; i < input.roadmapId.length; i++) {
               if (typeof input.roadmapId[i] === 'string') {
-                console.log(input.roadmapId[i]);
                 input.roadmapId[i] = arrStr.find(val => val.name === input.roadmapId[i]).id;
               }
             }

@@ -47,7 +47,6 @@ function UserPasswordPage() {
   }, []);
 
   useEffect(() => {
-    console.log(userMessage);
     if (userMessage === 'Update User Password Success') {
       dispatch(setAlert({ alert: true, alertName: 'password' }));
     }

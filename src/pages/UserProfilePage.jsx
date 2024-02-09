@@ -11,7 +11,7 @@ import "../styles/pages/UserProfilePage.css";
 import "../index.css";
 import "../styles/pages/UserProfilePage.css";
 import { getCity } from "../redux/slices/citySlice";
-import { editUserProfile, getUserProfile } from "../redux/slices/userSlice";
+import { editUserProfile, getUserImage, getUserProfile } from "../redux/slices/userSlice";
 import { useCookies } from "react-cookie";
 import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
@@ -22,13 +22,14 @@ function UserProfilePage() {
   const { alert, alertName } = useSelector(state => state.alert);
   const { toast, toastName } = useSelector(state => state.toast);
   const { city } = useSelector(state => state.city);
-  const { user, userMessage } = useSelector(state => state.user);
+  const { user, userImage, userMessage } = useSelector(state => state.user);
   const [cookies] = useCookies();
 
   // dropdown
   const [isOpen, setIsOpen] = useState("");
   const [searchCity, setSearchCity] = useState("");
   const [cityName, setCityName] = useState("");
+  const [file, setFile] = useState(null);
   const dropdownRef = useRef();
   const searchRef = useRef();
 
@@ -36,6 +37,7 @@ function UserProfilePage() {
     dispatch(setFooterAnchor("", ""));
     dispatch(getCity());
     dispatch(getUserProfile(cookies.token));
+    dispatch(getUserImage(cookies.token));
   }, []);
 
   useEffect(() => {
@@ -55,12 +57,28 @@ function UserProfilePage() {
     email: user.email,
     gender: user.gender,
     cityId: user.city,
-    image: user.image
+    image: Object.keys(userImage).length !== 0 ? userImage : ''
   });
   const [error, setError] = useState({
     username: '',
     email: ''
   });
+
+  useEffect(() => {
+    const fileReader = new FileReader();
+    if (typeof input.image !== 'string') {
+      fileReader.onload = (e) => {
+        const { result } = e.target;
+        if (result) {
+          setFile(result);
+        };
+      };
+  
+      fileReader.readAsDataURL(input.image);
+    } else {
+      setFile(null);
+    };
+  }, [input]);
 
   // change profile picture
   const fileInputRef = useRef(null);
@@ -175,8 +193,8 @@ function UserProfilePage() {
             {/* profile photo */}
             <div className="flex flex-col items-center">
               <img
-                src={input.image ? input.image : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'}
-                className="rounded-full w-20 m-6"
+                src={input.image ? file : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'}
+                className="rounded-full w-20 h-20 m-6"
               />
               {/* edit button */}
               <div className="editBtn">
