@@ -12,6 +12,7 @@ import { setAlert } from "../redux/slices/alertSlice"
 import Alert from "./Alert"
 import { getToast } from "../redux/slices/toastSlice"
 import Toast from "./Toast"
+import "../styles/components/SidebarClass.css"
 
 function SidebarClass({ data, setIsOpen }) {
   const navigate = useNavigate();
@@ -37,10 +38,10 @@ function SidebarClass({ data, setIsOpen }) {
       dispatch(voteClass(payload));
 
       if (!courseMessage.includes('Get')) {
-        dispatch(getToast({ toast: true, toastName: 'voteClass'}));
+        dispatch(getToast({ toast: true, toastName: 'voteClass' }));
 
         setTimeout(() => {
-          dispatch(getToast({ toast: false, toastName: 'voteClass'}));
+          dispatch(getToast({ toast: false, toastName: 'voteClass' }));
         }, 3000);
       };
     };
@@ -62,33 +63,34 @@ function SidebarClass({ data, setIsOpen }) {
     }
   };
 
-  return ( 
-    <div>
-      <div>
-        <h1 className="heading1 green">Pilihan Kelas</h1>
-        {/* perlu tambah error handling keluar alet kalau user belum login klik */}
-        <CloseLineIcon color="#1E292B" onClick={() => setIsOpen({ status: false, id: '' })}></CloseLineIcon>
-      </div>
-
-      <div>
-        <div>
-          <h3 className="heading3 green font-bold">{data.name}</h3>
-          <ButtonRecommendation name={'Kelas'} action={Object.keys(cookies).length !== 0 ?
-            () => navigate('/recommendations') : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}></ButtonRecommendation>
+  return (
+    <div className="sidebar-bg">
+      <div className="sidebar-container">
+        <div className="sidebar-title">
+          <h1 className="heading1 green">Pilihan Kelas</h1>
+          <CloseLineIcon className="close" color="#1E292B" onClick={() => setIsOpen({ status: false, id: '' })}></CloseLineIcon>
         </div>
 
-        <div>
-          {course.map(v => (
-            <div key={v.id}>
-              <CardClass data={v} editBtn={false} setVote={setVote}></CardClass>
-            </div>
-          ))}
-        </div>
-      </div>
+        <div className="sidebar-main">
+          <div className="sidebar-name">
+            <h2 className="heading2 green font-bold">{data.name}</h2>
+            <ButtonRecommendation name={'Kelas'} action={Object.keys(cookies).length !== 0 ?
+              () => navigate('/recommendations') : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}></ButtonRecommendation>
+          </div>
 
-      {alert && alertName === 'class'  && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button} 
-        closeBtn={true} name={'class'}></Alert>}
-      {toast && toastName === 'voteClass' && <Toast message={courseMessage}></Toast>}
+          <div className="sidebar-class">
+            {course.map(v => (
+              <div key={v.id}>
+                <CardClass data={v} editBtn={false} setVote={setVote}></CardClass>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {alert && alertName === 'class' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}
+          closeBtn={true} name={'class'}></Alert>}
+        {toast && toastName === 'voteClass' && <Toast message={courseMessage}></Toast>}
+      </div>
     </div>
   );
 }
