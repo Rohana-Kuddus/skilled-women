@@ -57,7 +57,7 @@ function UserProfilePage() {
     email: user.email,
     gender: user.gender,
     cityId: user.city,
-    image: Object.keys(userImage).length !== 0 ? userImage : ''
+    image: userImage
   });
   const [error, setError] = useState({
     username: '',
@@ -193,7 +193,8 @@ function UserProfilePage() {
             {/* profile photo */}
             <div className="flex flex-col items-center">
               <img
-                src={input.image ? file : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'}
+                src={input.image && typeof input.image === 'string' ? input.image
+                  : typeof input.image !== 'string' ? file : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'}
                 className="rounded-full w-20 h-20 m-6"
               />
               {/* edit button */}

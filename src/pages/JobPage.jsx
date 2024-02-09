@@ -112,7 +112,7 @@ function JobPage() {
 
           <div className="mt-4 lg:mt-0">
             <ButtonRecommendation name={'Pekerjaan'} action={Object.keys(cookies).length !== 0
-              ? () => window.open('url', '_blank', 'noreferrer')
+              ? () => window.open('https://forms.gle/azMcFgBtZ29ZpcVPA', '_blank', 'noreferrer')
               : () => dispatch(setAlert({ alert: true, alertName: 'login' }))} padding="px-[1.2em] md:px-8"></ButtonRecommendation>
           </div>
         </div>

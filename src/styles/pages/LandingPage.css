@@ -3,7 +3,7 @@
 /* {Hero section} */
 
 .hero {
-  @apply flex flex-col-reverse bg-[#4F6C6A] p-28  md:flex items-center justify-around;
+  @apply flex bg-[#4F6C6A] p-28  md:flex items-center justify-around;
 }
 
 .div-1 {
@@ -183,7 +183,7 @@
 /* {Roadmap section} */
 
 .roadmap {
-  @apply pt-12 mb-12 sm:ml-8 md:ml-16 lg:ml-32 ml-4 gap-8;
+  @apply pt-12 mb-12 sm:ml-8 md:ml-16 lg:ml-28 ml-4 gap-8;
 }
 
 .roadmap-h1 {
@@ -191,7 +191,7 @@
 }
 
 .roadmap-list {
-  @apply flex flex-wrap justify-between px-6 p-16 gap-12;
+  @apply flex flex-wrap justify-between px-6 gap-12;
 }
 
 .roadmap-konten {

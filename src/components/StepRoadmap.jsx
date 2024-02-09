@@ -26,7 +26,7 @@ function StepRoadmap() {
         {roadmap.map((v, i)=> (
           <div className={`flex justify-center ${flip && 'flex-row-reverse'}`} key={v.id}>
             <CardRoadmap data={v} isOpen={isOpen} setIsOpen={setIsOpen}></CardRoadmap>
-            {i !== 4 ? <Arrow flip={flip}></Arrow> : ''}
+            <Arrow flip={flip} hidden={i !== 4 ? false : true}></Arrow>
             {(i + 1) % 2 === 0 ? flip = false : flip = true}
           </div>
         ))}
