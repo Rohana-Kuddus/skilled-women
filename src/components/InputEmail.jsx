@@ -39,7 +39,7 @@ function InputEmail() {
       <form className="flex flex-col justify-center items-center text-center gap-12 m-6 md:my-20">
         <div>
           <h1 className="heading1 black">Lupa Password?</h1>
-          <p className="paragraph-regular black">
+          <p className="paragraph-regular black mb-14">
             Masukkan email yang telah kamu daftarkan untuk merubah password kamu
           </p>
         </div>
@@ -64,7 +64,7 @@ function InputEmail() {
         </div>
 
         <p> Kembali ke laman{" "}
-          <span className="underline hover:cursor-pointer" onClick={() => navigate("/login")}>
+          <span className="underline hover:cursor-pointer green" onClick={() => navigate("/login")}>
             Log in
           </span>
         </p>

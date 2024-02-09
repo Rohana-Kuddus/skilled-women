@@ -1,15 +1,16 @@
 import SidebarClass from "./SidebarClass"
 import PropTypes from "prop-types"
+import "../styles/components/CardRoadmap.css";
 
 function CardRoadmap({ data, isOpen, setIsOpen }) {
   return (
-    <div>
-      <div className="bg-[#F6DDD9]">
-        <h2 className="heading2 white">{data.step}</h2>
+    <div className="relative w-2/5">
+      <div className="step">
+        <h2 className="absolute top-2 left-4 heading2 white">{data.step}</h2>
       </div>
 
-      <div className="bg-[#4F6C6A] hover:cursor-pointer">
-        <h3 className="heading3 white" onClick={() => setIsOpen({ status: true, id: data.id })}>{data.name}</h3>
+      <div className="step-name">
+        <h3 className="sm:paragraph-regular md:heading3 white" onClick={() => setIsOpen({ status: true, id: data.id })}>{data.name}</h3>
       </div>
 
       {isOpen.status && isOpen.id === data.id && <SidebarClass data={data} setIsOpen={setIsOpen}></SidebarClass>}

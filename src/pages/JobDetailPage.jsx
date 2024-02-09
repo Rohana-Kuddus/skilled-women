@@ -25,15 +25,17 @@ function JobDetailPage() {
       {Object.keys(jobDetail).length !== 0 ?
         <div>
           {<Hero data={jobDetail}></Hero>}
-
+        
           {/* tab */}
-          <div className="tabSection">
+          <div className="container-job tabSection">
             <h3 className="tab" onClick={() => setIsActive('intro')}>Pengenalan</h3>
             <h3 className="tab" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
           </div>
 
-          {isActive === 'intro' && <Introduction data={jobDetail} setIsActive={setIsActive}></Introduction>}
-          {isActive === 'roadmap' && <Roadmap data={jobDetail}></Roadmap>}
+          <div className="container-job ">
+            {isActive === 'intro' && <Introduction data={jobDetail} setIsActive={setIsActive}></Introduction>}
+            {isActive === 'roadmap' && <Roadmap data={jobDetail}></Roadmap>}
+          </div>
         </div>
         : <Loading></Loading>}
     </div>

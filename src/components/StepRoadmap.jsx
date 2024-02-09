@@ -21,8 +21,8 @@ function StepRoadmap() {
   }, [roadmap]);
 
   return (
-    <div className="border-2 border-dashed border-[#4F6C6A] p-5">
-      <div className="flex flex-col justify-center">
+    <div className="border-2 border-dashed border-[#4F6C6A] p-5 pt-10">
+      <div className="flex flex-col justify-center align-middle">
         {roadmap.map((v, i)=> (
           <div className={`flex justify-center ${flip && 'flex-row-reverse'}`} key={v.id}>
             <CardRoadmap data={v} isOpen={isOpen} setIsOpen={setIsOpen}></CardRoadmap>
