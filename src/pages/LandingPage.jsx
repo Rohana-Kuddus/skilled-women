@@ -29,7 +29,7 @@ function LandingPage() {
       {/* Hero section */}
 
       <div className="hero m-0">
-        <div className="div-1">
+        <div className="div-1 flex-initial md:w-2/4">
           <div className="div-2">
             <h1 className="div-h1">
               Ingin mempelajari keterampilan baru tetapi tidak tahu harus mulai
@@ -51,7 +51,7 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="div-imgHero">
+        <div className="div-imgHer flex-initial w-96">
           <img src="https://imgur.com/wp3X00G.png" alt="img" />
         </div>
       </div>
