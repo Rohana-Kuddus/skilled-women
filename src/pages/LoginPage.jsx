@@ -7,37 +7,62 @@ import "../styles/pages/LoginPage.css";
 import "../index.css";
 
 function LoginPage() {
-  // akan ke page register jika tulisan "daftar sekarang" di klik
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // navigate to register and forgot password page
   const toRegister = () => {
     navigate("/register");
   };
-
   const toForgotPassword = () => {
     navigate("/password/email");
   };
 
   // input form
-  const [user, setUser] = useState({
-    username: "",
+  const [login, setLogin] = useState({
+    email: "",
     password: "",
   });
-
   const handleInput = (event) => {
-    setUser({
-      ...user,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    setLogin((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const login = (event) => {
+  // handle submit login
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(user);
+    const errors = validateData();
+
+    if (Object.keys(errors).length === 0) {
+      console.log("Login", login);
+    } else {
+      setValidationsErrors(errors);
+    }
+  };
+
+  const [validationsErrors, setValidationsErrors] = useState({});
+  const validateData = () => {
+    const errors = {};
+    // validasi email dengan format @
+    if (!/^\S+@\S+\.\S+$/.test(login.email)) {
+      errors.email = "Email salah atau belum terdaftar";
+    }
+    // validasi password, minimal 1 angka, 1 huruf dan 1 karakter
+    if (
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/.test(
+        login.password
+      )
+    ) {
+      errors.password = "Password salah atau belum terdaftar";
+    }
+
+    return errors;
   };
 
   // set text and link for footer
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(
       setFooterAnchor(
@@ -49,55 +74,81 @@ function LoginPage() {
 
   return (
     <>
-      <div className="login">
-        <h1 className="login-h1">Log In</h1>
-        <p className="login-p">
-          Senang melihat kamu kembali! <br /> Masukkan data sesuai dengan yang
-          telah kamu daftarkan.
+      <div className="headingStart">
+        <h1 className="heading1">Log In</h1>
+        <p className="paragraph-reguler">Senang melihat kamu kembali!</p>
+        <p className="paragraf-reguler">
+          Masukkan sesuai dengan data yang telah kamu daftarkan.
         </p>
       </div>
 
-      <div className="login-konten">
-        <div>
-          <img src="https://imgur.com/Z8jSaVB.png" alt="login"></img>
+      <div className="login">
+        {/* login image */}
+        <div className="mb-0 md:mb-20">
+          <img
+            src="https://imgur.com/Z8jSaVB.png"
+            className="w-72 lg:w-96 h-auto"
+            alt="login-image"
+          />
         </div>
+        <div className="loginContent">
+        <form onClick={handleSubmit}>
+          
+            <div className="w-fit">
+              {/* email */}
+              <div className="flex flex-col">
+                <label className="label-form" htmlFor="email">
+                  Email
+                </label>
+                <input
+                  className="formInput pr-24 lg:pr-40"
+                  type="text"
+                  name="email"
+                  placeholder="janedoe@email.com"
+                  value={login.email}
+                  onChange={handleInput}
+                ></input>
+              </div>
+              {validationsErrors.email && (
+                <p className="text-[#ff0000]">{validationsErrors.email}</p>
+              )}
 
-        <div className="login-form">
-          <div className="mb-4">
-            <label className="label">Email</label>
-            <input
-              className="input-text"
-              type="text"
-              name="username"
-              placeholder="janedoe@email.com"
-              value={user.username}
-              onChange={handleInput}
-            ></input>
-          </div>
+              {/* password */}
+              <div className="flex flex-col">
+                <label className="label-form">Password</label>
+                <input
+                  className="formInput pr-24 lg:pr-40"
+                  type="password"
+                  name="password"
+                  placeholder="********"
+                  value={login.password}
+                  onChange={handleInput}
+                ></input>
+              </div>
+              {validationsErrors.password && (
+                <p className="text-[#ff0000]">{validationsErrors.password}</p>
+              )}
+              <p className="mt-4" onClick={toForgotPassword}>
+                Forgot Password?
+              </p>
+            </div>
 
-          <div className="mb-4">
-            <label className="label">Password</label>
-            <input
-              className="input-text"
-              type="password"
-              name="password"
-              placeholder="********"
-              value={user.password}
-              onChange={handleInput}
-            ></input>
-
-            <p className="forgot-password" onClick={toForgotPassword}>Forgot Password?</p>
-          </div>
-
-          <div className="button-div">
-            <ButtonPrimary buttonText="Log in" onClick={login} />
-            <p className="button-p">
+          {/* button and shortcut */}
+          <div className="submitBtn mt-12">
+            <ButtonPrimary
+              type="submit"
+              buttonText="Log in"
+              onClick={handleSubmit}
+              padding="px-[2em] md:px-8 py-3"
+            />
+            <p className="mt-4">
               Belum punya akun?&ensp;
-              <span className="button-span" onClick={toRegister}>
+              <span className="underline decoration-solid" onClick={toRegister}>
                 Daftar sekarang
               </span>
             </p>
           </div>
+        </form>
         </div>
       </div>
     </>

@@ -3,7 +3,7 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
 import CardJob from "../components/CardJob";
 import { useEffect, useState } from "react";
-import "../styles/components/LandingPage.css";
+import "../styles/pages/LandingPage.css";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";

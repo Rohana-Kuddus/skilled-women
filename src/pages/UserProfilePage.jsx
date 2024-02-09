@@ -6,11 +6,10 @@ import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import SidebarProfile from "../components/SidebarProfile";
 import ButtonPrimary from "../components/ButtonPrimary";
 import Alert from "../components/Alert";
+import { getCity } from "../redux/slices/citySlice";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import "../styles/pages/UserProfilePage.css";
 import "../index.css";
-import "../styles/pages/UserProfilePage.css";
-import { getCity } from "../redux/slices/citySlice";
 
 function UserProfilePage() {
   const dispatch = useDispatch();
@@ -309,7 +308,7 @@ function UserProfilePage() {
                             ref={searchRef}
                             className="searchDropdown"
                             type="text"
-                            placeholder="Search items"
+                            placeholder="Search City"
                             autoComplete="off"
                             onChange={handleSearch}
                           />

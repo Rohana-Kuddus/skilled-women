@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import "../index.css";
 import { useEffect } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import "../styles/components/AboutPage.css";
+import "../styles/pages/AboutPage.css";
 
 function AboutPage() {
   // reset footer's text + link
@@ -12,12 +12,12 @@ function AboutPage() {
   }, []);
 
   const teamMembers = [
-    { name: "Khalisa Syahba", image: "" },
-    { name: "Nur Inayah", image: "" },
-    { name: "Rizqi 'Amaliyyah", image: "" },
+    { name: "Khalisa Syahba", image: "https://i.imgur.com/Sa8YLTr.png" },
+    { name: "Nur Inayah", image: "https://i.imgur.com/EcdTiHU.png" },
+    { name: "Rizqi 'Amaliyyah", image: "https://i.imgur.com/djCaUJp.png" },
     {
-      name: "Gloriaza Yemima Lawrance Odyardy",
-      image: "",
+      name: "Gloriaza Y. L. Odyardy",
+      image: "https://i.imgur.com/QeantAe.jpeg",
     },
   ];
 
@@ -41,7 +41,6 @@ function AboutPage() {
       </div>
 
       {/* Apa itu skilled women? */}
-
       <div className="apa-itu">
         <div className="apa-itu-img">
           <img src="https://imgur.com/sdIleH7.png" alt="about-logo" />
@@ -72,7 +71,7 @@ function AboutPage() {
 
         <div className="daftar-anggota">
           {teamMembers.map((member) => (
-            <div key={member.name} className="text-center">
+            <div key={member.name} className="flex flex-col justify-center">
               <img
                 className="img-anggota"
                 src={member.image}
