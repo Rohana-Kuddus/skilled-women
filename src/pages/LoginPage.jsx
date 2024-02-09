@@ -9,7 +9,6 @@ import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
 import { loginUser } from "../redux/slices/authSlice";
-import { useCookies } from "react-cookie";
 import "../styles/components/LoginPage.css";
 
 function LoginPage() {

@@ -5,6 +5,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {},
+    userImage: {},
     userMessage: ''
   },
   reducers: {
@@ -12,13 +13,16 @@ const userSlice = createSlice({
       state.user = action.payload.data;
       state.userMessage = action.payload.message;
     },
+    setUserImage(state, action) {
+      state.userImage = action.payload;
+    },
     setUserMessage(state, action) {
       state.userMessage = action.payload;
     }
   }
 });
 
-export const { setUser, setUserMessage } = userSlice.actions;
+export const { setUser, setUserImage, setUserMessage } = userSlice.actions;
 
 // function get user profile
 export const getUserProfile = (token) => async (dispatch) => {
@@ -46,6 +50,7 @@ export const editUserProfile = (token, payload) => async (dispatch) => {
       method: 'put',
       url: 'https://skilled-women-be-production.up.railway.app/users',
       headers: {
+        'Content-Type': 'multipart/form-data',
         'Authorization': token
       },
       data: payload
@@ -74,6 +79,25 @@ export const editUserPassword = (token, payload) => async (dispatch) => {
   } catch (err) {
     console.log(err);
     return dispatch(setUserMessage(err.response.data.message || err.message));
+  };
+};
+
+// function get user profile
+export const getUserImage = (token) => async (dispatch) => {
+  try {
+    const { data } = await axios({
+      method: 'get',
+      url: 'https://skilled-women-be-production.up.railway.app/users/image',
+      headers: {
+        'Authorization': token
+      },
+      responseType: 'blob'
+    });
+
+    return dispatch(setUserImage(data));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setUserMessage(''));
   };
 };
 
