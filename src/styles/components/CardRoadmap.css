@@ -5,5 +5,5 @@
 }
 
 .step-name {
-    @apply bg-[#4F6C6A] px-10 py-4 hover:cursor-pointer rounded-md
+    @apply bg-[#4F6C6A] px-10 py-4 hover:cursor-pointer rounded-lg;
 }
