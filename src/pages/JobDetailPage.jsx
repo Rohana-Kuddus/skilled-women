@@ -20,16 +20,23 @@ function JobDetailPage() {
     dispatch(getJobDetail(params.id));
   }, [jobDetail]);
 
+  const tabHandler = (e) => {
+    const name = e.target.getAttribute('name');
+    setIsActive(name);
+  }
+
   return (
-    <div>
+    <div className="mx-20">
       {Object.keys(jobDetail).length !== 0 ?
         <div>
           {<Hero data={jobDetail}></Hero>}
         
           {/* tab */}
           <div className="container-job tabSection">
-            <h3 className="tab" onClick={() => setIsActive('intro')}>Pengenalan</h3>
-            <h3 className="tab" onClick={() => setIsActive('roadmap')}>Roadmap</h3>
+            <h3 className={`tab ${isActive === 'intro' ? 'bg-[--secondary-color] border-b-2 border-[--primary-color]' : ''}`} 
+              name="intro" onClick={tabHandler}>Pengenalan</h3>
+            <h3 className={`tab ${isActive === 'roadmap' ? 'bg-[--secondary-color] border-b-2 border-[--primary-color]' : ''}`}
+              name="roadmap" onClick={tabHandler}>Roadmap</h3>
           </div>
 
           <div className="container-job ">

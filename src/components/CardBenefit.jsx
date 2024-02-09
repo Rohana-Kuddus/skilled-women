@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 const CardBenefit = ({ icon, description }) => {
   return (
     <>
-    <div className="text-center px-4 py-6 mx-2 md:mx-4 rounded-lg bg-[#F6DDD9] min-h-52">
+    <div className="text-center px-4 py-12 m-2 md:mx-4 w-56 rounded-xl bg-[#F6DDD9]">
       <img src={icon} alt="benefit" className="w-20 h-full mx-auto mb-4" />
-      <p className="paragraph-regular dark text-wrap">{description}</p>
+      <p className="paragraph-regular dark">{description}</p>
     </div>
     </>
   );

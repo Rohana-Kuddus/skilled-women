@@ -1,15 +1,15 @@
 .arrow {
-  @apply border-solid border-black;
+  @apply border-solid;
 }
 
 .x-line {
-  @apply border w-60 mt-7;
+  @apply border mt-7 sm:w-12 md:w-48 lg:w-60;
 }
 
 .y-line {
-  @apply mt-[3.4rem] ml-[11.5rem] border w-28 rotate-90;
+  @apply mt-[3.4rem] lg:ml-[11.5rem] md:ml-[8.5rem] border rotate-90 lg:w-28 md:w-28 sm:w-4;
 }
 
 .down {
-  @apply mt-[2.8rem] ml-[14.7rem] border-r-[1.5px] border-b-[1.5px] inline-block p-1 rotate-45;
+  @apply mt-[2.8rem] lg:ml-[14.7rem] md:ml-[11.7rem] border-r-[1.5px] border-b-[1.5px] inline-block p-1 rotate-45;
 }

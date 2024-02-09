@@ -41,7 +41,7 @@ function Roadmap({ data }) {
         <div className="flex justify-end mb-2">
           {/* perlu ubah url jadi link gform rekomendasi roadmap */}
           <ButtonRecommendation name={'Roadmap'} action={Object.keys(cookies).length !== 0 ?
-            () => window.open('url', '_blank', 'noreferrer') : () => 
+            () => window.open('https://forms.gle/75LaERLJ8hQSXYSV6', '_blank', 'noreferrer') : () => 
             dispatch(setAlert({ alert: true, alertName: 'roadmap' }))}></ButtonRecommendation>
         </div>
 
