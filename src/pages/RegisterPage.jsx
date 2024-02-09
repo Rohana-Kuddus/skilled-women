@@ -5,13 +5,12 @@ import { getCity } from "../redux/slices/citySlice";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import ButtonPrimary from "../components/ButtonPrimary";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { getCity } from "../redux/slices/citySlice";
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
 import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import { registerUser } from "../redux/slices/authSlice";
 import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
-import "../styles/components/RegisterPage.css";
+import "../styles/pages/RegisterPage.css";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -21,6 +20,10 @@ function RegisterPage() {
   const { authMessage } = useSelector((state) => state.auth);
   const [validationsErrors, setValidationsErrors] = useState({});
   const [passwordType, setPasswordType] = useState("password");
+  const [isOpen, setIsOpen] = useState("");
+  const [searchCity, setSearchCity] = useState("");
+  const dropdownRef = useRef();
+  const searchRef = useRef();
   const [register, setRegister] = useState({
     username: "",
     email: "",
@@ -37,7 +40,7 @@ function RegisterPage() {
       )
     );
     dispatch(getCity());
-  }, [city]);
+  }, []);
 
   useEffect(() => {
     if (authMessage === "User Registration Success") {
@@ -49,14 +52,14 @@ function RegisterPage() {
     const errors = {};
 
     if (!/^[a-zA-Z0-9]+$/.test(register.username)) {
-      errors.username = "Username harus hanya berisi huruf dan angka";
+      errors.username = "Username harus berisi huruf dan angka";
     }
     if (!/^.+@.+\..+$/.test(register.email)) {
       errors.email = "Format email tidak valid";
     }
     if (!/(?=.*\d)(?=.*[A-Z])(?=.*\W)/.test(register.password)) {
       errors.password =
-        "Password harus memiliki minimal 1 angka,\n 1 huruf dan 1 karakter";
+        "Password min:\n 1 (angka, huruf dan karakter)";
     }
 
     // validasi gender
@@ -82,7 +85,36 @@ function RegisterPage() {
     }
   };
 
-  // search
+
+  // dropdown
+  const toggleDropdown = (dropdownName) => {
+    setIsOpen(dropdownName);
+  };
+
+    // filter city
+    const filterItems = () => {
+      if (isOpen !== "") {
+        const items = dropdownRef.current.querySelectorAll("a");
+  
+        items.forEach((item) => {
+          const text = item.textContent.toLowerCase();
+  
+          searchCity === "" ||
+            text.includes(searchCity.toLowerCase()) ||
+            searchCity.toLowerCase().includes(text)
+            ? (item.style.display = "block")
+            : (item.style.display = "none");
+        });
+      }
+    };
+  
+  useEffect(() => {
+    if (isOpen !== "" && dropdownRef.current) {
+      filterItems();
+    }
+  }, [isOpen]);
+
+  // search city
   const handleSearch = (event) => {
     setSearchCity(event.target.value);
     filterItems();
@@ -119,15 +151,14 @@ function RegisterPage() {
 
       <div className="register">
         {/* register image */}
-        <div className="">
+        <div className="flex items-center">
           <img
             src="https://imgur.com/Ow0Trpe.png"
-            className="w-40 md:w-52 h-auto"
+            className="w-40 md:w-64 lg:w-56 h-auto mb-0 md:mb-64"
             alt="register-image"
           />
         </div>
-        <form>
-          <div className="userForm gap-0 lg:gap-4">
+          <div className="userForm gap-0 lg:gap-8">
             <div className="w-fit">
               {/* username */}
               <div className="flex flex-col">
@@ -135,7 +166,7 @@ function RegisterPage() {
                   Username
                 </label>
                 <input
-                  className="formInput pr-16"
+                  className="formInput pr-[7.4em] md:pr-[9em]"
                   type="text"
                   id="username"
                   name="username"
@@ -306,7 +337,7 @@ function RegisterPage() {
                   Email
                 </label>
                 <input
-                  className="formInput pr-16"
+                  className="formInput"
                   type="email"
                   id="email"
                   name="email"
@@ -320,13 +351,13 @@ function RegisterPage() {
                 )}
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col relative">
                 <label className="label-form" htmlFor="password">
                   Password
                 </label>
                 <input
-                  className="formInput pr-16"
-                  type="password"
+                  className="formInput pr-[7.4em] lg:pr-20"
+                  type={passwordType}
                   id="password"
                   name="password"
                   placeholder="********"
@@ -334,28 +365,19 @@ function RegisterPage() {
                   onChange={handleInput}
                   required
                 ></input>
-                <span
-                  name="confirmPassword"
-                  onClick={() =>
-                    passwordType === "password"
-                      ? setPasswordType("text")
-                      : setPasswordType("password")
-                  }
-                >
-                  {passwordType === "password" ? (
-                    <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
-                  ) : (
-                    <EyeLineIcon className="green"></EyeLineIcon>
-                  )}
-                </span>
-                {validationsErrors.password && (
+                <span name="confirmPassword" className="absolute right-3 top-[3.2em]" onClick={() => passwordType === 'password' 
+                ? setPasswordType('text') : setPasswordType('password')}>
+                {passwordType === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+                  : <EyeLineIcon className="green"></EyeLineIcon>}
+                  </span>
+                  {validationsErrors.password && (
                   <p className="text-[#ff0000]">{validationsErrors.password}</p>
                 )}
               </div>
             </div>
             {/* button */}
             <div className="submitBtn mt-12">
-              <p className="label-form ">
+              <p>
                 Sudah punya akun?&ensp;
                 <span
                   className="underline cursor-pointer"
@@ -368,11 +390,10 @@ function RegisterPage() {
                 type="submit"
                 onClick={handleSubmit}
                 buttonText="Daftar Sekarang"
-                padding="px-[4.7em] md:px-8 py-3"
+                padding="px-[2em] md:px-8 py-3"
               />
             </div>
           </div>
-        </form>
       </div>
       {toast && toastName === "register" && (
         <Toast message={authMessage}></Toast>

@@ -11,7 +11,6 @@ import { setAlert } from "../redux/slices/alertSlice";
 import "../styles/pages/UserProfilePage.css";
 import "../index.css";
 import "../styles/pages/UserProfilePage.css";
-import { getCity } from "../redux/slices/citySlice";
 import { editUserProfile, getUserProfile } from "../redux/slices/userSlice";
 import { useCookies } from "react-cookie";
 import Toast from "../components/Toast";

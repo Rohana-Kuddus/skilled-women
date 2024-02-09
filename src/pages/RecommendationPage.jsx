@@ -14,7 +14,7 @@ import { getToast } from "../redux/slices/toastSlice";
 import Toast from "../components/Toast";
 import { getUserProfile } from "../redux/slices/userSlice";
 import CloseLineIcon from "remixicon-react/CloseLineIcon";
-import "../styles/components/RecommendationPage.css";
+import "../styles/pages/RecommendationPage.css";
 
 function RecommendationPage() {
   const navigate = useNavigate();

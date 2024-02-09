@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../components/ButtonPrimary";
-import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
@@ -11,7 +9,7 @@ import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
 import { loginUser } from "../redux/slices/authSlice";
 import { useCookies } from "react-cookie";
-import "../styles/components/LoginPage.css";
+import "../styles/pages/LoginPage.css";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -102,7 +100,7 @@ function LoginPage() {
         <div className="mb-0 md:mb-20">
           <img
             src="https://imgur.com/Z8jSaVB.png"
-            className="w-72 lg:w-96 h-auto"
+            className="w-72 md:w-80 h-auto"
             alt="login-image"
           />
         </div>
@@ -114,8 +112,8 @@ function LoginPage() {
               <label className="label-form">Email</label>
               <input
                 className="formInput pr-24 lg:pr-40"
-                type="text"
-                name="username"
+                type="email"
+                name="email"
                 placeholder="janedoe@email.com"
                 value={user.email}
                 onChange={handleInput}
@@ -125,7 +123,7 @@ function LoginPage() {
             {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
 
              {/* password */}
-            <div className="flex flex-col">
+            <div className="flex flex-col relative">
               <label className="label-form">Password</label>
               <input
                 className="formInput pr-24 lg:pr-40"
@@ -136,18 +134,18 @@ function LoginPage() {
                 onChange={handleInput}
                 onBlur={validateInput}
               ></input>
-              <span name="password" onClick={() => passwordType === 'password'
+              <span name="password" className="absolute right-3 top-[3.2em]" onClick={() => passwordType === 'password'
                 ? setPasswordType('text') : setPasswordType('password')}>
                 {passwordType === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
                   : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
               </span>
             </div>
             {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
-            <p className="forgot-password" onClick={() => navigate("/password/email")}>Forgot Password?</p>
+            <p className="forgot-password hover:cursor-pointer" onClick={() => navigate("/password/email")}>Forgot Password?</p>
           </div>
 
           <div className="submitBtn mt-12">
-            <ButtonPrimary buttonText="Log in" onClick={login} />
+            <ButtonPrimary buttonText="Log in" onClick={login} padding="px-[2em] py-3"/>
             <p className="mt-4">
               Belum punya akun?&ensp;
               <span className="underline decoration-solid" onClick={() => navigate("/register")}>Daftar sekarang</span>
