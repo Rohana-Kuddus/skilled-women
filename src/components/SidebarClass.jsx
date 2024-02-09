@@ -4,40 +4,91 @@ import { useNavigate } from "react-router"
 import CardClass from "./CardClass"
 import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
-import { getClassRoadmap } from "../redux/slices/courseSlice"
+import { useEffect, useState } from "react"
+import { getClassRoadmap, voteClass } from "../redux/slices/courseSlice"
+import { useParams } from "react-router-dom"
+import { useCookies } from "react-cookie"
+import { setAlert } from "../redux/slices/alertSlice"
+import Alert from "./Alert"
+import { getToast } from "../redux/slices/toastSlice"
+import Toast from "./Toast"
 
 function SidebarClass({ data, setIsOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { course } = useSelector(state => state.course);
+  const params = useParams();
+  const [cookies] = useCookies();
+  const { alert, alertName } = useSelector(state => state.alert);
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { course, courseMessage } = useSelector(state => state.course);
+  const [vote, setVote] = useState({});
 
   useEffect(() => {
-    dispatch(getClassRoadmap(data.clasId, data.roadmapId));
+    dispatch(getClassRoadmap(params.id, data.id));
   }, [course]);
+
+  useEffect(() => {
+    if (Object.keys(vote).length !== 0) {
+      const payload = {
+        token: cookies.token,
+        classId: vote.id,
+        vote: vote.vote
+      };
+      dispatch(voteClass(payload));
+
+      if (!courseMessage.includes('Get')) {
+        dispatch(getToast({ toast: true, toastName: 'voteClass'}));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'voteClass'}));
+        }, 3000);
+      };
+    };
+  }, [vote]);
+
+  const alertObj = {
+    status: false,
+    text: 'Silahkan login atau daftar akun terlebih dahulu.',
+    button: {
+      primary: 'Login',
+      primaryAction: () => {
+        navigate('/login');
+        dispatch(setAlert({ alert: false, alertName: 'class' }));
+      },
+      secondary: 'Daftar sekarang',
+      secondaryAction: () => {
+        navigate('/register');
+      }
+    }
+  };
 
   return ( 
     <div>
       <div>
         <h1 className="heading1 green">Pilihan Kelas</h1>
         {/* perlu tambah error handling keluar alet kalau user belum login klik */}
-        <CloseLineIcon color="#1E292B" onClick={() => setIsOpen(false)}></CloseLineIcon>
+        <CloseLineIcon color="#1E292B" onClick={() => setIsOpen({ status: false, id: '' })}></CloseLineIcon>
       </div>
 
       <div>
         <div>
           <h3 className="heading3 green font-bold">{data.name}</h3>
-          <ButtonRecommendation name={'Kelas'} action={() => navigate('/recommendations')}></ButtonRecommendation>
+          <ButtonRecommendation name={'Kelas'} action={Object.keys(cookies).length !== 0 ?
+            () => navigate('/recommendations') : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}></ButtonRecommendation>
         </div>
 
         <div>
           {course.map(v => (
             <div key={v.id}>
-              <CardClass data={v} editBtn={false}></CardClass>
+              <CardClass data={v} editBtn={false} setVote={setVote}></CardClass>
             </div>
           ))}
         </div>
       </div>
+
+      {alert && alertName === 'class'  && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button} 
+        closeBtn={true} name={'class'}></Alert>}
+      {toast && toastName === 'voteClass' && <Toast message={courseMessage}></Toast>}
     </div>
   );
 }

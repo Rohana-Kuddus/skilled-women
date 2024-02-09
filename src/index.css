@@ -17,10 +17,10 @@
   --white-color: #fff;
 
   /* font size */
-  --h1-font-size: 2.25rem; /* 36px */
-  --h2-font-size: 1.625em; /* 26px */
-  --h3-font-size: 1.25rem; /* 20px */
-  --regular-font-size: 1rem; /* 16px */
+  --h1-font-size: 2.125rem; /* 34px */
+  --h2-font-size: 1.5em; /* 24px */
+  --h3-font-size: 1.125rem; /* 18px */
+  --regular-font-size: 0.875rem; /* 14px */
   --small-font-size: 0.75rem; /* 12px */
 }
 

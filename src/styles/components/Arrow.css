@@ -3,7 +3,7 @@
 }
 
 .x-line {
-  @apply border w-60;
+  @apply border w-60 mt-7;
 }
 
 .y-line {

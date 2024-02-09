@@ -4,11 +4,13 @@ import axios from "axios";
 const citySlice = createSlice({
   name: 'city',
   initialState: {
-    city: []
+    city: [],
+    cityMessage: ''
   },
   reducers: {
     setCity(state, action) {
-      state.city = action.payload;
+      state.city = action.payload.data;
+      state.cityMessage = action.payload.message;
     }
   }
 });
@@ -16,15 +18,18 @@ const citySlice = createSlice({
 export const { setCity } = citySlice.actions;
 
 // function get cities
-export const getCity = () => {
-  return async (dispatch) => {
-    const { data: { data } } = await axios({
+export const getCity = () => async (dispatch) => {
+  try {
+    const { data: { data, message } } = await axios({
       method: 'get',
       url: 'https://skilled-women-be-production.up.railway.app/cities',
       responseType: 'json'
     });
 
-    dispatch(setCity(data));
+    return dispatch(setCity({ data, message }));
+  } catch (err) {
+    console.log(err);
+    return dispatch(setCity({ data: [], message: err.response.data.message || err.message }));
   };
 };
 

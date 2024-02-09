@@ -5,8 +5,8 @@ import { setFooterAnchor } from "../redux/slices/footerSlice";
 import "../styles/pages/AboutPage.css";
 
 function AboutPage() {
-  // reset footer's text + link
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
   }, []);
@@ -30,7 +30,6 @@ function AboutPage() {
             Tentang <br /> Skilled Women
           </h1>
         </div>
-        <br />
         <div className="paragraph-regular">
           <p>
             Panduan langkah demi langkah untuk mempelajari berbagai keterampilan
@@ -63,7 +62,6 @@ function AboutPage() {
       </div>
 
       {/* Kenalan anggota */}
-
       <div className="kenalan">
         <div>
           <h2 className="heading2 mb-4">Kenalan dengan Anggota Tim Kami</h2>

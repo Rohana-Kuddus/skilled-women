@@ -2,11 +2,12 @@ import PropTypes from "prop-types";
 
 function Hero({ data }) {
   return (
-    <div className="flex justify-between items-center gap-59 p-20">
+    <div className="flex justify-around items-center flex-wrap my-12 gap-2 md:gap-0">
       <h1 className="heading1 green">{data.title}</h1>
       <img
         src={data.image}
         alt={data.title.toLowerCase().replace(/\s+/g, "-")}
+        className="w-64 md:w-[26rem] rounded-xl"
       />
     </div>
   );

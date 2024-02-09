@@ -5,13 +5,29 @@ import { getCity } from "../redux/slices/citySlice";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import ButtonPrimary from "../components/ButtonPrimary";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import "../styles/pages/RegisterPage.css";
-import "../index.css";
+import { getCity } from "../redux/slices/citySlice";
+import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
+import EyeLineIcon from "remixicon-react/EyeLineIcon";
+import { registerUser } from "../redux/slices/authSlice";
+import Toast from "../components/Toast";
+import { getToast } from "../redux/slices/toastSlice";
+import "../styles/components/RegisterPage.css";
 
 function RegisterPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { city } = useSelector((state) => state.city);
+  const { toast, toastName } = useSelector((state) => state.toast);
+  const { authMessage } = useSelector((state) => state.auth);
+  const [validationsErrors, setValidationsErrors] = useState({});
+  const [passwordType, setPasswordType] = useState("password");
+  const [register, setRegister] = useState({
+    username: "",
+    email: "",
+    gender: "",
+    password: "",
+    cityId: "",
+  });
 
   useEffect(() => {
     dispatch(
@@ -23,63 +39,22 @@ function RegisterPage() {
     dispatch(getCity());
   }, [city]);
 
-  // dropdown
-  const [isOpen, setIsOpen] = useState("");
-  const [searchCity, setSearchCity] = useState("");
-  const dropdownRef = useRef();
-  const searchRef = useRef();
-
-  const toggleDropdown = (dropdownName) => {
-    setIsOpen(dropdownName);
-  };
-
-  // filter
-  const filterItems = () => {
-    if (isOpen !== "") {
-      const items = dropdownRef.current.querySelectorAll("a");
-
-      items.forEach((item) => {
-        const text = item.textContent.toLowerCase();
-        const currentSearchCity = searchCity.toLowerCase();
-
-        item.style.display = text.includes(currentSearchCity)
-          ? "block"
-          : "none";
-      });
+  useEffect(() => {
+    if (authMessage === "User Registration Success") {
+      navigate("/login");
     }
-  };
-
-  // input form
-  const [register, setRegister] = useState({
-    username: "",
-    email: "",
-    gender: "",
-    password: "",
-    city: "",
-  });
-
-  // jika button daftar sekarang di klik saat form kosong, maka muncul validasi untuk tiap form
-  const [validationsErrors, setValidationsErrors] = useState({});
+  }, [authMessage]);
 
   const validateData = () => {
     const errors = {};
 
-    // validasi username hanya huruf dan angka
     if (!/^[a-zA-Z0-9]+$/.test(register.username)) {
       errors.username = "Username harus hanya berisi huruf dan angka";
     }
-
-    // validasi email dengan format @
-    if (!/^\S+@\S+\.\S+$/.test(register.email)) {
+    if (!/^.+@.+\..+$/.test(register.email)) {
       errors.email = "Format email tidak valid";
     }
-
-    // validasi password, minimal 1 angka, 1 huruf dan 1 karakter
-    if (
-      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/.test(
-        register.password
-      )
-    ) {
+    if (!/(?=.*\d)(?=.*[A-Z])(?=.*\W)/.test(register.password)) {
       errors.password =
         "Password harus memiliki minimal 1 angka,\n 1 huruf dan 1 karakter";
     }
@@ -88,9 +63,7 @@ function RegisterPage() {
     if (!register.gender) {
       errors.gender = "Jenis Kelamin harus dipilih";
     }
-
-    // validasi kota
-    if (!register.city) {
+    if (!register.cityId) {
       errors.city = "Kota harus dipilih";
     }
 
@@ -99,11 +72,14 @@ function RegisterPage() {
 
   const handleInput = (event) => {
     const { name, value } = event.target;
-    setRegister((prevData) => ({
-      ...prevData,
-      ...register,
-      [name]: value,
-    }));
+
+    if (value !== "Pilih kota" && value !== "Pilih gender") {
+      setRegister((prevData) => ({
+        ...prevData,
+        ...register,
+        [name]: value,
+      }));
+    }
   };
 
   // search
@@ -116,33 +92,29 @@ function RegisterPage() {
     event.preventDefault();
 
     const errors = validateData();
+    setValidationsErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      console.log("Register", register);
-    } else {
-      setValidationsErrors(errors);
+      dispatch(registerUser(register));
+
+      if (!authMessage.includes("Success")) {
+        dispatch(getToast({ toast: true, toastName: "register" }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: "register" }));
+        }, 3000);
+      }
     }
   };
-
-  // set text and link for footer
-  useEffect(() => {
-    dispatch(
-      setFooterAnchor(
-        "Icons by Icons8",
-        "https://icons8.com/illustrations/illustration/638b4253fce0330001fefd18"
-      )
-    );
-    return () => {
-      dispatch(setFooterAnchor("", ""));
-    };
-  }, []);
 
   return (
     <>
       <div className="headingStart">
         <h1 className="heading1">Get Started</h1>
         <p className="paragraf-reguler">Hey, Selamat datang!</p>
-        <p className="paragraf-reguler">Masukkan detail data sesuai form dan buat akunmu segera!</p>
+        <p className="paragraf-reguler">
+          Masukkan detail data sesuai form dan buat akunmu segera!
+        </p>
       </div>
 
       <div className="register">
@@ -150,10 +122,11 @@ function RegisterPage() {
         <div className="">
           <img
             src="https://imgur.com/Ow0Trpe.png"
-            className="w-40 md:w-52 h-auto" alt="register-image"
+            className="w-40 md:w-52 h-auto"
+            alt="register-image"
           />
         </div>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="userForm gap-0 lg:gap-4">
             <div className="w-fit">
               {/* username */}
@@ -175,6 +148,7 @@ function RegisterPage() {
               {validationsErrors.username && (
                 <p className="text-[#ff0000]">{validationsErrors.username}</p>
               )}
+
               {/* jenis kelamin */}
               <div className="flex flex-col">
                 <label className="label-form" htmlFor="gender">
@@ -194,7 +168,9 @@ function RegisterPage() {
                       aria-expanded="true"
                     >
                       <div className="innerDropdown">
-                        <span className="ml-4">{register.gender || "Jenis Kelamin"}</span>
+                        <span className="ml-4">
+                          {register.gender || "Pilih  gender"}
+                        </span>
                         <ArrowDownSLineIcon className="arrowDropdown" />
                       </div>
                     </button>
@@ -261,12 +237,15 @@ function RegisterPage() {
                       name="city"
                       value={register.city}
                       onClick={() => toggleDropdown("city")}
+                      onChange={handleInput}
                       aria-haspopup="true"
                       aria-expanded="true"
                       required
                     >
                       <div className="innerDropdown">
-                        <span className="ml-4">{register.city || "Pilih Kota"}</span>
+                        <span className="ml-4">
+                          {register.city || "Pilih Kota"}
+                        </span>
                         <ArrowDownSLineIcon className="arrowDropdown" />
                       </div>
                     </button>
@@ -296,6 +275,7 @@ function RegisterPage() {
                             role="menuitem"
                             className="options hover:bg-[--primary-color] hover:text-[--secondary-color]"
                             key={v.id}
+                            value={v.id}
                             onClick={(e) => {
                               e.preventDefault();
                               handleInput({
@@ -339,6 +319,7 @@ function RegisterPage() {
                   <p className="text-[#ff0000]">{validationsErrors.email}</p>
                 )}
               </div>
+
               <div className="flex flex-col">
                 <label className="label-form" htmlFor="password">
                   Password
@@ -353,6 +334,20 @@ function RegisterPage() {
                   onChange={handleInput}
                   required
                 ></input>
+                <span
+                  name="confirmPassword"
+                  onClick={() =>
+                    passwordType === "password"
+                      ? setPasswordType("text")
+                      : setPasswordType("password")
+                  }
+                >
+                  {passwordType === "password" ? (
+                    <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+                  ) : (
+                    <EyeLineIcon className="green"></EyeLineIcon>
+                  )}
+                </span>
                 {validationsErrors.password && (
                   <p className="text-[#ff0000]">{validationsErrors.password}</p>
                 )}
@@ -379,6 +374,9 @@ function RegisterPage() {
           </div>
         </form>
       </div>
+      {toast && toastName === "register" && (
+        <Toast message={authMessage}></Toast>
+      )}
     </>
   );
 }

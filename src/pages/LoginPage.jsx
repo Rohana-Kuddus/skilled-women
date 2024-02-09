@@ -2,75 +2,90 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../components/ButtonPrimary";
+import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import "../styles/pages/LoginPage.css";
-import "../index.css";
+import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
+import EyeLineIcon from "remixicon-react/EyeLineIcon";
+import Toast from "../components/Toast";
+import { getToast } from "../redux/slices/toastSlice";
+import { loginUser } from "../redux/slices/authSlice";
+import { useCookies } from "react-cookie";
+import "../styles/components/LoginPage.css";
 
 function LoginPage() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // navigate to register and forgot password page
-  const toRegister = () => {
-    navigate("/register");
-  };
-  const toForgotPassword = () => {
-    navigate("/password/email");
-  };
-
-  // input form
-  const [login, setLogin] = useState({
+  const dispatch = useDispatch();
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { authMessage } = useSelector(state => state.auth);
+  const [passwordType, setPasswordType] = useState('password');
+  const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const handleInput = (event) => {
-    const { name, value } = event.target;
-    setLogin((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [error, setError] = useState({
+    email: "",
+    password: ""
+  });
 
-  // handle submit login
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const errors = validateData();
-
-    if (Object.keys(errors).length === 0) {
-      console.log("Login", login);
-    } else {
-      setValidationsErrors(errors);
-    }
-  };
-
-  const [validationsErrors, setValidationsErrors] = useState({});
-  const validateData = () => {
-    const errors = {};
-    // validasi email dengan format @
-    if (!/^\S+@\S+\.\S+$/.test(login.email)) {
-      errors.email = "Email salah atau belum terdaftar";
-    }
-    // validasi password, minimal 1 angka, 1 huruf dan 1 karakter
-    if (
-      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/.test(
-        login.password
-      )
-    ) {
-      errors.password = "Password salah atau belum terdaftar";
-    }
-
-    return errors;
-  };
-
-  // set text and link for footer
   useEffect(() => {
-    dispatch(
-      setFooterAnchor(
-        "Icons by Icons8",
-        "https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14"
-      )
-    );
+    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'));
   }, []);
+
+  useEffect(() => {
+    if (authMessage === 'Login Success') {
+      navigate('/');
+    };
+  }, [authMessage]);
+
+  const handleInput = (event) => {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const validateInput = (e) => {
+    const { name, value } = e.target;
+
+    setError(prev => {
+      const stateObj = { ...prev, [name]: '' };
+
+      switch (name) {
+        case 'email':
+          if (!value) {
+            stateObj[name] = 'Email tidak boleh kosong.';
+          };
+          break;
+
+        case 'password':
+          if (!value) {
+            stateObj[name] = 'Password tidak boleh kosong.';
+          };
+          break;
+
+        default:
+          break;
+      };
+
+      return stateObj;
+    });
+  };
+
+  const login = (event) => {
+    event.preventDefault();
+    if (!error.email && !error.password) {
+      dispatch(loginUser(user));
+
+      if (!authMessage.includes('Success')) {
+        dispatch(getToast({ toast: true, toastName: 'login' }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'login' }));
+        }, 3000);
+      };
+    };
+  };
 
   return (
     <>
@@ -91,66 +106,57 @@ function LoginPage() {
             alt="login-image"
           />
         </div>
+
         <div className="loginContent">
-        <form onClick={handleSubmit}>
-          
-            <div className="w-fit">
-              {/* email */}
-              <div className="flex flex-col">
-                <label className="label-form" htmlFor="email">
-                  Email
-                </label>
-                <input
-                  className="formInput pr-24 lg:pr-40"
-                  type="text"
-                  name="email"
-                  placeholder="janedoe@email.com"
-                  value={login.email}
-                  onChange={handleInput}
-                ></input>
-              </div>
-              {validationsErrors.email && (
-                <p className="text-[#ff0000]">{validationsErrors.email}</p>
-              )}
-
-              {/* password */}
-              <div className="flex flex-col">
-                <label className="label-form">Password</label>
-                <input
-                  className="formInput pr-24 lg:pr-40"
-                  type="password"
-                  name="password"
-                  placeholder="********"
-                  value={login.password}
-                  onChange={handleInput}
-                ></input>
-              </div>
-              {validationsErrors.password && (
-                <p className="text-[#ff0000]">{validationsErrors.password}</p>
-              )}
-              <p className="mt-4" onClick={toForgotPassword}>
-                Forgot Password?
-              </p>
+          <div className="w-fit">
+            {/* email */}
+            <div className="flex flex-col">
+              <label className="label-form">Email</label>
+              <input
+                className="formInput pr-24 lg:pr-40"
+                type="text"
+                name="username"
+                placeholder="janedoe@email.com"
+                value={user.email}
+                onChange={handleInput}
+                onBlur={validateInput}
+              ></input>
             </div>
+            {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
 
-          {/* button and shortcut */}
+             {/* password */}
+            <div className="flex flex-col">
+              <label className="label-form">Password</label>
+              <input
+                className="formInput pr-24 lg:pr-40"
+                type={passwordType}
+                name="password"
+                placeholder="********"
+                value={user.password}
+                onChange={handleInput}
+                onBlur={validateInput}
+              ></input>
+              <span name="password" onClick={() => passwordType === 'password'
+                ? setPasswordType('text') : setPasswordType('password')}>
+                {passwordType === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+                  : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
+              </span>
+            </div>
+            {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
+            <p className="forgot-password" onClick={() => navigate("/password/email")}>Forgot Password?</p>
+          </div>
+
           <div className="submitBtn mt-12">
-            <ButtonPrimary
-              type="submit"
-              buttonText="Log in"
-              onClick={handleSubmit}
-              padding="px-[2em] md:px-8 py-3"
-            />
+            <ButtonPrimary buttonText="Log in" onClick={login} />
             <p className="mt-4">
               Belum punya akun?&ensp;
-              <span className="underline decoration-solid" onClick={toRegister}>
-                Daftar sekarang
-              </span>
+              <span className="underline decoration-solid" onClick={() => navigate("/register")}>Daftar sekarang</span>
             </p>
           </div>
-        </form>
         </div>
       </div>
+
+      {toast && toastName === 'login' && <Toast message={authMessage}></Toast>}
     </>
   );
 }

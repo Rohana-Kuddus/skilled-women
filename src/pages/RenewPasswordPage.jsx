@@ -3,38 +3,58 @@ import { useEffect, useState } from "react"
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon"
 import EyeLineIcon from "remixicon-react/EyeLineIcon"
 import { useDispatch, useSelector } from "react-redux";
-import { setStatus } from "../redux/slices/alertSlice";
+import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import "../styles/pages/renewPassword.css"
+import Toast from "../components/Toast";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getToast } from "../redux/slices/toastSlice";
+import { resetPassword } from "../redux/slices/authSlice";
+import "../styles/pages/RenewPassword.css"
 
 function RenewPasswordPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
-
-  const alert = {
-    status: true,
-    text: 'Kata sandi Anda berhasil diubah!',
-    button: {
-      primary: 'Kembali ke halaman log in',
-      primaryAction: () => dispatch(setStatus(false))
-    }
-  };
-
+  const location = useLocation();
+  const { alert, alertName } = useSelector(state => state.alert);
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { authMessage } = useSelector(state => state.auth);
   const [input, setInput] = useState({
     newPassword: '',
     confirmPassword: ''
   });
-
   const [error, setError] = useState({
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    validatePassword: ''
   });
-
   const [passwordType, setPasswordType] = useState({
     newPassword: 'password',
     confirmPassword: 'password'
   });
+
+  const alertObj = {
+    status: true,
+    text: 'Kata sandi Anda berhasil diubah!',
+    button: {
+      primary: 'Kembali ke halaman log in',
+      primaryAction: () => {
+        navigate('/login');
+        dispatch(setAlert({ alert: false, alertName: 'password' }));
+      }
+    }
+  };
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
+
+  useEffect(() => {
+    console.log(authMessage);
+    if (authMessage == 'Reset Password Success') {
+      dispatch(setAlert({ alert: true, alertName: 'password' }));
+    };
+  }, [authMessage]);
 
   // handler change visibiity
   const visibilityHandler = (e) => {
@@ -111,16 +131,32 @@ function RenewPasswordPage() {
 
   // submit input
   const buttonHandler = () => {
-    if (error.newPassword === '' && error.confirmPassword === '' && checkCapital !== '' && checkNumber !== '' && checkCharacter !== '') {
-      // akan buat function hit api ubah password
-      dispatch(setStatus(true));
+    if (checkCapital === '' || checkNumber === '' || checkCharacter === '') {
+      setError(prev => ({
+        ...prev,
+        validatePassword: 'Password must meet the requirements.'
+      }));
+    } else {
+      setError(prev => ({
+        ...prev,
+        validatePassword: ''
+      }));
+    };
+
+    if (Object.values(error).every(v => v === '')) {
+      const { email } = location.state;
+
+      dispatch(resetPassword({ email, password: input.newPassword }));
+
+      if (!authMessage.includes('Success')) {
+        dispatch(getToast({ toast: true, toastName: 'password' }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'password' }));
+        }, 3000);
+      };
     };
   };
-
-  // reset footer's text + link
-  useEffect(() => {
-    dispatch(setFooterAnchor("", ""));
-  }, []);
 
   return (
     <div className="userPasswordForm mt-8 mx-auto">
@@ -130,7 +166,7 @@ function RenewPasswordPage() {
       </div>
 
       <div className="mt-4">
-          <label htmlFor="password" className="label-form">Kata sandi baru</label>
+        <label htmlFor="password" className="label-form">Kata sandi baru</label>
         <div className="relative flex flex-row items-center">
           <input
             className="inputPassword"
@@ -143,8 +179,8 @@ function RenewPasswordPage() {
             autoFocus
           ></input>
           <span name="newPassword" onClick={visibilityHandler} className="passwordIcon">
-            {passwordType.newPassword === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
-              : <EyeLineIcon className="green"></EyeLineIcon>}
+            {passwordType.newPassword === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+              : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
           </span>
         </div>
         {error.newPassword && <p className="paragraph-regular text-[#FE0101]">{error.newPassword}</p>}
@@ -161,8 +197,8 @@ function RenewPasswordPage() {
             onBlur={validateInput}
           ></input>
           <span name="confirmPassword" onClick={visibilityHandler} className="passwordIcon">
-            {passwordType.confirmPassword === "password" ? <EyeOffLineIcon className="green"></EyeOffLineIcon>
-              : <EyeLineIcon className="green"></EyeLineIcon>}
+            {passwordType.confirmPassword === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+              : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
           </span>
         </div>
         {error.confirmPassword && <p className="paragraph-regular text-[#FE0101] break-words">{error.confirmPassword}</p>}
@@ -174,11 +210,13 @@ function RenewPasswordPage() {
             <li className={`paragraph-small dark ${checkNumber}`}>1 atau lebih angka</li>
             <li className={`paragraph-small dark ${checkCharacter}`}>1 atau lebih karakter khusus</li>
           </ul>
+          {error.validatePassword && <p className="paragraph-regular text-[#FE0101]">{error.validatePassword}</p>}
         </div>
       </div>
-        <ButtonPrimary buttonText={"Ubah kata sandi"} onClick={buttonHandler} padding="max-[380px]:px-[3.6em] max-[430px]:px-[6.8em] md:px-[10.4em]"/>
+      <ButtonPrimary buttonText={"Ubah kata sandi"} onClick={buttonHandler} padding="max-[380px]:px-[3.6em] max-[430px]:px-[6.8em] md:px-[10.4em]" />
 
-        {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
+      {alert && alertName === 'password' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
+      {toast && toastName === 'password' && <Toast message={authMessage}></Toast>}
     </div>
   );
 }
