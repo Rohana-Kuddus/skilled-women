@@ -4,5 +4,13 @@
     @apply flex flex-row justify-evenly mx-2 lg:mx-auto gap-4 lg:gap-0;
 }
 .tab{
-    @apply bg-[--secondary-color] paragraph-regular green w-96 py-2 text-center rounded-t-md border-b-2 border-[--primary-color] cursor-pointer hover:bg-gray-100;
+    @apply bg-[--secondary-color] paragraph-regular green w-full py-4 text-center rounded-t-md border-b-2 border-[--primary-color] cursor-pointer hover:bg-gray-100;
+}
+
+.container-job {
+    @apply max-w-7xl m-auto;
+}
+
+.summary {
+    @apply flex flex-col p-4 justify-around items-center gap-4 bg-[#4F6C6A] md:flex-row md:py-20 md:px-60 my-10;
 }

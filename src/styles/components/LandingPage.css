@@ -3,11 +3,11 @@
 /* {Hero section} */
 
 .hero {
-  @apply bg-[#4F6C6A] p-28 grid grid-cols-1 md:grid-cols-2 items-center justify-between;
+  @apply bg-[#4F6C6A] p-28 grid grid-cols-1 md:grid-cols-3 items-center justify-around;
 }
 
 .div-1 {
-  @apply md:ml-10;
+  @apply md:ml-10 col-span-2;
 }
 
 .div-2 {
@@ -37,7 +37,7 @@
 }
 
 .div-imgHero {
-  @apply w-full md:ml-72 md:mt-4;
+  @apply md:w-full col-span-1  sm:w-8;
 }
 
 /* {Fitur section} */
@@ -191,11 +191,11 @@
 }
 
 .roadmap-list {
-  @apply grid grid-cols-2 justify-between px-6 p-16 gap-12;
+  @apply flex flex-wrap justify-between px-6 p-16 gap-12;
 }
 
 .roadmap-konten {
-  @apply px-6 pt-6;
+  @apply px-6 pt-6 max-w-96;
 }
 
 .roadmap-text {
@@ -204,4 +204,8 @@
 
 .roadmap-h2-p {
   @apply heading2 mr-12;
+}
+
+.roadmap-slider {
+  @apply md:max-w-4xl
 }

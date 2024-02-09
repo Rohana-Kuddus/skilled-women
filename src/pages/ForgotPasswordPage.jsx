@@ -11,7 +11,7 @@ function ForgotPasswordPage() {
   }, []);
   
   return (
-    <div className="text-center mt-12">
+    <div className="mt-12">
       <InputEmail></InputEmail>
     </div>
   );

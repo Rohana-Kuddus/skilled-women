@@ -27,7 +27,8 @@ function LandingPage() {
   return (
     <>
       {/* Hero section */}
-      <div className="hero">
+
+      <div className="hero m-0">
         <div className="div-1">
           <div className="div-2">
             <h1 className="div-h1">
@@ -197,13 +198,26 @@ function LandingPage() {
             </div>
           </div>
 
-          <div className="container">
+          <div className="roadmap-slider">
             <Swiper
               modules={[Navigation, Pagination]}
               spaceBetween={20}
-              slidesPerView={3}
+              // slidesPerView={3}
               navigation
               pagination={{ clickable: true }}
+              breakpoints={
+                {
+                  0: {
+                    slidesPerView: 1,
+                  },
+                  400:{
+                    slidesPerView:2,
+                  },
+                  639: {
+                    slidesPerView: 3,
+                  }
+                }
+              }
             >
               {
                 job.map((val) => (

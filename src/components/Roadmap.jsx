@@ -6,6 +6,7 @@ import Alert from "./Alert";
 import { useNavigate } from "react-router-dom";
 import { setAlert } from "../redux/slices/alertSlice";
 import PropTypes from "prop-types";
+import "../styles/pages/JobDetailPage.css";
 
 function Roadmap({ data }) {
   const navigate = useNavigate();
@@ -32,15 +33,17 @@ function Roadmap({ data }) {
   return (
     <div>
       <div>
-        <div className="bg-[#4F6C6A]">
-          <h2 className="heading2 white">Roadmap</h2>
-          <p className="paragraph-regular white">{data.roadmapSummary}</p>
+        <div className="summary">
+          <h2 className="flex-auto w-32 m-auto heading2 white">Roadmap</h2>
+          <p className="flex-auto w-64 paragraph-regular white">{data.roadmapSummary}</p>
         </div>
 
-        {/* perlu ubah url jadi link gform rekomendasi roadmap */}
-        <ButtonRecommendation name={'Roadmap'} action={Object.keys(cookies).length !== 0 ?
-          () => window.open('url', '_blank', 'noreferrer') : () => 
-          dispatch(setAlert({ alert: true, alertName: 'roadmap' }))}></ButtonRecommendation>
+        <div className="flex justify-end mb-2">
+          {/* perlu ubah url jadi link gform rekomendasi roadmap */}
+          <ButtonRecommendation name={'Roadmap'} action={Object.keys(cookies).length !== 0 ?
+            () => window.open('url', '_blank', 'noreferrer') : () => 
+            dispatch(setAlert({ alert: true, alertName: 'roadmap' }))}></ButtonRecommendation>
+        </div>
 
         <StepRoadmap></StepRoadmap>
       </div>
