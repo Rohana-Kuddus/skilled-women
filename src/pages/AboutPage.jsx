@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import "../index.css";
 import { useEffect } from "react";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import "../styles/components/AboutPage.css";
+import "../styles/pages/AboutPage.css";
 
 function AboutPage() {
   const dispatch = useDispatch();

@@ -147,7 +147,7 @@
 }
 
 .benefit-1-konten {
-  @apply mt-12 px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-wrap gap-4 text-white text-justify items-center;
+  @apply mt-12 px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-wrap gap-4 text-white items-center;
 }
 
 .benefit-1-h2 {
@@ -155,7 +155,7 @@
 }
 
 .benefit-1-p {
-  @apply paragraph-regular;
+  @apply paragraph-regular text-justify;
 }
 
 /* Benefit 2 */
@@ -173,7 +173,7 @@
 }
 
 .benefit-2-p {
-  @apply paragraph-regular;
+  @apply paragraph-regular text-justify;
 }
 
 .benefit-2-img {

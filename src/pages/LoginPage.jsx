@@ -9,7 +9,7 @@ import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
 import { loginUser } from "../redux/slices/authSlice";
-import "../styles/components/LoginPage.css";
+import "../styles/pages/LoginPage.css";
 
 function LoginPage() {
   const navigate = useNavigate();

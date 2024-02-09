@@ -17,6 +17,7 @@ import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import { CookiesProvider, useCookies } from "react-cookie"
 import { useSelector } from "react-redux"
+import Empty from "./pages/Empty"
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -61,6 +62,7 @@ function App() {
             <Route path='/profiles/:id/recommendations' element={<UserRecommendationPage></UserRecommendationPage>}></Route>
 
             <Route path='/recommendations' element={<RecommendationPage></RecommendationPage>}></Route>
+            <Route path='/empty' element={<Empty></Empty>}></Route>
           </Routes>
         </BrowserRouter>
 

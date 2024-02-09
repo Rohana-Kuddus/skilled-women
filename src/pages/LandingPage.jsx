@@ -3,7 +3,7 @@ import ButtonPrimary from "../components/ButtonPrimary";
 import ArrowRightLineIcon from "remixicon-react/ArrowRightLineIcon";
 import CardJob from "../components/CardJob";
 import { useEffect } from "react";
-import "../styles/components/LandingPage.css";
+import "../styles/pages/LandingPage.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -27,7 +27,6 @@ function LandingPage() {
   return (
     <>
       {/* Hero section */}
-
       <div className="hero m-0">
         <div className="div-1">
           <div className="div-2">
