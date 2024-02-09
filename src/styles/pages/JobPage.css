@@ -1,7 +1,7 @@
 @import url(/src/index.css);
 
 /* HERO SECTION */
-.hero{
+.hero-job{
     @apply flex flex-col lg:flex-row justify-center lg:justify-end items-center gap-8 lg:gap-36 lg:mr-4 my-12;
 }
 
@@ -14,7 +14,7 @@
         @apply flex flex-col lg:flex-row gap-4 items-center;
     }
     .searchInput{
-        @apply py-4 border-2 border-gray-400 paragraph-regular placeholder-[#4f6c6aa8] bg-white h-10 pl-1 rounded-md text-sm w-64 lg:w-72 focus:outline-none;
+        @apply py-4 border-2 border-gray-400 paragraph-regular placeholder-[#4f6c6aa8] bg-white h-10 pl-1 rounded-md w-64 lg:w-72 focus:outline-none dark;
         @layer black;
     }
     .searchSection{
@@ -26,7 +26,7 @@
 
     /* DROPDOWN SECTION*/
     .dropdownButton{
-        @apply flex flex-row items-center gap-[7.6em] lg:gap-4 relative border-2 border-gray-400 rounded-md pl-2 py-[0.16em] text-gray-400;
+        @apply flex flex-row items-center gap-[7.6em] lg:gap-4 relative border-2 border-gray-400 rounded-md pl-2 py-[0.16em] paragraph-regular dark;
     }
     .arrowDropdown{
         @apply h-8 mr-2 transition-all duration-500 group-focus:-rotate-180;

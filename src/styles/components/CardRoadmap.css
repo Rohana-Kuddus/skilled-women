@@ -7,3 +7,9 @@
 .step-name {
     @apply bg-[#4F6C6A] px-10 py-4 hover:cursor-pointer rounded-lg;
 }
+
+@media screen and (max-width: 600px) {
+    .step {
+        @apply w-4 h-4
+    }
+}

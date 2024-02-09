@@ -5,7 +5,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {},
-    userImage: {},
+    userImage: '',
     userMessage: ''
   },
   reducers: {
@@ -93,8 +93,10 @@ export const getUserImage = (token) => async (dispatch) => {
       },
       responseType: 'blob'
     });
+    
+    const file = URL.createObjectURL(data);
 
-    return dispatch(setUserImage(data));
+    return dispatch(setUserImage(file));
   } catch (err) {
     console.log(err);
     return dispatch(setUserMessage(''));

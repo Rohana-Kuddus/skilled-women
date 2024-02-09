@@ -4,7 +4,7 @@
     @apply flex flex-row justify-evenly mx-2 lg:mx-auto gap-4 lg:gap-0;
 }
 .tab{
-    @apply bg-white paragraph-regular green w-full py-4 text-center rounded-t-md border-b-2 border-[--primary-color] cursor-pointer hover:bg-gray-100 active:bg-[--secondary-color];
+    @apply bg-white paragraph-regular green w-full py-4 text-center rounded-t-md cursor-pointer hover:bg-gray-100;
 }
 
 .container-job {

@@ -20,7 +20,7 @@ function JobPage() {
   const { alert, alertName } = useSelector(state => state.alert);
   const { industry } = useSelector(state => state.industry);
   const { job } = useSelector(state => state.job);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState('');
 
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
@@ -37,9 +37,6 @@ function JobPage() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-  };
-  const resetFilter = () => {
-    setSelected([]);
   };
 
   const alertObj = {
@@ -62,9 +59,9 @@ function JobPage() {
     <div>
       {/* hero section */}
       <section className="mx-auto lg:mx-0 ">
-        <div className="hero">
+        <div className="hero-job">
           <p className="heading1 black text-center">Pilihlah Pekerjaan Yang <br /> Kamu Minati!</p>
-          <img className=" max-w-36" src="https://imgur.com/dEyAXJg.png" alt="hero-image" />
+          <img className="max-w-36" src="https://imgur.com/dEyAXJg.png" alt="hero-image" />
         </div>
       </section>
 
@@ -86,17 +83,24 @@ function JobPage() {
             {/* dropdown industri */}
             <div>
               <button onClick={toggleDropdown} type="button" className="dropdownButton">
-                {selected.length > 0 ? selected[0].industry : "Pilih Industri"}
+                {selected ? selected : "Pilih Industri"}
                 <ArrowDownSLineIcon className="arrowDropdown" />
               </button>
               {isOpen && (
                 <div className="dropdownOptions">
                   <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <a key="reset" className="options" role="menuitem" onClick={() => resetFilter()}>
+                    <a key="reset" className="options" role="menuitem" onClick={() => {
+                      setSelected('');
+                      setIsOpen(false);
+                    }}>
                       Pilih Industri
                     </a>
                     {industry.map((industry) => (
-                      <a key={industry.id} className="options" role="menuitem" onClick={() => filterHandler({name: 'industry', value: industry.name})}>
+                      <a key={industry.id} className="options" role="menuitem" onClick={() => {
+                        filterHandler({name: 'industry', value: industry.name});
+                        setSelected(industry.name);
+                        setIsOpen(false);
+                      }}>
                         {industry.name}
                       </a>
                     ))}
@@ -108,7 +112,7 @@ function JobPage() {
 
           <div className="mt-4 lg:mt-0">
             <ButtonRecommendation name={'Pekerjaan'} action={Object.keys(cookies).length !== 0
-              ? () => window.open('url', '_blank', 'noreferrer')
+              ? () => window.open('https://forms.gle/azMcFgBtZ29ZpcVPA', '_blank', 'noreferrer')
               : () => dispatch(setAlert({ alert: true, alertName: 'login' }))} padding="px-[1.2em] md:px-8"></ButtonRecommendation>
           </div>
         </div>

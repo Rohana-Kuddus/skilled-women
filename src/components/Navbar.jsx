@@ -43,22 +43,6 @@ function Navbar() {
       dispatch(getUserImage(cookies.token));
     };
   }, [cookies]);
-  
-  useEffect(() => {
-    const fileReader = new FileReader();
-    if (Object.keys(userImage).length !== 0) {
-      fileReader.onload = (e) => {
-        const { result } = e.target;
-        if (result) {
-          setFile(result);
-        };
-      };
-  
-      fileReader.readAsDataURL(userImage);
-    } else {
-      setFile(null);
-    };
-  }, [userImage]);
 
   const handleToggle = () => {
     setOpen(!isOpen);
@@ -105,7 +89,7 @@ function Navbar() {
               {Object.keys(cookies).length !== 0 ?
                 <div className="flex items-center">
                   <img
-                    src={file ? file : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'} 
+                    src={userImage ? userImage : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'} 
                     alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4 hover:cursor-pointer" onClick={() => navigate(`/profiles/${user.id}`)} />
                   <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setAlert({ alert: true, alertName: 'logout' }))} 
                     margin="my-0"></ButtonPrimary>

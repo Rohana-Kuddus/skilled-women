@@ -10,7 +10,7 @@ import EyeLineIcon from "remixicon-react/EyeLineIcon";
 import { registerUser } from "../redux/slices/authSlice";
 import Toast from "../components/Toast";
 import { getToast } from "../redux/slices/toastSlice";
-import "../styles/pages/RegisterPage.css";
+import "../styles/pages/RegisterPage.css"; 
 
 function RegisterPage() {
   const navigate = useNavigate();

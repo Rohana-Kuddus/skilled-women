@@ -22,7 +22,7 @@ function CardJob({ job }) {
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <ButtonPrimary buttonText="Lihat Detail" onClick={() => navigate(`/jobs/${job.id}`)} padding="px-16 lg:px-24" className="primaryBtn"></ButtonPrimary>
+              <ButtonPrimary buttonText="Lihat Detail" onClick={() => navigate(`/jobs/${job.id}`)} padding="px-16 md:px-12 lg:px-20" className="primaryBtn"></ButtonPrimary>
             </div>
           </div>
         </div>
