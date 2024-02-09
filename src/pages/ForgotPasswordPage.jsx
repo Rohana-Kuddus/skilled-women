@@ -1,8 +1,19 @@
-// gabungan komponen input email dan konfirmasi email
+import { useEffect } from "react";
+import InputEmail from "../components/InputEmail";
+import { useDispatch } from "react-redux";
+import { setFooterAnchor } from "../redux/slices/footerSlice";
 
 function ForgotPasswordPage() {
-  return ( 
-    <div></div>
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFooterAnchor("", ""));
+  }, []);
+  
+  return (
+    <div className="mt-12">
+      <InputEmail></InputEmail>
+    </div>
   );
 }
 

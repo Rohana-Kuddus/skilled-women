@@ -1,0 +1,39 @@
+@import url(/src/index.css);
+
+.profileSection {
+  @apply flex flex-col justify-center items-center w-fit lg:w-full mx-auto md:mx-24 lg:mx-4 xl:mx-24 green;
+}
+
+/* PROFILE PICTURE SECTION */
+.editBtn {
+  @apply flex flex-row mb-4 gap-1 border-2 rounded-2xl px-4 align-middle justify-between;
+}
+
+/* FORM SECTION */
+.userForm {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-8 w-max;
+}
+.formInput {
+  @apply py-2 pl-4 pr-16 md:pr-36 rounded-md bg-[--secondary-color] text-[--neutral-color] outline-[--primary-color];
+}
+.formDropdown {
+  @apply inline-flex justify-center w-full rounded-md py-1 text-[--neutral-color];
+}
+.innerDropdown{
+    @apply flex justify-between items-center w-full bg-[--secondary-color] rounded-md;
+}
+.arrowDropdown {
+  @apply h-8 mr-4 transition-all duration-500 group-focus:-rotate-180;
+}
+.dropdownOption {
+  @apply origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-[--secondary-color] text-[--neutral-color];
+}
+.options {
+  @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900;
+}
+.searchDropdown {
+  @apply block w-full px-4 py-2 text-gray-800 border rounded-md border-gray-300 focus:outline-none;
+}
+.submitBtn {
+  @apply col-span-1 lg:col-span-2 text-center justify-center items-center mt-4;
+}

@@ -1,0 +1,44 @@
+@import url(/src/index.css);
+
+.cardContainer{
+    @apply container flex flex-row gap-6 items-center border-2 rounded-md mb-4 w-[40rem];
+}
+.reqBtn{
+    @apply card-content flex flex-row justify-between items-center gap-2;
+}
+
+/* MEDIA */
+@media (max-width: 884px) {
+    .container{
+        display: flex;
+        flex-direction: column!important;
+        justify-content: center!important;
+        width: 20rem!important;
+    }
+
+    .container img{
+        @apply rounded-t-md rounded-b-none w-auto h-auto;
+    }
+
+    .card{
+        @apply flex px-1 mx-0 ml-4;
+
+    }
+
+    .card-content{
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column!important;
+    }
+}
+
+@media (max-width: 425px) {
+    .container{
+        width: 14rem!important;
+        justify-content: center!important;
+    }
+
+    .container img{
+        @apply rounded-t-md rounded-b-none w-auto h-auto;
+    }
+}

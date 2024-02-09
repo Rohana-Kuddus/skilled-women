@@ -1,41 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types"
 import "../index.css";
 
-const ButtonSecondary1 = ({ text, onClick }) => {
+function ButtonSecondary({ name, action, padding = "px-4" }) {
   return (
-    <button
-      className="dark bg-gray-100 p-3 rounded-lg"
-      style={{ fontFamily: "var(--paragraph-font)" }}
-      onClick={onClick}
-    >
-      {text}
-    </button>
-  );
-};
-
-const ButtonSecondary2 = ({ text, onClick }) => {
-  return (
-    <button
-      className="dark p-3 rounded-lg"
+    <>
+      <button className={`paragraph-regular dark ${padding} py-2 rounded-lg hover:bg-gray-100 w-max`}
       style={{
-        fontFamily: "var(--paragraph-font)",
         borderColor: "var(--primary-color)",
         borderWidth: "1px",
       }}
-      onClick={onClick}
+      onClick={action}
     >
-      {text}
+      {name}
     </button>
-  );
-};
-
-function ButtonSecondary({ text, onClick }) {
-  return (
-    <>
-      <ButtonSecondary1 onClick={onClick} text={text} />
-      <ButtonSecondary2 onClick={onClick} text={text} />
     </>
   );
+}
+
+ButtonSecondary.propTypes = {
+  name: PropTypes.string,
+  action: PropTypes.func,
+  padding: PropTypes.string,
+  height: PropTypes.string,
 }
 
 export default ButtonSecondary;

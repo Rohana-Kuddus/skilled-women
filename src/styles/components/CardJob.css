@@ -1,0 +1,12 @@
+@import url(/src/index.css);
+
+.card-img{
+    @apply rounded-t-3xl w-full h-48 object-cover;
+}
+
+@media (max-width: 425px) {
+    .card-img{
+        @apply hidden h-full overflow-y-auto pt-4 pb-2;
+        
+    }
+}

@@ -1,0 +1,9 @@
+.container-figure {
+  @apply bg-[#F6DDD9] flex items-center gap-6 w-4/5 p-8 rounded-2xl m-auto;
+}
+
+@media screen and (max-width: 800px) {
+  .container-figure {
+    @apply flex-wrap
+  }
+}

@@ -1,0 +1,35 @@
+@import url(/src/index.css);
+
+.step {
+    @apply bg-[#F6DDD9] w-10 h-10 p-6 text-center rounded-full absolute top-0 transform -translate-y-1/2 -translate-x-4 inline;
+}
+
+.step-name {
+    @apply bg-[#4F6C6A] px-10 py-4 hover:cursor-pointer rounded-lg;
+}
+
+.step-text {
+    @apply heading3 white;
+}
+
+.step-num {
+    @apply absolute top-2 left-4 heading2 white;
+}
+
+@media screen and (max-width: 500px) {
+    .step {
+        @apply w-4 h-4 p-4;
+    }
+
+    .step-name {
+        @apply px-6 py-1;
+    }
+
+    .step-text {
+        @apply paragraph-regular;
+    }
+
+    .step-num {
+        @apply top-1 left-3 paragraph-regular
+    }
+}

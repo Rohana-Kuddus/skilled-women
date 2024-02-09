@@ -5,104 +5,109 @@ import ThumbDownFillIcon from "remixicon-react/ThumbDownFillIcon"
 import ButtonPrimary from "./ButtonPrimary"
 import ButtonSecondary from "./ButtonSecondary"
 import { useNavigate } from "react-router-dom"
-import Alert from "./Alert"
-import { useDispatch, useSelector } from "react-redux"
-import { setStatus } from "../redux/slices/alertSlice"
+import { useDispatch } from "react-redux"
+import { setAlert } from "../redux/slices/alertSlice"
 import { useState } from "react"
+import PropTypes from "prop-types"
+import "../styles/components/CardClass.css"
+import { useCookies } from "react-cookie"
 
-function CardClass({ data, editBtn = false }) {
+function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize = "size-40", setId, setVote }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [cookies] = useCookies();
   const [active, setActive] = useState('none');
 
-  // activate alert
-  const dispatch = useDispatch();
-  const { status } = useSelector(state => state.alert);
-
-  const alert = {
-    status: false,
-    text: `Tindakan ini tidak dapat dibatalkan <br> Apakah Anda yakin ingin menghapusnya?`,
-    button: {
-      primary: 'Hapus',
-      primaryAction: () => { // akan diubah dengan hit api delete
-        console.log('kelas berhasil dihapus');
-        dispatch(setStatus(false));
-      },
-      secondary: 'Batal',
-      secondaryAction: () => dispatch(setStatus(false))
-    }
-  };
+  const checkToken = Object.keys(cookies).length !== 0; // check if user loggedin
 
   const likeHandler = () => {
     if (active === 'none') {
+      setVote({ id: data.id, vote: true });
       return setActive('like');
     };
 
     if (active === 'like') {
+      setVote({ id: data.id, vote: false });
       return setActive('none');
     };
 
     if (active === 'dislike') {
+      setVote({ id: data.id, vote: true });
       return setActive('like');
     };
   };
 
   const dislikeHandler = () => {
-    if (active === 'none') {
+    if (active === 'none' && data.rating !== 0) {
+      setVote({ id: data.id, vote: false });
       return setActive('dislike');
     };
 
     if (active === 'dislike') {
+      setVote({ id: data.id, vote: true });
       return setActive('none');
     };
 
     if (active === 'like') {
+      setVote({ id: data.id, vote: false });
       return setActive('dislike');
     };
-  }; 
+  };
 
   return (
     <div>
-      <div>
-        {/* default icon untuk kelas tanpa image */}
-        <img src={data.image ? data.image : 'https://cdn-icons-png.flaticon.com/128/9257/9257182.png'} alt="kelas" />
+      <div className="cardContainer">
+        <img src={data.image ? data.image : 'https://cdn-icons-png.flaticon.com/128/9257/9257182.png'} alt="kelas" className={` ${imgScale} ${imgSize} rounded-s-md`} />
 
-        <div>
+        <div className="card flex flex-col mr-4 py-4 gap-[0.20rem]">
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
           <p className="paragraph-regular dark">{data.name}</p>
           <div>
-            <div className="dot"></div>
             <p className="paragraph-small dark">{data.paid ? 'Berbayar' : 'Gratis'}</p>
           </div>
           <p className="paragraph-small dark">{data.description}</p>
 
-          <div>
-            {/* akan ditambah error handling jika user klik sebelum login */}
-            <div>
-              {/* hit api ketika di klik untuk tambah rating */}
-              <div onClick={likeHandler}>
-                {active === 'none' || active !== 'like' ? 
-                  <ThumbUpLineIcon></ThumbUpLineIcon> : <ThumbUpFillIcon></ThumbUpFillIcon>}
+          {/* buttons */}
+          <div className="reqBtn">
+            <div className="grid grid-cols-3 gap-2">
+              <div className="hover:cursor-pointer" onClick={checkToken ? likeHandler
+                : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}>
+                {active === 'none' || active !== 'like' ?
+                  <ThumbUpLineIcon color="#4F6C6A"></ThumbUpLineIcon> : <ThumbUpFillIcon color="#4F6C6A"></ThumbUpFillIcon>}
               </div>
               <p className="paragraph-regular green">{data.rating}</p>
-              <div onClick={dislikeHandler}>
-                {active === 'none' || active !== 'dislike' ? 
-                  <ThumbDownLineIcon></ThumbDownLineIcon> : <ThumbDownFillIcon></ThumbDownFillIcon>}
+              <div className="hover:cursor-pointer" onClick={checkToken ? dislikeHandler
+                : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}>
+                {active === 'none' || active !== 'dislike' ?
+                  <ThumbDownLineIcon color="#4F6C6A"></ThumbDownLineIcon> : <ThumbDownFillIcon color="#4F6C6A"></ThumbDownFillIcon>}
               </div>
             </div>
 
             {!editBtn ?
-              <ButtonPrimary text={'Lihat Kelas'} action={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
-              : <div>
-                <ButtonPrimary text={'Edit'} action={() => navigate('/recommendations')}></ButtonPrimary>
-                <ButtonSecondary text={'Hapus'} action={() => dispatch(setStatus(true))}></ButtonSecondary>
-              </div>}
+              <ButtonPrimary buttonText={'Lihat Kelas'} onClick={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
+              : <div className="flex flex-row items-center gap-2">
+                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations', { state: { classId: data.id } })} padding="px-8"></ButtonPrimary>
+                <ButtonSecondary name={'Hapus'} action={() => {
+                  setId(data.id);
+                  dispatch(setAlert({ alert: true, alertName: 'deleteClass' }));
+                }} padding="px-7" height="h-10"></ButtonSecondary>
+              </div>
+            }
           </div>
         </div>
       </div>
-
-      {status && <Alert status={alert.status} text={alert.text} button={alert.button}></Alert>}
     </div>
   );
+}
+
+CardClass.propTypes = {
+  data: PropTypes.object,
+  editBtn: PropTypes.bool,
+  imgWidth: PropTypes.string,
+  imgHeight: PropTypes.string,
+  imgScale: PropTypes.string,
+  setId: PropTypes.func,
+  setVote: PropTypes.func
 }
 
 export default CardClass;

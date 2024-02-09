@@ -1,0 +1,38 @@
+@import url(/src/index.css);
+
+.rekomendasi-p {
+  @apply paragraph-regular dark text-wrap;
+}
+
+.form-heading {
+  @apply flex flex-col text-center m-12;
+}
+
+.form {
+  @apply flex flex-col items-center;
+}
+
+.label-form {
+  @apply relative sm:max-w-60 flex flex-col md:max-w-80 lg:max-w-96;
+  
+}
+ 
+.search-icon {
+  @apply absolute top-12 transform translate-y-1 right-3 inline;
+}
+
+.search-option {
+  @apply border border-gray-400 rounded-md hover:cursor-pointer hover:bg-[#4F6C6A] hover:text-white pl-2 py-1.5 mt-1 w-96;
+  color: #4f6c6ac4;
+}
+
+.form-select {
+  @apply border-2 border-gray-400 rounded-md pl-2 py-1.5 mt-1 w-96;
+  color: #4f6c6ac4;
+}
+
+.radio-option {
+  @apply 
+  inline-flex items-center justify-between w-full cursor-pointer p-3 green bg-[#EDEDED]
+  border-gray-400 peer-checked:text-white peer-checked:bg-[#4F6C6A];
+}

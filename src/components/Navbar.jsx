@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setAlert } from "../redux/slices/alertSlice"
 import MenuLineIcon from "remixicon-react/MenuLineIcon";
-import Logo from "../../assets/logo.svg";
-import "../../index.css";
-import "./Navbar.css";
+import Logo from "../assets/logo.svg";
+import Alert from "./Alert";
+import "../index.css";
+import "../styles/components/Navbar.css";
+import { useCookies } from "react-cookie";
+import { logoutUser } from "../redux/slices/authSlice";
+import ButtonPrimary from "./ButtonPrimary";
+import { getUserImage, getUserProfile } from "../redux/slices/userSlice";
 
 function Navbar() {
-  // change the navbar view based on device size
-  const [isOpen, setOpen] = useState(window.innerWidth >= 1024);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { alert, alertName } = useSelector(state => state.alert);
+  const { user, userImage } = useSelector(state => state.user);
+  const [cookies] = useCookies();
+  const [isOpen, setOpen] = useState(window.innerWidth >= 931); // change the navbar view based on device size
+  const location = useLocation();
+
   const resizeNav = () => {
-    window.innerWidth >= 1024 ? setOpen(true) : setOpen(false);
+    window.innerWidth >= 931 ? setOpen(true) : setOpen(false);
   };
 
   useEffect(() => {
@@ -19,92 +32,76 @@ function Navbar() {
     };
   }, []);
 
+  const isActive = (routePath) => {
+    return location.pathname === routePath;
+  };
+  
+
+  useEffect(() => {
+    if (Object.keys(cookies).length !== 0) {
+      dispatch(getUserProfile(cookies.token));
+      dispatch(getUserImage(cookies.token));
+    };
+  }, [cookies]);
+
   const handleToggle = () => {
     setOpen(!isOpen);
   };
-
-  // check if the user has registered/login --> show user profile
-  // the state should be false
-  const [isRegistered, setRegistered] = useState(true);
-  const [userProfile, setProfile] = useState(null);
-
-  const handleRegister = () => {
-    setRegistered(true);
-    setProfile("https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile");
+  
+  const alertObj = {
+    status: false,
+    text: 'Apakah Anda yakin ingin keluar?',
+    button: {
+      primary: 'Keluar',
+      primaryAction: () => {
+        dispatch(logoutUser());
+        dispatch(setAlert({ alert: false, alertName: 'logout' }));
+        navigate('/');
+      },
+      secondary: 'Batal',
+      secondaryAction: () => dispatch(setAlert({ alert: false, alertName: 'logout' }))
+    },
   };
 
   return (
-    <>
-      <nav className="flex items-center p-4 flex-wrap shadow-md">
+    <div>
+      <nav className="navbarContent">
         {/* LOGO */}
         <Link to="/" className="top-0 p-2 mx-2 inline-flex items-center">
-          {/* <Logo alt="skilled-women_logo" /> */}
-          LOGO
+          <img src={Logo} alt="skilldwomen_logo" className="logo" />
         </Link>
+
         {/* ICON MENU */}
-        <button
-          onClick={handleToggle}
-          class="text-white inline-flex p-3 rounded lg:hidden ml-auto hover:text-white outline-none nav-toggle"
-        >
-          <MenuLineIcon color="##4F6C6A" />
+        <button onClick={handleToggle} className="burgerIcon">
+          <MenuLineIcon color="#4F6C6A" />
         </button>
+
         {/* NAVIGATION BAR */}
         {isOpen && (
-          <div
-            className={`top-navbar transition-all duration-500 ease-in-out lg:inline-flex lg:flex-grow lg:w-auto" ${
-              isOpen ? "" : "opacity-0 scale-0"
-            }`}
-          >
-            <div className="navSmall lg:inline-flex lg:flex-row lg:ml-auto mx-2 lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto">
-              <NavLink
-                to="/"
-                className="navlink lg:inline-flex lg:w-auto w-full mx-2 px-4 py-2 rounded items-center justify-center hover:text-white"
-              >
-                Home
-              </NavLink>
-              <NavLink
-                to="/jobs"
-                className="navlink lg:inline-flex lg:w-auto w-full mx-2 px-4 py-2 rounded items-center justify-center hover:text-white"
-              >
-                Pekerjaan
-              </NavLink>
-              <NavLink
-                to="/about"
-                className="navlink lg:inline-flex lg:w-auto w-full mx-2 px-4 py-2 rounded items-center justify-center hover:text-white"
-              >
-                Tentang Kami
-              </NavLink>
-              <NavLink
-                to="/faq"
-                className="navlink lg:inline-flex lg:w-auto w-full mx-2 px-4 py-2 rounded items-center justify-center hover:text-white"
-              >
-                FAQ
-              </NavLink>
+          <div className={`${isOpen ? "" : "opacity-0 scale-0"} navbarSection`}>
+            {/* belum dibuat hover */}
+            <div className="navbar">
+              <p className={`navlink ${isActive('/') ? 'active' : ''}`} onClick={() => navigate('/')}>Home</p >
+              <p className={`navlink ${isActive('/jobs') ? 'active' : ''}`} onClick={() => navigate('/jobs')}>Pekerjaan</p >
+              <p className={`navlink ${isActive('/about') ? 'active' : ''}`} onClick={() => navigate('/about')}>Tentang Kami</p >
+              <p className={`navlink ${isActive('/faq') ? 'active' : ''}`} onClick={() => navigate('/faq')}>FAQ</p >
 
-              {isRegistered ? (
-                <div>
-                  <NavLink to="/profiles/:id" className="userNav">
-                    <img
-                      src={userProfile}
-                      alt="User Profile"
-                      className="user-profile rounded-xxl"
-                    />
-                  </NavLink>
+              {Object.keys(cookies).length !== 0 ?
+                <div className="flex items-center">
+                  <img
+                    src={userImage ? userImage : 'https://dummyimage.com/400x400/000/fff.jpg&text=User+Profile'} 
+                    alt="User Profile" className="user-profile rounded-full w-10 h-10 mx-4 hover:cursor-pointer" onClick={() => navigate(`/profiles/${user.id}`)} />
+                  <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setAlert({ alert: true, alertName: 'logout' }))} 
+                    margin="my-0"></ButtonPrimary>
                 </div>
-              ) : (
-                <NavLink
-                  to="/register"
-                  onClick={handleRegister}
-                  className="active navlink lg:inline-flex lg:w-auto w-full mx-2 px-4 py-2 rounded items-center justify-center hover:text-white"
-                >
-                  Coba Sekarang
-                </NavLink>
-              )}
+                : <ButtonPrimary buttonText="Coba Sekarang" onClick={() => navigate('/register')} margin="my-0 ml-0 md:ml-4"></ButtonPrimary>}
             </div>
           </div>
         )}
       </nav>
-    </>
+
+      {alert && alertName === 'logout' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
+    </div>
   );
 }
 

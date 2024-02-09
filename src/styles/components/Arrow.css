@@ -1,0 +1,29 @@
+.arrow {
+  @apply border-solid;
+}
+
+.x-line {
+  @apply border mt-7 md:w-48 lg:w-60;
+}
+
+.y-line {
+  @apply mt-[3.4rem] lg:ml-[11.5rem] md:ml-[8.5rem] border rotate-90 w-28;
+}
+
+.down {
+  @apply mt-[2.8rem] lg:ml-[14.7rem] md:ml-[11.7rem] border-r-[1.5px] border-b-[1.5px] inline-block p-1 rotate-45;
+}
+
+@media screen and (max-width: 500px) {
+  .x-line {
+    @apply w-16;
+  }
+
+  .y-line {
+    @apply ml-[0.5rem]
+  }
+
+  .down {
+    @apply ml-[3.7rem]
+  }
+}
