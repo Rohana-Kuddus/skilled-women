@@ -242,7 +242,7 @@ function RecommendationPage() {
 
       <div>
         <form className="form">
-          <div>
+          <div className="relative">
             <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
             <input type="text" name="job" placeholder="masukkan nama pekerjaan" className="input-text block mt-1" autoFocus value={search} onChange={searchHandler} onBlur={errorHandler} />
             <ul className={`${hidden}`} onClick={() => setHidden('hidden')}>
