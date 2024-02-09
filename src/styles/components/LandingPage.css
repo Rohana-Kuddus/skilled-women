@@ -129,7 +129,7 @@
 /* {Benefit section} */
 
 .benefit {
-  @apply gap-20 bg-[#4F6C6A] pt-20 pb-24 py-14 flex flex-wrap justify-center;
+  @apply gap-16 bg-[#4F6C6A] pt-20 pb-24 py-14 flex flex-wrap justify-center;
 }
 
 /* Benefit 1 */
@@ -143,7 +143,7 @@
 }
 
 .benefit-1-img {
-  @apply w-3/4 m-auto md:w-3/4 lg:w-full md:max-w-sm lg:max-w-full;
+  @apply w-3/4 m-auto md:w-3/4;
 }
 
 .benefit-1-konten {
@@ -161,7 +161,7 @@
 /* Benefit 2 */
 
 .benefit-2 {
-  @apply mx-12 px-4 flex flex-col-reverse md:flex md:flex-row justify-center items-center sm:px-8 lg:px-16 xl:px-24;
+  @apply mx-12 px-4 flex flex-col-reverse md:flex md:flex-row md:gap-x-14 justify-center items-center sm:px-8 lg:px-16 xl:px-24;
 }
 
 .benefit-2-konten {
