@@ -1,27 +1,41 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
 import ButtonPrimary from "../components/ButtonPrimary";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
+import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
+import EyeLineIcon from "remixicon-react/EyeLineIcon";
+import Toast from "../components/Toast";
+import { getToast } from "../redux/slices/toastSlice";
+import { loginUser } from "../redux/slices/authSlice";
+import { useCookies } from "react-cookie";
 import "../styles/components/LoginPage.css";
 
 function LoginPage() {
-  // akan ke page register jika tulisan "daftar sekarang" di klik
   const navigate = useNavigate();
-  const toRegister = () => {
-    navigate("/register");
-  };
-
-  const toForgotPassword = () => {
-    navigate("/password/email");
-  };
-
-  // input form
+  const dispatch = useDispatch();
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { authMessage } = useSelector(state => state.auth);
+  const [passwordType, setPasswordType] = useState('password');
   const [user, setUser] = useState({
-    username: "",
+    email: "",
     password: "",
   });
+  const [error, setError] = useState({
+    email: "",
+    password: ""
+  });
+
+  useEffect(() => {
+    dispatch(setFooterAnchor('Icons by Icons8', 'https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14'));
+  }, []);
+
+  useEffect(() => {
+    if (authMessage === 'Login Success') {
+      navigate('/');
+    };
+  }, [authMessage]);
 
   const handleInput = (event) => {
     setUser({
@@ -30,25 +44,51 @@ function LoginPage() {
     });
   };
 
-  const login = (event) => {
-    event.preventDefault();
-    console.log(user);
+  const validateInput = (e) => {
+    const { name, value } = e.target;
+
+    setError(prev => {
+      const stateObj = { ...prev, [name]: '' };
+
+      switch (name) {
+        case 'email':
+          if (!value) {
+            stateObj[name] = 'Email tidak boleh kosong.';
+          };
+          break;
+
+        case 'password':
+          if (!value) {
+            stateObj[name] = 'Password tidak boleh kosong.';
+          };
+          break;
+
+        default:
+          break;
+      };
+
+      return stateObj;
+    });
   };
 
-  // set text and link for footer
-  const dispatch = useDispatch();
+  const login = (event) => {
+    event.preventDefault();
 
-  useEffect(() => {
-    dispatch(
-      setFooterAnchor(
-        "Icons by Icons8",
-        "https://icons8.com/illustrations/illustration/63bbe96d6e704382d7151e14"
-      )
-    );
-  }, []);
+    if (!error.email && !error.password) {
+      dispatch(loginUser(user));
+
+      if (!authMessage.includes('Success')) {
+        dispatch(getToast({ toast: true, toastName: 'login' }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'login' }));
+        }, 3000);
+      };
+    };
+  };
 
   return (
-    <>
+    <div>
       <div className="login">
         <h1 className="login-h1">Log In</h1>
         <p className="login-p">
@@ -67,40 +107,48 @@ function LoginPage() {
             <label className="label">Email</label>
             <input
               className="input-text"
-              type="text"
-              name="username"
+              type="email"
+              name="email"
               placeholder="janedoe@email.com"
-              value={user.username}
+              value={user.email}
               onChange={handleInput}
+              onBlur={validateInput}
             ></input>
+            {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
           </div>
 
           <div className="mb-4">
             <label className="label">Password</label>
             <input
               className="input-text"
-              type="password"
+              type={passwordType}
               name="password"
               placeholder="********"
               value={user.password}
               onChange={handleInput}
+              onBlur={validateInput}
             ></input>
-
-            <p className="forgot-password" onClick={toForgotPassword}>Forgot Password?</p>
+            <span name="password" onClick={() => passwordType === 'password'
+              ? setPasswordType('text') : setPasswordType('password')}>
+              {passwordType === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+                : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
+            </span>
+            {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
           </div>
 
           <div className="button-div">
+            <p className="forgot-password" onClick={() => navigate("/password/email")}>Forgot Password?</p>
             <ButtonPrimary buttonText="Log in" onClick={login} />
             <p className="button-p">
               Belum punya akun?&ensp;
-              <span className="button-span" onClick={toRegister}>
-                Daftar sekarang
-              </span>
+              <span className="button-span" onClick={() => navigate("/register")}>Daftar sekarang</span>
             </p>
           </div>
         </div>
       </div>
-    </>
+
+      {toast && toastName === 'login' && <Toast message={authMessage}></Toast>}
+    </div>
   );
 }
 

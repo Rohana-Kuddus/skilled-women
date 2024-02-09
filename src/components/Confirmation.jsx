@@ -1,4 +1,3 @@
-// konfirmasi email terkirim
 import { useNavigate } from 'react-router-dom'
 
 function Confirmation() {
@@ -11,7 +10,7 @@ function Confirmation() {
           <p>Segera cek email kamu, ya!</p>
         </div>
         <p>
-            Kembali ke laman <span className="underline" onClick={()=>navigate('/login')}>Log in</span> 
+          Kembali ke laman <span className="underline" onClick={() => navigate('/login')}>Log in</span>
         </p>
       </div>
     </>

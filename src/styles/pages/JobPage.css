@@ -35,10 +35,11 @@
         @apply origin-top-right absolute mt-2 w-[9.6em] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5;
     }
     .options{
-        @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900;
+        @apply block px-4 py-2 text-sm text-gray-700 cursor-pointer;
     }
     .options:hover{
-        @apply bg-[--primary-color] text-white;
+        background-color: var(--primary-color) !important;
+        color: var(--white-color) !important;
     }
 
 

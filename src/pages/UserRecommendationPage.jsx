@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SidebarProfile from "../components/SidebarProfile";
 import CardClass from "../components/CardClass";
@@ -6,48 +6,96 @@ import ButtonRecommendation from "../components/ButtonRecommendation";
 import "../index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { getClassUser } from "../redux/slices/courseSlice";
+import { deleteClass, getClassUser, voteClass } from "../redux/slices/courseSlice";
+import { useCookies } from "react-cookie";
+import Alert from "../components/Alert";
+import { getToast } from "../redux/slices/toastSlice";
+import Toast from "../components/Toast";
+import { setAlert } from "../redux/slices/alertSlice";
+import { getUserProfile } from "../redux/slices/userSlice";
 import "../index.css";
 import "../styles/pages/UserRecommendationPage.css"
 
 function UserRecommendationPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cookies] = useCookies();
   const { course } = useSelector(state => state.course);
+  const { alert, alertName } = useSelector(state => state.alert);
+  const { toast, toastName } = useSelector(state => state.toast);
+  const { courseMessage } = useSelector(state => state.course);
+  const [id, setId] = useState();
+  const [vote, setVote] = useState({});
 
-  // dummy token
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqb2huZG9lQGVtYWlsLmNvbSIsImlhdCI6MTcwNjc0ODg0NX0.HDhf3ah9l5abgcoRIdF_G6yK8UVJ7_ddmFYuwVf88Qg';
   useEffect(() => {
     dispatch(setFooterAnchor("", ""));
-    dispatch(getClassUser(token));
+    dispatch(getClassUser(cookies.token));
+    dispatch(getUserProfile(cookies.token));
   }, [course]);
 
+  useEffect(() => {
+    if (Object.keys(vote).length !== 0) {
+      const payload = {
+        token: cookies.token,
+        classId: vote.id,
+        vote: vote.vote
+      };
+      dispatch(voteClass(payload));
+
+      if (!courseMessage.includes('Get')) {
+        dispatch(getToast({ toast: true, toastName: 'voteClass' }));
+
+        setTimeout(() => {
+          dispatch(getToast({ toast: false, toastName: 'voteClass' }));
+        }, 3000);
+      };
+    };
+  }, [vote]);
+
+  const alertObj = {
+    status: false,
+    text: `Tindakan ini tidak dapat dibatalkan <br> Apakah Anda yakin ingin menghapusnya?`,
+    button: {
+      primary: 'Hapus',
+      primaryAction: () => {
+        dispatch(deleteClass({ token: cookies.token, classId: id }));
+
+        if (!courseMessage.includes('Get')) {
+          dispatch(getToast({ toast: true, toastName: 'deleteClass' }));
+
+          setTimeout(() => {
+            dispatch(getToast({ toast: false, toastName: 'deleteClass' }));
+          }, 3000);
+        };
+        dispatch(setAlert({ alert: false, alertName: 'deleteClass' }));
+      },
+      secondary: 'Batal',
+      secondaryAction: () => dispatch(setAlert({ alert: false, alertName: 'deleteClass' }))
+    }
+  };
+
   return (
-    <>
-      <div
-        className="flex flex-row"
-        style={{ fontFamily: "var(--paragraph-font)" }}
-      >
-        {/* sidebar */}
-          <SidebarProfile/>
-        {/* user's class recommendation (card) */}
+    <div>
+      <div className="flex flex-row" style={{ fontFamily: "var(--paragraph-font)" }}>
+        <SidebarProfile></SidebarProfile>
+
         <div className="reqCard">
-          {course.map((i) => (
-            <div key={i.id} className="mb-2 w-full">
-              <CardClass data={i} editBtn={true}></CardClass>
+          {course.map((v, i) => (
+            <div key={i} className="mb-2 w-full">
+              <CardClass data={v} editBtn={true} setId={setId} setVote={setVote}></CardClass>
             </div>
           ))}
-          {/* button recommendation */}
+
           <div className="flex justify-center w-full">
-            <ButtonRecommendation
-              name="Kelas"
-              padding="px-4 md:px-8 lg:px-[16.5em] xl:px-[24.5em]"
-              action={() => navigate('/recommendations')}
-            />
+            <ButtonRecommendation name="Kelas" padding="px-4 md:px-8 lg:px-[16.5em] xl:px-[24.5em]" action={() => navigate('/recommendations')} />
           </div>
         </div>
       </div>
-    </>
+
+      {alert && alertName === 'deleteClass' && <Alert status={alertObj.status} text={alertObj.text} button={alertObj.button}></Alert>}
+      {toast && toastName === 'deleteClass' && <Toast message={courseMessage}></Toast>}
+      {toast && toastName === 'voteClass' && <Toast message={courseMessage}></Toast>}
+    </div>
   );
 }
 

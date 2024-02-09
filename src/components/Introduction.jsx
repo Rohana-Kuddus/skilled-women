@@ -59,11 +59,11 @@ function Introduction({ data, setIsActive }) {
       <div className="m-8">
         <h2 className="heading2 green mb-12">Perempuan Inspiratif {data.title}</h2>
         <div className="bg-[#F6DDD9] grid grid-row md:grid-cols-2 place-content-around place-items-center p-8 rounded-2xl">
-          <img src={data.figure.image} alt={data.figure.name.toLowerCase().replace(/\s+/g, '-')} className="max-w-40 mx-auto rounded-2xl"/>
+          <img src={data.Figure.image} alt={data.Figure.name.toLowerCase().replace(/\s+/g, '-')} className="max-w-40 mx-auto rounded-2xl"/>
           <div className="text-center md:text-left mt-6 md:my-auto md:place-self-start">
-            <h2 className="heading2 green">{data.figure.name}</h2>
-            <h3 className="hedaing3 green">{data.figure.role}</h3>
-            <p className="paragraph-regular dark">{data.figure.description}</p>
+            <h2 className="heading2 green">{data.Figure.name}</h2>
+            <h3 className="hedaing3 green">{data.Figure.role}</h3>
+            <p className="paragraph-regular dark">{data.Figure.description}</p>
           </div>
         </div>
       </div>
