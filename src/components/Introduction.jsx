@@ -1,6 +1,7 @@
 import CardBenefit from "./CardBenefit"
 import ButtonPrimary from "./ButtonPrimary"
 import PropTypes from "prop-types"
+import "../styles/components/Introduction.css"
 
 function Introduction({ data, setIsActive }) {
   return (
@@ -34,7 +35,7 @@ function Introduction({ data, setIsActive }) {
 
       </div>
 
-      <div className="flex flex-col items-center justify-center text-center">
+      <div className="introBenefit">
       {/* benefits */}
       <div className="m-8">
         <h2 className="heading2 green mb-8">Apa keunggulan {data.title}?</h2>

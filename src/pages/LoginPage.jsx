@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../index.css";
+import { useNavigate } from "react-router-dom";
 import ButtonPrimary from "../components/ButtonPrimary";
-import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import EyeOffLineIcon from "remixicon-react/EyeOffLineIcon";
@@ -72,7 +71,6 @@ function LoginPage() {
 
   const login = (event) => {
     event.preventDefault();
-
     if (!error.email && !error.password) {
       dispatch(loginUser(user));
 
@@ -87,67 +85,76 @@ function LoginPage() {
   };
 
   return (
-    <div>
-      <div className="login">
-        <h1 className="login-h1">Log In</h1>
-        <p className="login-p">
-          Senang melihat kamu kembali! <br /> Masukkan data sesuai dengan yang
-          telah kamu daftarkan.
+    <>
+      <div className="headingStart">
+        <h1 className="heading1">Log In</h1>
+        <p className="paragraph-reguler">Senang melihat kamu kembali!</p>
+        <p className="paragraf-reguler">
+          Masukkan sesuai dengan data yang telah kamu daftarkan.
         </p>
       </div>
 
-      <div className="login-konten">
-        <div>
-          <img src="https://imgur.com/Z8jSaVB.png" alt="login"></img>
+      <div className="login">
+        {/* login image */}
+        <div className="mb-0 md:mb-20">
+          <img
+            src="https://imgur.com/Z8jSaVB.png"
+            className="w-72 md:w-80 h-auto"
+            alt="login-image"
+          />
         </div>
 
-        <div className="login-form">
-          <div className="mb-4">
-            <label className="label">Email</label>
-            <input
-              className="input-text"
-              type="email"
-              name="email"
-              placeholder="janedoe@email.com"
-              value={user.email}
-              onChange={handleInput}
-              onBlur={validateInput}
-            ></input>
+        <div className="loginContent">
+          <div className="w-fit">
+            {/* email */}
+            <div className="flex flex-col">
+              <label className="label-form">Email</label>
+              <input
+                className="formInput pr-24 lg:pr-40"
+                type="email"
+                name="email"
+                placeholder="janedoe@email.com"
+                value={user.email}
+                onChange={handleInput}
+                onBlur={validateInput}
+              ></input>
+            </div>
             {error.email && <p className="paragraph-regular text-[#FE0101]">{error.email}</p>}
-          </div>
 
-          <div className="mb-4">
-            <label className="label">Password</label>
-            <input
-              className="input-text"
-              type={passwordType}
-              name="password"
-              placeholder="********"
-              value={user.password}
-              onChange={handleInput}
-              onBlur={validateInput}
-            ></input>
-            <span name="password" onClick={() => passwordType === 'password'
-              ? setPasswordType('text') : setPasswordType('password')}>
-              {passwordType === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
-                : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
-            </span>
+             {/* password */}
+            <div className="flex flex-col relative">
+              <label className="label-form">Password</label>
+              <input
+                className="formInput pr-24 lg:pr-40"
+                type={passwordType}
+                name="password"
+                placeholder="********"
+                value={user.password}
+                onChange={handleInput}
+                onBlur={validateInput}
+              ></input>
+              <span name="password" className="absolute right-3 top-[3.2em]" onClick={() => passwordType === 'password'
+                ? setPasswordType('text') : setPasswordType('password')}>
+                {passwordType === "password" ? <EyeOffLineIcon className="green hover:cursor-pointer"></EyeOffLineIcon>
+                  : <EyeLineIcon className="green hover:cursor-pointer"></EyeLineIcon>}
+              </span>
+            </div>
             {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
+            <p className="forgot-password hover:cursor-pointer" onClick={() => navigate("/password/email")}>Forgot Password?</p>
           </div>
 
-          <div className="button-div">
-            <p className="forgot-password" onClick={() => navigate("/password/email")}>Forgot Password?</p>
-            <ButtonPrimary buttonText="Log in" onClick={login} />
-            <p className="button-p">
+          <div className="submitBtn mt-12">
+            <ButtonPrimary buttonText="Log in" onClick={login} padding="px-[2em] py-3"/>
+            <p className="mt-4">
               Belum punya akun?&ensp;
-              <span className="button-span" onClick={() => navigate("/register")}>Daftar sekarang</span>
+              <span className="underline decoration-solid" onClick={() => navigate("/register")}>Daftar sekarang</span>
             </p>
           </div>
         </div>
       </div>
 
       {toast && toastName === 'login' && <Toast message={authMessage}></Toast>}
-    </div>
+    </>
   );
 }
 
