@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
 import { useNavigate } from "react-router-dom";
 import { getJobList } from "../redux/slices/jobSlice";
+import "../styles/pages/LandingPage.css";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -48,8 +49,8 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="div-imgHer w-96">
-          <img src="https://imgur.com/wp3X00G.png" alt="img" />
+        <div className="">
+          <img src="https://imgur.com/wp3X00G.png" alt="img" className="div-imgHero" />
         </div>
       </div>
 

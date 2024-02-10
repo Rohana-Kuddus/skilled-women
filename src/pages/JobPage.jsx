@@ -80,7 +80,7 @@ function JobPage() {
             <div className="searchSection">
               <input className="searchInput"
                 type="search" name="search" placeholder="Cari Berdasarkan Pekerjaan"
-                onChange={(e) => filterHandler({ name: 'search', value: e.target.value })} />
+                onChange={(e) => filterHandler({ name: 'search', value: e.target.value })} autoComplete="off" />
               <button type="submit" className="searchBtn">
                 <SearchLineIcon className="green"></SearchLineIcon>
               </button>

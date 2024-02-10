@@ -7,7 +7,7 @@ function Hero({ data }) {
       <img
         src={data.image}
         alt={data.title.toLowerCase().replace(/\s+/g, "-")}
-        className="w-64 md:w-[26rem] rounded-xl"
+        className="w-64 md:w-[18rem] lg:w-[26rem] rounded-xl"
       />
     </div>
   );

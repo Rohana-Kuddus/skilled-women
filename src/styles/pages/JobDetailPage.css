@@ -12,7 +12,7 @@
 }
 
 .summary {
-    @apply flex flex-col p-4 justify-around items-center gap-4 bg-[#4F6C6A] md:flex-row md:py-20 md:px-60 my-10;
+    @apply flex flex-col p-4 justify-around items-center gap-4 bg-[#4F6C6A] md:flex-row md:p-20 my-10;
 }
 
 .font-h4 {

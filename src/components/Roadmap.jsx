@@ -34,7 +34,7 @@ function Roadmap({ data }) {
     <div>
       <div>
         <div className="summary">
-          <h2 className="flex-auto w-32 m-auto heading2 white">Roadmap</h2>
+          <h2 className="flex-auto w-32 heading2 white">Roadmap</h2>
           <p className="flex-auto w-64 paragraph-regular white">{data.roadmapSummary}</p>
         </div>
 
