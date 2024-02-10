@@ -115,7 +115,6 @@ function RecommendationPage() {
         const arr = [...select, name];
         setSelect(arr);
         input.roadmapId = [...input.roadmapId, id];
-        // input.roadmapId.push(id);
       };
     };
   };
