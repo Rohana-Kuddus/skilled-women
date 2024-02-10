@@ -40,7 +40,7 @@ function App() {
   return (
     <>
       <CookiesProvider>
-        <BrowserRouter>
+        <BrowserRouter basename="/skilled-women">
           <Navbar></Navbar>
 
           <Routes>
