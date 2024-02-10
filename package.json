@@ -2,7 +2,6 @@
   "name": "skilled-women",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://Rohana-Kuddus.github.io/skilled-women",
   "type": "module",
   "scripts": {
     "dev": "vite",
