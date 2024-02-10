@@ -1,7 +1,8 @@
 @import url(/src/index.css);
 
 .navbarContent{
-  @apply flex flex-col lg:flex-row items-center justify-between px-4 py-4 lg:px-8 lg:py-2 flex-wrap bg-white border-b-4 border-gray-200 mx-auto lg:mx-0;
+  @apply flex flex-col lg:flex-row items-center justify-between px-4 py-4 lg:px-8 lg:py-2 flex-wrap bg-white mx-auto lg:mx-0;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06);
 }
 
 .navbarSection{

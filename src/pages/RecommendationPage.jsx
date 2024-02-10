@@ -115,7 +115,6 @@ function RecommendationPage() {
         const arr = [...select, name];
         setSelect(arr);
         input.roadmapId = [...input.roadmapId, id];
-        // input.roadmapId.push(id);
       };
     };
   };
@@ -177,7 +176,7 @@ function RecommendationPage() {
       if (location.state !== null) {
         const { classId } = location.state;
         const roadmapId = [];
-
+        
         const arrStr = roadmap.filter(v => input.roadmapId.includes(v.name));
         if (arrStr.length !== 0) {
           const checkArr = input.roadmapId.every(i => typeof i === "string");
@@ -200,6 +199,7 @@ function RecommendationPage() {
 
         dispatch(editClass(payload));
       } else {
+        console.log(payload);
         dispatch(submitClass(payload));
       };
 
@@ -243,13 +243,14 @@ function RecommendationPage() {
         <form className="form">
           <div className="relative">
             <label htmlFor="job" className="label-form">Pilih pekerjaan</label>
-            <input type="text" name="job" placeholder="masukkan nama pekerjaan" className="input-text block mt-1" autoFocus value={search} onChange={searchHandler} onBlur={errorHandler} />
+            <input type="text" name="job" placeholder="Masukkan nama pekerjaan" className="input-text block mt-1" autoFocus value={search} onChange={searchHandler} onBlur={errorHandler} />
             <ul className={`${hidden}`} onClick={() => setHidden('hidden')}>
               {search !== '' && job.map(v => (
                 <li className="search-option" key={v.id} value={v.id} onClick={() => {
                   setSearch(v.title);
-                  setInput(prev => ({ ...prev, jobId: v.id }));
+                  setInput(prev => ({ ...prev, jobId: v.id, roadmapId: [] }));
                   dispatch(getRoadmap(v.id));
+                  setSelect([]);
                 }}>{v.title}</li>
               ))}
             </ul>
@@ -276,13 +277,13 @@ function RecommendationPage() {
 
           <div>
             <label htmlFor="name" className="label-form">Nama kelas</label>
-            <input type="text" name="name" placeholder="masukkan nama kelas" value={input.name} className="input-text mt-1" onChange={inputHandler} onBlur={errorHandler} />
+            <input type="text" name="name" placeholder="Masukkan nama kelas" value={input.name} className="input-text mt-1" onChange={inputHandler} onBlur={errorHandler} />
             {error.name && <p className="paragraph-regular text-[#FE0101]">{error.name}</p>}
           </div>
 
           <div>
             <label htmlFor="link" className="label-form">Link kelas</label>
-            <input type="text" name="link" placeholder="link kelas" value={input.link} className="input-text mt-1" onChange={inputHandler} onBlur={errorHandler} />
+            <input type="text" name="link" placeholder="Link kelas" value={input.link} className="input-text mt-1" onChange={inputHandler} onBlur={errorHandler} />
             {error.link && <p className="paragraph-regular text-[#FE0101]">{error.link}</p>}
           </div>
 
@@ -291,19 +292,19 @@ function RecommendationPage() {
             <ul className="grid w-96 md:grid-cols-2">
               <li>
                 <input className="hidden peer" type="radio" id="radio-paid" name="paidChecked" value={'paid'} checked={payment.paidChecked} onChange={radioHandler} />
-                <label for="radio-paid" className="radio-option rounded-l-md">Berbayar</label>
+                <label htmlFor="radio-paid" className="radio-option rounded-l-md">Berbayar</label>
               </li>
               <li>
                 <input className="hidden peer" type="radio" id="radio-free" name="freeChecked" value={'free'} checked={payment.freeChecked} onChange={radioHandler} />
-                <label for="radio-free" className="radio-option rounded-r-md">Gratis</label>
+                <label htmlFor="radio-free" className="radio-option rounded-r-md">Gratis</label>
               </li>
             </ul>
           </div>
 
           <div>
             <label htmlFor="description" className="label-form">Deskripsi kelas</label>
-            <textarea name="description" placeholder="deskripsi singkat kelas" value={input.description} cols="30" rows="10"
-              className="pl-4 pt-2 rounded-lg bg-[#EDEDED] w-96 mt-1" onChange={inputHandler} onBlur={errorHandler}></textarea>
+            <textarea name="description" placeholder="Deskripsi singkat kelas" value={input.description} cols="30" rows="10"
+              className="pl-4 pt-2 rounded-lg bg-[#EDEDED] w-96 mt-1 dark" onChange={inputHandler} onBlur={errorHandler}></textarea>
             {error.description && <p className="paragraph-regular text-[#FE0101]">{error.description}</p>}
           </div>
 

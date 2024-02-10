@@ -1,7 +1,7 @@
 @import url(/src/index.css);
 
 .cardContainer{
-    @apply container flex flex-row gap-6 items-center border-2 rounded-md mb-4 lg:w-[42rem] w-[36rem];
+    @apply container flex flex-row gap-6 items-center border-2 rounded-md mb-4 lg:w-[40rem] w-[36rem];
 }
 
 .cardMain {
