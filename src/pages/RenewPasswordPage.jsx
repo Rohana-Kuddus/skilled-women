@@ -10,7 +10,7 @@ import Toast from "../components/Toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getToast } from "../redux/slices/toastSlice";
 import { resetPassword } from "../redux/slices/authSlice";
-import "../styles/pages/RenewPassword.css"
+import "../styles/pages/RenewPasswordPage.css";
 
 function RenewPasswordPage() {
   const navigate = useNavigate();
