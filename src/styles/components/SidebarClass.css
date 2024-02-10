@@ -1,0 +1,27 @@
+.sidebar-container {
+  @apply fixed overflow-y-scroll z-10 bg-white lg:w-[50rem] sm:w-[40rem] top-0 bottom-0 right-0;
+}
+
+.sidebar-bg {
+  @apply fixed inset-0 bg-black bg-opacity-60;
+}
+
+.sidebar-title {
+  @apply flex justify-between items-center bg-white shadow-md py-4 px-12;
+}
+
+.close {
+  @apply w-8 h-8 cursor-pointer;
+}
+
+.sidebar-main {
+  @apply px-16;
+}
+
+.sidebar-name {
+  @apply flex justify-between items-center py-8
+}
+
+.sidebar-class {
+  @apply flex flex-col justify-center items-center;
+}

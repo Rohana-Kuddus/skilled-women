@@ -59,7 +59,7 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
       <div className="cardContainer">
         <img src={data.image ? data.image : 'https://cdn-icons-png.flaticon.com/128/9257/9257182.png'} alt="kelas" className={` ${imgScale} ${imgSize} rounded-s-md`} />
 
-        <div className="card flex flex-col mr-4 w-full py-4">
+        <div className="card flex flex-col mr-4 py-4 gap-[0.20rem]">
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
           <p className="paragraph-regular dark">{data.name}</p>
           <div>

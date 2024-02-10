@@ -86,9 +86,7 @@ function UserRecommendationPage() {
             </div>
           ))}
 
-          <div className="flex justify-center w-full">
-            <ButtonRecommendation name="Kelas" padding="px-4 md:px-8 lg:px-[16.5em] xl:px-[24.5em]" action={() => navigate('/recommendations')} />
-          </div>
+          <ButtonRecommendation name="Kelas" padding="lg:px-52 md:px-24" action={() => navigate('/recommendations')} />
         </div>
       </div>
 
