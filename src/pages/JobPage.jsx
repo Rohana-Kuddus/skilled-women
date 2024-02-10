@@ -113,13 +113,13 @@ function JobPage() {
           <div className="mt-4 lg:mt-0">
             <ButtonRecommendation name={'Pekerjaan'} action={Object.keys(cookies).length !== 0
               ? () => window.open('https://forms.gle/azMcFgBtZ29ZpcVPA', '_blank', 'noreferrer')
-              : () => dispatch(setAlert({ alert: true, alertName: 'login' }))} padding="px-[1.2em] md:px-8"></ButtonRecommendation>
+              : () => dispatch(setAlert({ alert: true, alertName: 'login' }))} padding="px-[2em] md:px-[1em] lg:px-8"></ButtonRecommendation>
           </div>
         </div>
       </section>
 
       {/* section cards */}
-      <section className="mt-10 mx-0 md:mx-8">
+      <section className="mt-10 mx-auto w-fit">
         <div className="cardSection">
           {job.map((val) => (
             <div key={val.id}>

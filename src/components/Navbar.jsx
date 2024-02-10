@@ -18,11 +18,11 @@ function Navbar() {
   const { alert, alertName } = useSelector(state => state.alert);
   const { user, userImage } = useSelector(state => state.user);
   const [cookies] = useCookies();
-  const [isOpen, setOpen] = useState(window.innerWidth >= 931); // change the navbar view based on device size
+  const [isOpen, setOpen] = useState(window.innerWidth >= 1024); // change the navbar view based on device size
   const location = useLocation();
 
   const resizeNav = () => {
-    window.innerWidth >= 931 ? setOpen(true) : setOpen(false);
+    window.innerWidth >= 1024 ? setOpen(true) : setOpen(false);
   };
 
   useEffect(() => {
@@ -65,14 +65,16 @@ function Navbar() {
 
   return (
     <div>
-      <nav className="navbarContent">
+      <nav 
+      className="navbarContent">
         {/* LOGO */}
-        <Link to="/" className="top-0 p-2 mx-2 inline-flex items-center">
+        <Link to="/" className="logoLink ">
           <img src={Logo} alt="skilldwomen_logo" className="logo" />
         </Link>
 
         {/* ICON MENU */}
-        <button onClick={handleToggle} className="burgerIcon">
+        <button onClick={handleToggle} 
+        className="burgerIcon">
           <MenuLineIcon color="#4F6C6A" />
         </button>
 
@@ -94,7 +96,7 @@ function Navbar() {
                   <ButtonPrimary buttonText="Keluar" onClick={() => dispatch(setAlert({ alert: true, alertName: 'logout' }))} 
                     margin="my-0"></ButtonPrimary>
                 </div>
-                : <ButtonPrimary buttonText="Coba Sekarang" onClick={() => navigate('/register')} margin="my-0 ml-0 md:ml-4"></ButtonPrimary>}
+                : <ButtonPrimary buttonText="Coba Sekarang" onClick={() => navigate('/register')} margin="my-0 ml-0 lg:ml-4"></ButtonPrimary>}
             </div>
           </div>
         )}

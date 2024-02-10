@@ -37,10 +37,10 @@ function FaqPage() {
       <div className="flex flex-col align-center">
         {/* HERO */}
         <div className="faqHero" style={{ backgroundColor: "var(--primary-color)" }}>
-          <h1 className="text-center text-4xl font-bold my-6" style={{ fontFamily: "var(--heading-font)" }}>
+          <h1 className="text-center text-4xl font-bold my-6 heading1 white">
             Frequently Asked Questions
           </h1>
-          <p style={{ fontFamily: "var(--paragraph-font)" }}>
+          <p className="paragraph-regular white">
             Pertanyaan-pertanyaan yang sering ditanyakan dan perlu kalian
             ketahui jawabannya mengenai Skilled Women
           </p>

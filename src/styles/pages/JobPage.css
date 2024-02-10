@@ -18,7 +18,7 @@
         @layer black;
     }
     .searchSection{
-        @apply flex items-center relative mx-auto green;
+        @apply relative flex items-center mx-auto green;
     }
     .searchBtn{
         @apply absolute right-0 mr-4;
@@ -26,13 +26,13 @@
 
     /* DROPDOWN SECTION*/
     .dropdownButton{
-        @apply flex flex-row items-center gap-[7.6em] lg:gap-4 relative border-2 border-gray-400 rounded-md pl-2 py-[0.16em] paragraph-regular dark;
+        @apply relative flex flex-row items-center lg:gap-4 border-2 border-gray-400 rounded-md pl-2 py-2 paragraph-regular dark w-64 lg:w-32;
     }
     .arrowDropdown{
-        @apply h-8 mr-2 transition-all duration-500 group-focus:-rotate-180;
+        @apply absolute top-[0.2rem] right-0 lg:left-24 h-8 transition-all duration-500 group-focus:-rotate-180;
     }
     .dropdownOptions{
-        @apply origin-top-right absolute mt-2 w-[9.6em] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5;
+        @apply absolute origin-top-right mt-2 w-[16rem] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5;
     }
     .options{
         @apply block px-4 py-2 text-sm text-gray-700 cursor-pointer;
@@ -45,5 +45,5 @@
 
 /* CARDS SECTION*/
 .cardSection{
-    @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-4 md:gap-8 gap-y-8 md:gap-y-16 md:w-fit mx-auto;
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-8 gap-y-8 md:gap-y-16 w-fit mx-auto;
 }
