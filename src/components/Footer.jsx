@@ -23,7 +23,7 @@ function Footer() {
                   <div>
                       <div className="grid place-items-start mt-5">
                       <p className="heading3 green">Contact Us</p>
-                        <p className="paragraph-regular green underline">skilledwomen@gmail.com</p>
+                        <p className="paragraph-regular green underline">skilledwomen1023@gmail.com</p>
                         <p className="paragraph-regular green">+62 8123 4567 8901</p>
                         <p className="paragraph-regular green">Jl Mawar No C XIV/123, Jakarta</p>
                       </div>

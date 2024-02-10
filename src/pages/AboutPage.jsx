@@ -47,7 +47,7 @@ function AboutPage() {
 
         <div className="apa-itu-konten">
           <div>
-            <h2 className="heading2">Apa sih Skilled Women itu?</h2>
+            <h2 className="heading2 mb-4">Apa sih Skilled Women itu?</h2>
           </div>
           <div>
             <p className="paragraph-regular">
@@ -69,7 +69,7 @@ function AboutPage() {
 
         <div className="daftar-anggota">
           {teamMembers.map((member) => (
-            <div key={member.name} className="flex flex-col justify-center">
+            <div key={member.name} className="flex flex-col justify-center mb-4">
               <img
                 className="img-anggota"
                 src={member.image}

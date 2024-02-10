@@ -3,7 +3,7 @@
 /* {Hero section} */
 
 .hero {
-  @apply flex bg-[#4F6C6A] p-28 md:flex items-center justify-around;
+  @apply flex bg-[#4F6C6A] p-28 md:flex items-center justify-around flex-wrap-reverse;
 }
 
 .div-1 {
@@ -37,7 +37,7 @@
 }
 
 .div-imgHero {
-  @apply w-3/4 md:w-full col-span-1  sm:w-8;
+  @apply lg:w-96 md:w-60 w-52 col-span-1 mb-4;
 }
 
 /* {Fitur section} */

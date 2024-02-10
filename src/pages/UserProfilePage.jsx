@@ -101,7 +101,11 @@ function UserProfilePage() {
   };
 
   const toggleDropdown = (dropdownName) => {
-    setIsOpen(dropdownName);
+    if (isOpen === dropdownName) {
+      setIsOpen('');
+    } else {
+      setIsOpen(dropdownName);
+    };
   };
 
   // filter
@@ -242,7 +246,7 @@ function UserProfilePage() {
                           aria-expanded="true"
                         >
                           <div className="innerDropdown">
-                            <span className="ml-4">{input.gender}</span>
+                            <span className="ml-4 dark">{input.gender}</span>
                             <ArrowDownSLineIcon className="arrowDropdown" />
                           </div>
                         </button>
@@ -323,7 +327,7 @@ function UserProfilePage() {
                           aria-expanded="true"
                         >
                           <div className="innerDropdown">
-                            <span className="ml-4">{typeof input.cityId === 'number' ? cityName : input.cityId}</span>
+                            <span className="ml-4 dark">{typeof input.cityId === 'number' ? cityName : input.cityId}</span>
                             <ArrowDownSLineIcon className="arrowDropdown" />
                           </div>
                         </button>
@@ -331,7 +335,7 @@ function UserProfilePage() {
 
                       {/* city dropdown */}
                       {isOpen === "city" ? (
-                        <div className="dropdownOption" ref={dropdownRef}>
+                        <div className="dropdownOption dropdownCity" ref={dropdownRef}>
                           <div
                             className="py-1"
                             role="menu"
@@ -348,7 +352,7 @@ function UserProfilePage() {
                               onChange={handleSearch}
                             />
                             {city.map(v => (
-                              <a href="#" role="menuitem" className="option" key={v.id} onClick={(e) => {
+                              <a href="#" role="menuitem" className="options" key={v.id} onClick={(e) => {
                                 inputHandler({
                                   target: {
                                     name: "cityId",

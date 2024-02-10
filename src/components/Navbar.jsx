@@ -67,8 +67,7 @@ function Navbar() {
         </Link>
 
         {/* ICON MENU */}
-        <button onClick={handleToggle} 
-        className="burgerIcon">
+        <button onClick={handleToggle} className="burgerIcon">
           <MenuLineIcon color="#4F6C6A" />
         </button>
 

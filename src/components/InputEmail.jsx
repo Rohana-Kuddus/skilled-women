@@ -49,7 +49,7 @@ function InputEmail() {
             Email
           </label>
           <input
-            className="input-text mb-2 max-w-64 md:max-w-80 lg:max-w-96"
+            className="input-text mb-2 max-w-64 md:max-w-80 lg:max-w-96 outline-[#4F6C6A]"
             type="text"
             name="email"
             placeholder="janedoe@email.com"
