@@ -141,7 +141,7 @@ function RenewPasswordPage() {
         validatePassword: ''
       }));
     };
-
+    
     if (Object.values(error).every(v => v === '')) {
       const { email } = location.state;
 

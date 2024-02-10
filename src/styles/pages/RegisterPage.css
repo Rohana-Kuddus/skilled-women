@@ -15,7 +15,7 @@
 
 /* FORM SECTION */
 .userForm {
-  @apply grid grid-cols-1 lg:grid-cols-2 ml-0 md:ml-12;
+  @apply grid grid-cols-1 lg:grid-cols-2 ml-0 md:ml-12 mb-20;
 }
 .formInput {
   @apply py-2 pl-4 rounded-md bg-[--secondary-color] text-[--neutral-color] outline-[--primary-color];
@@ -23,21 +23,28 @@
 .formDropdown {
   @apply inline-flex justify-center rounded-md text-[--neutral-color];
 }
+.labelDropdown {
+  @apply label-form;
+  margin-bottom: 0.2rem !important;
+}
 .innerDropdown{
-    @apply flex justify-between items-center py-1 w-32 rounded-md;
+  @apply flex justify-center items-center w-96 h-10 rounded-md;
 }
 .arrowDropdown {
-  @apply h-8 mr-4 text-[--primary-color];
+  @apply mt-1.5 ml-48 text-[--primary-color];
 }
 .dropdownOption {
   @apply origin-top-right absolute right-0 mt-2 w-full rounded-md bg-[--secondary-color] text-[--neutral-color];
+}
+.dropdownCity {
+  @apply max-h-52 overflow-y-scroll;
 }
 .options {
   @apply block px-4 py-2 text-sm text-gray-700;
 }
 
 .searchDropdown {
-  @apply block w-full px-4 py-2 text-gray-800 border rounded-md border-gray-300 focus:outline-none;
+  @apply block px-4 py-2 text-gray-800 border rounded-md border-gray-300 focus:outline-none;
 }
 .submitBtn {
   @apply col-span-1 lg:col-span-2 text-center justify-center items-center mb-20;

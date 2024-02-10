@@ -5,7 +5,7 @@
 }
 
 .sidebar{
-  @apply w-80 md:w-full lg:w-96 h-auto border-r-2 border-b-2 bg-[--white-color];
+  @apply w-80 md:w-60 lg:w-80 h-auto border-r-2 border-b-2 bg-[--white-color];
 }
 .sidebarOption{
   @apply my-1 p-1 w-full text-center hover:bg-gray-200 active:bg-gray-200 rounded-md;

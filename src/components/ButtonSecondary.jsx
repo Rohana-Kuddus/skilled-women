@@ -5,7 +5,7 @@ import "../index.css";
 function ButtonSecondary({ name, action, padding = "px-4" }) {
   return (
     <>
-      <button className={`paragraph-regular dark ${padding} py-2 rounded-lg hover:bg-gray-100 w-max`}
+      <button className={`paragraph-regular dark ${padding} py-2 rounded-lg hover:bg-[#EDEDED] w-max`}
       style={{
         borderColor: "var(--primary-color)",
         borderWidth: "1px",

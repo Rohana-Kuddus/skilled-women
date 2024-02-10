@@ -29,7 +29,8 @@
   color: var(--primary-color);
   font-family: var(--heading-font);
 }
-.navlink.active {
+
+.navlink:hover {
   background-color: var(--primary-color);
   color: var(--white-color);
 }

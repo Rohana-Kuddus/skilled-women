@@ -36,15 +36,15 @@ function InputEmail() {
 
   return (
     <div>
-      <form className="flex flex-col justify-center items-center text-center gap-12 m-6 md:my-20">
+      <form className="flex flex-col justify-center items-center text-center m-6">
         <div>
           <h1 className="heading1 black">Lupa Password?</h1>
-          <p className="paragraph-regular black mb-14">
+          <p className="paragraph-regular black mb-12">
             Masukkan email yang telah kamu daftarkan untuk merubah password kamu
           </p>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col items-start">
           <label htmlFor="Email" className="label-form text-left">
             Email
           </label>
@@ -59,9 +59,9 @@ function InputEmail() {
             autoFocus
           />
           {error && <p className="paragraph-regular text-[#FE0101]">{error}</p>}
-
-          <ButtonPrimary buttonText={"Kirim email"} onClick={submitHandler} submit={true}></ButtonPrimary>
         </div>
+
+        <ButtonPrimary buttonText={"Kirim email"} onClick={submitHandler} submit={true}></ButtonPrimary>
 
         <p> Kembali ke laman{" "}
           <span className="underline hover:cursor-pointer green" onClick={() => navigate("/login")}>

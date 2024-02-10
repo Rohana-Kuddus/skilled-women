@@ -59,10 +59,11 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
       <div className="cardContainer">
         <img src={data.image ? data.image : 'https://cdn-icons-png.flaticon.com/128/9257/9257182.png'} alt="kelas" className={` ${imgScale} ${imgSize} rounded-s-md`} />
 
-        <div className="card flex flex-col mr-4 py-4 gap-[0.20rem]">
+        <div className="cardMain">
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
-          <p className="paragraph-regular dark">{data.name}</p>
-          <div>
+          <p className="heading3 dark mb-1">{data.name}</p>
+          <div className="bg-neutral-200 flex items-center py-1 px-2 max-w-20 rounded-3xl mb-1">
+            <div className="bg-neutral-400 w-2 h-2 mr-2 rounded-lg"></div>
             <p className="paragraph-small dark">{data.paid ? 'Berbayar' : 'Gratis'}</p>
           </div>
           <p className="paragraph-small dark">{data.description}</p>
@@ -86,11 +87,11 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
             {!editBtn ?
               <ButtonPrimary buttonText={'Lihat Kelas'} onClick={() => window.open(`${data.link}`, '_blank', 'noreferrer')}></ButtonPrimary>
               : <div className="flex flex-row items-center gap-2">
-                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations', { state: { classId: data.id } })} padding="px-8"></ButtonPrimary>
+                <ButtonPrimary buttonText={'Edit'} onClick={() => navigate('/recommendations', { state: { classId: data.id } })} padding="px-5"></ButtonPrimary>
                 <ButtonSecondary name={'Hapus'} action={() => {
                   setId(data.id);
                   dispatch(setAlert({ alert: true, alertName: 'deleteClass' }));
-                }} padding="px-7" height="h-10"></ButtonSecondary>
+                }} height="h-10"></ButtonSecondary>
               </div>
             }
           </div>

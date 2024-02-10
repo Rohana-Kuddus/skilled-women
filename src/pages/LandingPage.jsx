@@ -35,13 +35,11 @@ function LandingPage() {
               dari mana?
             </h1>
           </div>
-          <div className="div-paragraph">
-            <p>
-              Temukan panduan langkah demi langkah untuk mempelajari berbagai
-              keterampilan dan memulai langkahmu menjadi seorang perempuan
-              bertalenta!
-            </p>
-          </div>
+          <p className="div-paragraph">
+            Temukan panduan langkah demi langkah untuk mempelajari berbagai
+            keterampilan dan memulai langkahmu menjadi seorang perempuan
+            bertalenta!
+          </p>
           <div className="div-3">
             <a href="#fitur" className="div-button">
               Mulai Jelajahi
@@ -131,9 +129,7 @@ function LandingPage() {
 
       {/* Benefit section */}
       <div className="benefit">
-        <div className="benefit-h1">
-          <h1>Manfaat menggunakan Skilled Women</h1>
-        </div>
+        <h1 className="benefit-h1">Manfaat menggunakan Skilled Women</h1>
 
         <div className="benefit-1">
           <div className="benefit-1-img">
@@ -141,33 +137,25 @@ function LandingPage() {
           </div>
 
           <div className="benefit-1-konten">
-            <div className="benefit-1-h2">
-              <h2>Ketahui lebih banyak tentang pekerjaan yang kamu minati</h2>
-            </div>
-            <div className="benefit-1-p">
-              <p>
-                Kamu bisa mengakses berbagai informasi tentang pekerjaan yang
-                diminati, mulai dari kelibihan dan kekurangannya, perkiraan gaji
-                dan lain-lain. Kamu juga bisa mengetahui keterampilan apa saja
-                yang perlu dipelajari melalui roadmap pekerjaan. Selain itu di
-                setiap langkah roadmap kamu bisa melihat daftar kursus online
-                yang bersesuaian.
-              </p>
-            </div>
+            <h2 className="benefit-h2">Ketahui lebih banyak tentang pekerjaan yang kamu minati</h2>
+            <p className="benefit-p">
+              Kamu bisa mengakses berbagai informasi tentang pekerjaan yang
+              diminati, mulai dari kelibihan dan kekurangannya, perkiraan gaji
+              dan lain-lain. Kamu juga bisa mengetahui keterampilan apa saja
+              yang perlu dipelajari melalui roadmap pekerjaan. Selain itu di
+              setiap langkah roadmap kamu bisa melihat daftar kursus online
+              yang bersesuaian.
+            </p>
           </div>
         </div>
 
         <div className="benefit-2">
           <div className="benefit-2-konten">
-            <div className="benefit-2-h2">
-              <h2>Pelajari keterampilan-keterampilan yang up-to-date</h2>
-            </div>
-            <div className="benefit-2-p">
-              <p>
-                Kamu bisa melihat berbagai macam pekerjaan di banyak industri
-                berbeda yang bisa kamu pelajari.
-              </p>
-            </div>
+            <h2 className="benefit-h2">Pelajari keterampilan-keterampilan yang up-to-date</h2>
+            <p className="benefit-p">
+              Kamu bisa melihat berbagai macam pekerjaan di banyak industri
+              berbeda yang bisa kamu pelajari.
+            </p>
           </div>
           <div className="benefit-2-img">
             <img src="https://imgur.com/r7joNG1.png" alt="img" />
@@ -192,31 +180,30 @@ function LandingPage() {
                 meningkatkan Keahlian kamu!
               </p>
             </div>
-            <div>
-              <ButtonPrimary buttonText="Lihat Semua" onClick={() => navigate('/jobs')} />
-            </div>
+
+            <ButtonPrimary buttonText="Lihat Semua" onClick={() => navigate('/jobs')} />
           </div>
 
           <div className="m-auto">
             <Swiper
-                breakpoints={{
-                  340: {
-                    slidesPerView: 1,
-                    spaceBetween: 15
-                  },
-                  700: {
-                    slidesPerView: 3,
-                    spaceBetween: 15
-                  }
-                }}
+              breakpoints={{
+                340: {
+                  slidesPerView: 1,
+                  spaceBetween: 15
+                },
+                700: {
+                  slidesPerView: 3,
+                  spaceBetween: 15
+                }
+              }}
 
-                pagination={{
-                  clickable: true
-                }}
+              pagination={{
+                clickable: true
+              }}
 
-                navigation
-                modules={[Navigation, Pagination]}
-                className="max-w-64 md:max-w-xl lg:max-w-[52rem]"
+              navigation
+              modules={[Navigation, Pagination]}
+              className="max-w-[16rem] sm:max-w-[36rem] md:max-w-[46rem] lg:max-w-[60rem]"
             >
               {
                 job.map((val) => (

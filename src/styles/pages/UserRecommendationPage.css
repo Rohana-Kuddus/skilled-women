@@ -1,5 +1,5 @@
 @import url(/src/index.css);
 
 .reqCard{
-    @apply flex flex-col justify-center items-start lg:w-full mx-auto md:mx-24 lg:mx-4 xl:mx-12 green mt-8;
+    @apply flex flex-col justify-center items-start lg:w-full mx-auto lg:mx-14 green mt-8;
 }

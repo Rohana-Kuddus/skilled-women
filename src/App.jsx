@@ -32,7 +32,7 @@ function App() {
         expires: today,
         secure: true
       }]);
-    } else if (!token && cookies.token) {
+    } else if (token === '' && cookies.token) {
       removeCookie('token');
     };
   }, [token]);

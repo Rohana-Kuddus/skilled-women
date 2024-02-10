@@ -19,7 +19,6 @@ function Navbar() {
   const { user, userImage } = useSelector(state => state.user);
   const [cookies] = useCookies();
   const [isOpen, setOpen] = useState(window.innerWidth >= 1024); // change the navbar view based on device size
-  const location = useLocation();
 
   const resizeNav = () => {
     window.innerWidth >= 1024 ? setOpen(true) : setOpen(false);
@@ -31,11 +30,6 @@ function Navbar() {
       window.removeEventListener("resize", resizeNav);
     };
   }, []);
-
-  const isActive = (routePath) => {
-    return location.pathname === routePath;
-  };
-  
 
   useEffect(() => {
     if (Object.keys(cookies).length !== 0) {
@@ -81,12 +75,11 @@ function Navbar() {
         {/* NAVIGATION BAR */}
         {isOpen && (
           <div className={`${isOpen ? "" : "opacity-0 scale-0"} navbarSection`}>
-            {/* belum dibuat hover */}
             <div className="navbar">
-              <p className={`navlink ${isActive('/') ? 'active' : ''}`} onClick={() => navigate('/')}>Home</p >
-              <p className={`navlink ${isActive('/jobs') ? 'active' : ''}`} onClick={() => navigate('/jobs')}>Pekerjaan</p >
-              <p className={`navlink ${isActive('/about') ? 'active' : ''}`} onClick={() => navigate('/about')}>Tentang Kami</p >
-              <p className={`navlink ${isActive('/faq') ? 'active' : ''}`} onClick={() => navigate('/faq')}>FAQ</p >
+              <p className="navlink" onClick={() => navigate('/')}>Home</p >
+              <p className="navlink" onClick={() => navigate('/jobs')}>Pekerjaan</p >
+              <p className="navlink" onClick={() => navigate('/about')}>Tentang Kami</p >
+              <p className="navlink" onClick={() => navigate('/faq')}>FAQ</p >
 
               {Object.keys(cookies).length !== 0 ?
                 <div className="flex items-center">

@@ -73,7 +73,7 @@ function SidebarClass({ data, setIsOpen }) {
 
         <div className="sidebar-main">
           <div className="sidebar-name">
-            <h2 className="heading2 green font-bold">{data.name}</h2>
+            <h2 className="heading2 green font-bold max-w-80">{data.name}</h2>
             <ButtonRecommendation name={'Kelas'} action={Object.keys(cookies).length !== 0 ?
               () => navigate('/recommendations') : () => dispatch(setAlert({ alert: true, alertName: 'class' }))}></ButtonRecommendation>
           </div>
