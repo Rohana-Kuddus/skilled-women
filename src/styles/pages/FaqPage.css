@@ -1,7 +1,7 @@
 @import url(/src/index.css);
 
 .faqHero{
-    @apply text-white text-center text-balance py-16 px-2;
+    @apply text-white text-center text-balance py-[4.84em] px-2;
 }
 
 .faqSection{

@@ -25,13 +25,13 @@ function AboutPage() {
     <>
       {/* About hero */}
       <div className="about-hero">
-        <div className="about-hero-h1">
-          <h1>
+        <div className="mb-2">
+          <h1 className=" heading1 white">
             Tentang <br /> Skilled Women
           </h1>
         </div>
-        <div className="paragraph-regular">
-          <p>
+        <div>
+          <p className="paragraph-regular white">
             Panduan langkah demi langkah untuk mempelajari berbagai keterampilan
             untuk <br /> membantu perempuan mengambil langkah awal dan menjadi
             perempuan bertalenta!
