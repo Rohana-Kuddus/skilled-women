@@ -17,7 +17,6 @@ import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import { CookiesProvider, useCookies } from "react-cookie"
 import { useSelector } from "react-redux"
-import { Helmet } from "react-helmet"
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -40,11 +39,6 @@ function App() {
 
   return (
     <>
-      <Helmet>
-        <title>Skilled Women</title>
-        <link rel="icon" type="image/svg+xml" href="/logo.svg"></link>
-      </Helmet>
-
       <CookiesProvider>
         <BrowserRouter>
           <Navbar></Navbar>
