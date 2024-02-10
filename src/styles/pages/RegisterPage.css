@@ -31,7 +31,7 @@
   @apply flex justify-center items-center w-96 h-10 rounded-md;
 }
 .arrowDropdown {
-  @apply mt-1.5 ml-48 text-[--primary-color];
+  @apply mt-1.5 ml-40 text-[--primary-color];
 }
 .dropdownOption {
   @apply origin-top-right absolute right-0 mt-2 w-full rounded-md bg-[--secondary-color] text-[--neutral-color];

@@ -202,7 +202,7 @@ function RegisterPage() {
                     aria-expanded="true"
                   >
                     <div className="innerDropdown">
-                      <p className="pl-4">{selectGender || "Pilih  gender"}</p>
+                      <p className="pl-4">{selectGender || "Pilih Gender"}</p>
                       <ArrowDownSLineIcon className="arrowDropdown"></ArrowDownSLineIcon>
                     </div>
                   </button>

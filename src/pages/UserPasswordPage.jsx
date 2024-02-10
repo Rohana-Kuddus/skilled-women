@@ -7,11 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../redux/slices/alertSlice";
 import Alert from "../components/Alert";
 import { setFooterAnchor } from "../redux/slices/footerSlice";
-import { editUserPassword, getUserProfile } from "../redux/slices/userSlice";
+import { editUserPassword } from "../redux/slices/userSlice";
 import { useCookies } from "react-cookie";
 import { getToast } from "../redux/slices/toastSlice";
 import Toast from "../components/Toast";
-import "../styles/pages/RenewPassword.css"
 
 function UserPasswordPage() {
   const dispatch = useDispatch();
