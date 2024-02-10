@@ -15,14 +15,15 @@ function CardJob({ job }) {
           />
           <div className="flex flex-col justify-between p-5 h-72">
             <div>
-              <p className="paragraph-regular black">{job.industry}</p>
-              <p className="heading2 black font-bold text-balance">{job.title}</p>
-              <p className="paragraph-regular green text-left desc">
+              <p className="paragraph-regular dark">{job.industry}</p>
+              <p className="heading2 dark font-bold text-balance">{job.title}</p>
+              <p className="paragraph-regular dark text-left desc">
                 {job.description}
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <ButtonPrimary buttonText="Lihat Detail" onClick={() => navigate(`/jobs/${job.id}`)} padding="px-16 md:px-12 lg:px-20" className="primaryBtn"></ButtonPrimary>
+              <ButtonPrimary buttonText="Lihat Detail" onClick={() => navigate(`/jobs/${job.id}`)} 
+                padding="px-12 sm:px-8 md:px-12 lg:px-20" className="primaryBtn"></ButtonPrimary>
             </div>
           </div>
         </div>

@@ -17,6 +17,7 @@ import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import { CookiesProvider, useCookies } from "react-cookie"
 import { useSelector } from "react-redux"
+import { Helmet } from "react-helmet"
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -26,23 +27,28 @@ function App() {
     if (token) {
       const today = new Date();
       today.setDate(today.getDate() + 7);
-  
+
       setCookie('token', token, [{
         path: '/',
         expires: today,
         secure: true
       }]);
-    } else if (!token && cookies.token) {
+    } else if (token === '' && cookies.token) {
       removeCookie('token');
     };
   }, [token]);
-  
+
   return (
     <>
+      <Helmet>
+        <title>Skilled Women</title>
+        <link rel="icon" type="image/svg+xml" href="/logo.svg"></link>
+      </Helmet>
+
       <CookiesProvider>
         <BrowserRouter>
           <Navbar></Navbar>
-          
+
           <Routes>
             <Route path='/' element={<LandingPage></LandingPage>}></Route>
             <Route path='/about' element={<AboutPage></AboutPage>}></Route>

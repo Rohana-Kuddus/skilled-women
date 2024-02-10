@@ -86,7 +86,7 @@ function UserRecommendationPage() {
             </div>
           ))}
 
-          <ButtonRecommendation name="Kelas" padding="lg:px-52 md:px-24" action={() => navigate('/recommendations')} />
+          <ButtonRecommendation name="Kelas" padding="lg:px-56 md:px-24 sm:px-20 px-4" action={() => navigate('/recommendations')} />
         </div>
       </div>
 

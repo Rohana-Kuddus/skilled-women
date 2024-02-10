@@ -19,7 +19,7 @@
 }
 
 .sidebar-name {
-  @apply flex justify-between items-center py-8
+  @apply flex justify-between items-center py-8;
 }
 
 .sidebar-class {

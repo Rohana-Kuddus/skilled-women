@@ -1,23 +1,28 @@
 @import url(/src/index.css);
 
 .navbarContent{
-  @apply flex items-center justify-between px-4 py-2 flex-wrap bg-white border-b-4 border-gray-200 mx-auto lg:mx-0;
+  @apply flex flex-col lg:flex-row items-center justify-between px-4 py-4 lg:px-8 lg:py-2 flex-wrap bg-white mx-auto lg:mx-0;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06);
 }
 
 .navbarSection{
-  @apply md:flex md:items-center mx-auto min-[931px]:mx-0;
+  @apply md:flex md:items-center mx-auto lg:mx-0;
+}
+
+.logoLink{
+  @apply top-0 p-2 inline-flex self-start md:self-center items-center relative lg:static;
 }
 
 .logo{
-  @apply w-[10em] md:w-60 h-auto hover:cursor-pointer;
+  @apply w-[10em] md:w-52 lg:w-60 h-auto hover:cursor-pointer;
 }
 
 .burgerIcon{
-  @apply text-white inline-flex p-3 rounded min-[931px]:hidden ml-auto mr-4 hover:text-white outline-none;
+  @apply text-white inline-flex p-3 rounded lg:hidden ml-auto mr-2 hover:text-white outline-none absolute lg:static top-3 lg:top-auto right-4 md:right-4 lg:right-auto;
 }
 
 .navbar{
-  @apply flex max-[425px]:flex-col md:flex-row items-center justify-end mr-4 mt-2 md:mt-0;
+  @apply flex flex-col lg:flex-row items-center justify-end mr-0 lg:mr-4 mt-2 md:mt-0;
 }
 
 .navlink {
@@ -25,7 +30,8 @@
   color: var(--primary-color);
   font-family: var(--heading-font);
 }
-.navlink.active {
+
+.navlink:hover {
   background-color: var(--primary-color);
   color: var(--white-color);
 }

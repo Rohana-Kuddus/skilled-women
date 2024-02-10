@@ -2,8 +2,24 @@
   @apply bg-[#F6DDD9] flex items-center gap-6 w-4/5 p-8 rounded-2xl m-auto;
 }
 
+.container-benefit {
+  @apply flex justify-center items-center px-32 flex-wrap;
+}
+
+.container-statistics {
+  @apply grid grid-cols-2 w-96 md:w-5/12 gap-2 md:gap-6;
+}
+
 @media screen and (max-width: 800px) {
   .container-figure {
-    @apply flex-wrap
+    @apply flex-wrap w-80;
+  }
+
+  .container-benefit {
+    @apply px-0
+  }
+
+  .container-statistics {
+    @apply w-80
   }
 }

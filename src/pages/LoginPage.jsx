@@ -140,10 +140,10 @@ function LoginPage() {
               </span>
             </div>
             {error.password && <p className="paragraph-regular text-[#FE0101]">{error.password}</p>}
-            <p className="forgot-password hover:cursor-pointer" onClick={() => navigate("/password/email")}>Forgot Password?</p>
           </div>
 
           <div className="submitBtn mt-12">
+            <p className="hover:cursor-pointer" onClick={() => navigate("/password/email")}>Forgot Password?</p>
             <ButtonPrimary buttonText="Log in" onClick={login} padding="px-[2em] py-3"/>
             <p className="mt-4">
               Belum punya akun?&ensp;
