@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../redux/slices/alertSlice"
 import MenuLineIcon from "remixicon-react/MenuLineIcon";
@@ -10,6 +10,7 @@ import { logoutUser } from "../redux/slices/authSlice";
 import PropTypes from "prop-types";
 
 function SidebarProfile() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { alert, alertName } = useSelector(state => state.alert);
   const [isOpen, setOpen] = useState(window.innerWidth >= 768);
@@ -43,6 +44,7 @@ function SidebarProfile() {
       primaryAction: () => {
         dispatch(logoutUser());
         dispatch(setAlert({ alert: false, alertName: 'signout' }));
+        navigate('/');
       },
       secondary: 'Batal',
       secondaryAction: () => dispatch(setAlert({ alert: false, alertName: 'signout' }))

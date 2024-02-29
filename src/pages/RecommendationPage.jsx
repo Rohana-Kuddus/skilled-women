@@ -199,7 +199,6 @@ function RecommendationPage() {
 
         dispatch(editClass(payload));
       } else {
-        console.log(payload);
         dispatch(submitClass(payload));
       };
 
@@ -283,7 +282,7 @@ function RecommendationPage() {
 
           <div>
             <label htmlFor="link" className="label-form">Link kelas</label>
-            <input type="text" name="link" placeholder="Link kelas" value={input.link} className="input-text mt-1" onChange={inputHandler} onBlur={errorHandler} />
+            <input type="url" name="link" placeholder="Link kelas" value={input.link} className="input-text mt-1" onChange={inputHandler} onBlur={errorHandler} />
             {error.link && <p className="paragraph-regular text-[#FE0101]">{error.link}</p>}
           </div>
 
