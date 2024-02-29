@@ -61,7 +61,11 @@ function CardClass({ data, editBtn = false, imgScale = "object-cover", imgSize =
 
         <div className="cardMain">
           <p className="paragraph-small green font-bold">{data.username !== '' ? data.username : ''}</p>
-          <p className="heading3 dark mb-1">{data.name}</p>
+          <div className="flex flex-row items-center">
+            {/* hardcode contoh kelas yang disponsori atau ads */}
+            {data.id === 1 && <p className="paragraph-regular green pr-2 mb-1">Ad</p>}
+            <p className="heading3 dark mb-1">{data.name}</p>
+          </div>
           <div className="bg-[#EDEDED] flex items-center py-1 px-2 max-w-20 rounded-3xl mb-1">
             <div className="bg-neutral-300 w-2 h-2 mr-2 rounded-lg"></div>
             <p className="paragraph-small dark">{data.paid ? 'Berbayar' : 'Gratis'}</p>
