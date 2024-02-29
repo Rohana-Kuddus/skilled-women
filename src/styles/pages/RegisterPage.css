@@ -34,7 +34,7 @@
   @apply mt-1.5 ml-40 text-[--primary-color];
 }
 .dropdownOption {
-  @apply origin-top-right absolute right-0 mt-2 w-full rounded-md bg-[--secondary-color] text-[--neutral-color];
+  @apply origin-top-right absolute right-0 mt-2 w-full rounded-md bg-[--secondary-color] text-[--neutral-color] z-20;
 }
 .dropdownCity {
   @apply max-h-52 overflow-y-scroll;
